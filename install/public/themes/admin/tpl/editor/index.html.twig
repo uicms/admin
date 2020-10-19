@@ -1,0 +1,99 @@
+{% extends "admin/tpl/layout.html.twig" %}
+{% set results = rows %}
+{% set page_slug = page.slug %}
+        
+{% block title %}{{ page.slug|capitalize }} - Parcourir{% endblock %}
+
+{% block body %}
+<div id="dropzoneForm_container">
+    <div class="wrapper">
+        <div class="close"></div>
+    	<form action="{{ path('admin_page_action', {slug:'action', action:'upload', entity_name: page.arguments.entity_name}) }}" id="dropzoneForm" class="dropzone">
+    		<div class="dz-message" data-dz-message><span>Cliquer ou déposer des fichiers</span></div>
+    		<div class="fallback">
+    	  		<input name="file" type="file" multiple />
+    		</div>
+    	</form>
+    </div>
+</div>
+
+<section id="explorer" class="explorer {{ params.display }}" data-offset="{{ paginator.offset }}" data-url="{{ path('admin_page_action', {slug:'action', action:'position', entity_name: page.arguments.entity_name, linked_to:params.linked_to}) }}">
+    
+    {% if params.linked_to_row is defined %}
+    <div class="linked_to_row">
+        <h3><a href="{{ path('admin_page_action_id', {slug:params.linked_to_slug, action: 'form', id:params.linked_to_id}) }}">{{ params.linked_to_slug }} \ {{ params.linked_to_row._name }}</a></h3>
+    </div>
+    {% endif %}
+    
+    <div class="tools1">
+	    <a href="{{ path('admin_page_action', {slug: page.slug, action: 'form', target: 'blank'}) }}" class="button new_row">Nouveau</a>{% if model.config.is_tree is defined and model.config.is_tree %} | <a href="javascript:;" data-url="{{ path('admin_page_action', {slug: 'action', action: 'new_folder', target: 'blank'}) }}" class="button new_folder">Dossier</a>{% endif %} |
+        <a href="javascript:;" class="button import">Importer</a>
+        <!-- | <a href="{{ path('admin_page_action', {slug: page.slug, action: 'form'}) }}" class="button export">Exporter</a>
+         | <a href="{{ path('admin_page_action', {slug: page.slug, action: 'form'}) }}" class="button batch">Traitement par lot</a>-->
+        
+        <div id="new_folder_popup">
+            <div class="wrapper">
+                <div class="close"></div>
+                <form name="new_folder_form" action="{{ path('admin_page_action', {slug: 'action', action: 'newfolder', entity_name: model.name}) }}" method="post"> 
+                    <fieldset>
+                        <input type="text" value="" name="new_folder_name" required="required" placeholder="Nom du dossier" />
+                    </fieldset>
+                    <button type="button" class="btn cancel">Annuler</button> <button type="submit" class="btn">Créer</button>
+                </form>
+            </div>
+        </div>
+    </div>
+    
+    <div class="tools2 clearfix">
+        <div class="misc_tools">
+            <form class="search_form" method="get" action="">
+                <input type="text" name="search" class="form-control" placeholder="Rechercher" />
+            </form>
+        
+            <div class="dropdown action">
+              <button class="dropdown-toggle" type="button">
+                Action
+              </button>
+              <div class="dropdown-menu">
+                <a class="dropdown-item" href="javascript:action('#form_results', 'conceal');">Masquer</a>
+                <a class="dropdown-item" href="javascript:action('#form_results', 'publish');">Publier</a>
+                <a class="dropdown-item" href="javascript:action('#form_results', 'delete');">Supprimer</a>
+                <!--<a class="dropdown-item" href="javascript:action('#form_results', 'copy');">Dupliquer</a>-->
+              </div>
+            </div>
+        </div>
+
+        <div class="display_tools">{% include "admin/tpl/editor/index/tools.html.twig" %}</div>
+    </div>
+    
+    <div class="path">
+        <h1>
+            <a href="{{ path('admin_page_action', {slug: page_slug, action: 'index', dir: 0, offset: 0}) }}">
+                <span class="droppable" data-id="0"><span class="wrapper">{{ page.slug|capitalize }}</span></span>
+            </a>
+            
+            {% for path_item in params.path %}
+                \ <span class="name icon {% if path_item.isdir %} folder{% else %} doc{% endif %}">
+                {% if path_item.isdir %}<a href="{{ path('admin_page_action', {slug:page_slug, action: 'index', dir:path_item.id, offset:0 }) }}">{% endif %}
+                {{ path_item._name }}
+                {% if path_item.isdir %}</a>{% endif %}
+            </span>
+            {% endfor %}
+            
+        </h1>
+    </div>
+
+    <div id="results" class="results">
+        <form id="form_results" name="index" action="{{ path('admin_page', {slug:'action', entity_name:model.name, linked_to:params.linked_to, linked_to_id:params.linked_to_id}) }}" method="post">
+            
+            {% include "admin/tpl/editor/index/" ~ params.display ~ ".html.twig" %}
+        
+            <input type="hidden" name="action" value="" />
+            <input type="hidden" name="target" value="" />
+        </form>
+    </div>
+    
+    {% include "admin/tpl/editor/index/pagination.html.twig" %}
+</section>
+
+{% endblock %}

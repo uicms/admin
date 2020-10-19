@@ -1,0 +1,160 @@
+/* Form objects */
+input[type=text],
+input[type=password],
+input[type=email],
+textarea {
+    border: 1px solid #ccc;
+    box-sizing: border-box;
+    width: 100%;
+    padding: 0.5em;
+    line-height: 1.8em;
+}
+textarea {
+    resize: none;
+}
+
+
+/* Layout */
+#form .infos {
+    margin-bottom: 1.2em;
+}
+#form .path {
+    margin-bottom: 1.2em;
+}
+#form .form {
+    float: left;
+    width: calc(100% - 400px);
+    box-sizing: border-box;
+    padding-right: 20px;
+    position: relative;
+}
+#form .form .buttons button {
+    margin-right: 5px;
+}
+#form .field {
+    margin-bottom: 20px;
+}
+#form .field h3 .col-form-label,
+#form .field h3 label {
+    font-size: 17px;
+    font-weight: bold;
+}
+#form .field .thumbnail img {
+    width: 100%;
+    max-width: 100px;
+}
+#form .nav-tabs {
+    margin-bottom: 20px;
+}
+
+/* Dropdown action */
+#form .form .dropdown.action {
+    /*position: absolute;
+    right: 15px;
+    top: 0;*/
+}
+
+
+/* View nav */
+.view_nav {
+    margin-bottom: 20px;
+}
+.view_nav a.prev {
+    padding-left: 20px;
+    padding-right: 15px;
+    background: url('../img/prev.svg') no-repeat left center;
+    background-size: 15px;
+}
+.view_nav a.next {
+    padding-left: 15px;
+    padding-right: 20px;
+    background: url('../img/next.svg') no-repeat right center;
+    background-size: 15px;
+}
+
+
+/* Aside */
+#form aside {
+    float: right;
+    width: 27em;
+    /*border-top: 1px solid #ccc;
+    border-left: 1px solid #ccc;
+    border-right: 1px solid #ccc;*/
+    box-sizing: border-box;
+    
+}
+#form aside > .thumbnail {
+    margin-bottom: 2em;
+    width: 27em;
+    height: 300px;
+    background: #f8f8f8;
+    position: relative;
+}
+#form aside > .thumbnail img {
+    max-width: 27em;
+    max-height: 300px;
+    display: block;
+    margin: auto;
+    position: absolute;
+    top: 0;left: 0; right: 0; bottom: 0;
+    object-fit: cover;
+}
+#form .dropdown.add_link .dropdown-menu {
+    width: 320px;
+}
+#form .dropdown.add_link .dropdown-menu li {
+    box-sizing: border-box;
+    padding: 0.5em 1em 0.5em 0.5em;
+}
+
+#form .dropdown.add_link .dropdown-menu li .button {
+    display: none;
+}
+#form .dropdown.add_link .dropdown-menu li:hover {
+    background: #f8f8f8;
+}
+#form .dropdown.add_link .dropdown-menu li:hover .button {
+    display: inline-block;
+}
+#form .dropdown.add_link .name {
+    display: inline-block;
+    width: 30%;
+    font-weight: bold;
+}
+#form .dropdown.add_link .name a {
+    display: block;
+}
+#form .dropdown.add_link .button {
+    float: right;
+    margin-left: 1em;
+    box-sizing: border-box;
+}
+#form aside .linked_entity {
+    padding: 1em 0 2em 0;
+    position: relative;
+    /*border-top: 1px solid #eee;*/
+}
+#form aside .linked_entity .grid .user,
+/*#form aside .linked_entity .grid .position,*/
+#form aside .linked_entity .grid .text_preview {
+    display: none;
+}
+#form aside .linked_entity .title {
+    font-size: 1.5em !important;
+    letter-spacing: 0.5px;
+    padding-bottom: 1em;
+}
+#form aside .linked_entity .dropdown.action {
+    position: absolute;
+    right: 0;
+    top: 10px;
+    margin-bottom: 1em;
+}
+#form aside .linked_entity .dropdown .dropdown-menu {
+    right: 0.3em;
+    left: auto;
+}
+#form aside .linked_entity .buttons > a {
+    display: inline-block;
+    margin-right: 10px;
+}

@@ -1,0 +1,14 @@
+{% trans_default_domain 'admin' %}
+
+{% if field.vars.data.publicPath is defined %}
+    {% if field.vars.data.thumbnailPath %}
+    <div class="thumbnail">
+        <a href="{{ field.vars.data.publicPath }}" data-fancybox="gallery">
+            <img src="{{ field.vars.data.thumbnailPath }}" />
+        </a>
+    </div>
+    {% endif %}
+    <a href="{{ field.vars.data.publicPath }}" class="external">{{ field.vars.data.publicPath }}</a>
+{% endif %}
+
+{{ form_widget(field) }}

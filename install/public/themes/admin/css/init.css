@@ -1,0 +1,84 @@
+body, img, a, p, span, div, strong, em, ul, ol, li, label, input, textarea, form, fieldset, table, tr, th, td, h1, h2, h3, h4, h5, h6, hr, iframe, embed, object {
+	list-style-type: none;
+	text-decoration: none;
+	outline: none;
+	border: 0;
+	margin: 0;
+	padding: 0;
+}
+select,
+input,
+textarea,
+button,
+body {
+    font-family: Arial;
+	color: #000;
+	font-size: 0.9em;
+	line-height: 1.2em;
+}
+table, td, tr, th {
+	border-spacing: 0;
+	vertical-align: middle;
+	border-collapse: collapse;
+}
+label {
+	display: block;
+	padding-right: 20px;
+}
+html {
+	overflow-y: scroll;
+}
+html, body {
+  height: 100%;
+  min-height: 100vh;
+}
+.clearfix:after {
+	content: "."; 
+	display: block; 
+	height: 0; 
+	clear: both; 
+	visibility: hidden;
+}
+.clearfix {
+	display: inline-table;
+}
+* html .clearfix {
+	height: 1%;
+}
+.clearfix {
+	display: block;
+}
+.noselect {
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    -khtml-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}
+.loadable {
+	filter: alpha(opacity=0);
+	-moz-opacity: 0;
+	opacity: 0;
+}
+sup {
+	valign: super;
+	font-size: 70%;
+	line-height: 80%;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

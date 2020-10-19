@@ -1,0 +1,359 @@
+/* Path */
+.path {
+    /*border-top: 1px solid #ccc;
+    padding-top: 15px;*/
+}
+h1 .name.icon.folder {
+    background: url('../img/folder.svg') no-repeat left center;
+    background-size: 1em;
+    padding-left: 1.2em;
+}
+
+/* Notice */
+.notice {
+    margin-bottom: 20px;
+}
+
+/* Select section */
+section#select .tools_db {
+    display: none;
+}
+section#select .item.doc a:hover {
+    color: #000;
+    cursor: default;
+}
+section#select .item.selecting a:hover,
+section#select .item.selected a:hover {
+    color: #fff;
+}
+
+/* Position */
+#loading {
+    background: url('../img/loading.svg') no-repeat left center;
+    background-size: 1.6em;
+    padding-left: 1.8em;
+    position: absolute;
+    top: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+}
+
+/* Tools */
+.tools1 {
+    margin-bottom: 20px;
+}
+.tools2 .misc_tools {
+    margin-bottom: 20px;
+    float: left;
+    height: 40px;
+    line-height: 40px;
+    vertical-align: middle;
+}
+.tools2 .display_tools {
+    margin-bottom: 20px;
+    float: right;
+    height: 40px;
+    line-height: 40px;
+}
+.tools2 .display_tools .infos {
+    display: inline-block;
+    padding-right: 20px;
+}
+.pagination {
+    margin: 20px 0;
+}
+.pagination li {
+    display: inline-block;
+}
+.pagination li.active {
+    text-decoration: underline !important;
+}
+.search_form {
+    display: inline-block;
+    margin-bottom: 1.2em;
+}
+.search_form input[type=text] {
+    background: url('../img/search.svg') no-repeat 8px 10px;
+    background-size: 15px;
+    padding-left: 30px;
+    width: 100%;
+    max-width: 300px;
+}
+
+
+
+/* Selection */
+input.check_item {
+    display: none;
+}
+
+
+/* Results */
+.results {
+    padding-bottom: 1.2em;
+}
+.item.concealed {
+    opacity: 0.5;
+}
+.item.selected.concealed,
+.item.selecting.concealed {
+    opacity: 1;
+}
+
+
+/* Items manipulation */
+.sortable {
+}
+.explorer.thumbnails .placeholder {
+    float: left;
+    background: #f2f7fc;
+    width: 230px !important;
+    height: 300px !important;
+    margin-right: 20px;
+    margin-bottom: 20px;
+}
+.explorer.list .placeholder {
+    float: none;
+    background: #f2f7fc;
+}
+.dragging {
+    opacity: 0.5;
+}
+#clone,
+#tooltip {
+    position: absolute;
+    z-index: 10000;
+    background: #3849e8;
+    padding: .4em;
+    color: #fff;
+}
+span.ui-droppable-hover,
+.explorer.list .ui-droppable-hover {
+    background: #ffc800 !important;
+}
+.explorer.thumbnails .ui-droppable-hover .wrapper {
+    background: #ffc800 !important;
+}
+
+/* Folder edit */
+.explorer .item .edit {
+    font-size: 0;
+    width: 12px;
+    height: 12px;
+    margin-left: 4px;
+    background: url('../img/pen.svg') no-repeat;
+    background-size: 100%;
+    display: none;
+}
+.explorer .item:hover .edit {
+    display: inline-block;
+}
+
+
+/* Grid */
+.explorer.list .grid .header {
+    background-color: #f8f8f8;
+}
+.explorer.list .item {
+    border-bottom: 1px solid #eee;
+    overflow: hidden;
+}
+.explorer.list .item .col {
+    float: left;
+    line-height: 1.2em;
+    padding: 0.4em 0;
+}
+
+.explorer.list .item .col.name {
+    width: 50%;
+    white-space: nowrap;
+    box-sizing: border-box;
+    padding-left: 0.8em;
+    overflow: hidden;
+}
+.explorer.list .item .col.name:hover {
+}
+.explorer.list .item .col.name a.name {
+}
+.explorer.list .item .col.name .text_preview {
+    padding-left: 1em;
+    color: #999;
+}
+.explorer.list .item .col.extra {
+    float: right;
+    width: 10%;
+    text-align: center;
+}
+.explorer.list .item .col .thumbnail img {
+    max-width: 20px;
+    max-height: 20px;
+}
+.explorer.list .item .col.name a.name.icon.doc {
+    background: url('../img/doc.svg') no-repeat left center;
+    background-size: 0.8em;
+    padding-left: 1.2em;
+}
+.explorer.list .item .col.name a.name.icon.folder {
+    background: url('../img/folder.svg') no-repeat left center;
+    background-size: 1em;
+    padding-left: 1.5em;
+}
+
+
+
+/* Selecting */
+.explorer.list .item.selecting .text_preview,
+.explorer.list .item.selecting:hover .text_preview,
+.explorer.list .item.selected .text_preview,
+.explorer.list .item.selected:hover .text_preview {
+    color: #999;
+    opacity: 0.5;
+}
+.explorer.list .item.selecting,
+.explorer.list .item.selecting:hover,
+.explorer.list .item.selected,
+.explorer.list .item.selected:hover {
+    background-color: #0074e8;
+    color: #fff;
+}
+.explorer.list .item:hover {
+    background-color: #f8f9fa;
+}
+.explorer.list .item.selecting a,
+.explorer.list .item.selected a {
+    color: #fff;
+}
+.explorer.list .item.selected .col.name a.name.icon.doc,
+.explorer.list .item.selecting .col.name a.name.icon.doc {
+    /*background: url('../img/doc.svg') no-repeat left center;
+    background-size: 0.7em;*/
+}
+.explorer.list .item.hidden {
+    display: none;
+}
+
+/* Thumbnails */
+.explorer.thumbnails .item {
+    width: 230px;
+    box-sizing: border-box;
+    float: left;
+    margin-bottom: 20px;
+    margin-right: 20px;
+}
+.explorer.thumbnails .item > .wrapper {
+    border: 1px solid #ccc;
+    height: 300px;
+    
+    padding: 15px;
+    box-sizing: border-box;
+    position: relative;
+    background: #fff;
+}
+.explorer.thumbnails .item.selecting > .wrapper .details,
+.explorer.thumbnails .item.selecting:hover > .wrapper .details,
+.explorer.thumbnails .item.selected > .wrapper .details,
+.explorer.thumbnails .item.selected:hover > .wrapper .details,
+.explorer.thumbnails .item.selecting > .wrapper a,
+.explorer.thumbnails .item.selected > .wrapper a {
+    background: #3849e8;
+    color: #fff;
+}
+.explorer.thumbnails .item.selecting > .wrapper,
+.explorer.thumbnails .item.selected > .wrapper {
+    border: 1px solid #3849e8;
+}
+.explorer.thumbnails .item > .wrapper .thumbnail {
+    height: 200px;
+    margin-bottom: 15px;
+}
+.explorer.thumbnails .item.doc > .wrapper .thumbnail.icon {
+    background: url('../img/doc.svg') no-repeat center center;
+    background-size: 30%;
+    opacity: 0.2;
+}
+.explorer.thumbnails .item.folder > .wrapper .thumbnail.icon {
+    background: url('../img/folder.svg') no-repeat center center;
+    background-size: 30%;
+    opacity: 0.2;
+}
+.explorer.thumbnails .item > .wrapper .thumbnail img {
+    max-width: 100%;
+    max-height: 200px;
+    display: block;
+    margin: auto;
+}
+.explorer.thumbnails .item > .wrapper .details .name {
+    width: 90%;
+    display: inline-block;
+    overflow: hidden;
+    white-space: nowrap;
+}
+.explorer.thumbnails .item > .wrapper .details {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 65px;
+    background: #fbfbfb;
+    padding: 5px;
+}
+
+/* Popup */
+#new_folder_popup,
+#dropzoneForm_container {
+    display: none;
+    z-index: 10000;
+    position: fixed;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    right: 0;
+    background: rgba(255, 255, 255, 0.7);
+}
+#new_folder_popup.active,
+#dropzoneForm_container.active {
+    display: block;
+}
+#new_folder_popup > .wrapper,
+#dropzoneForm_container > .wrapper {
+    width: 80%;
+    height: 60vh;
+    background: #fff;
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%,-50%);
+}
+#new_folder_popup > .wrapper {
+    top: 20%;
+    left: 10%;
+    transform: none;
+}
+#new_folder_popup > .wrapper .close,
+#dropzoneForm_container > .wrapper .close {
+    position: absolute;
+    z-index: 10001;
+    right: 1em;
+    top: 1em;
+    width: 1.5em;
+    height: 1.5em;
+    background: url('../img/close_black.svg') no-repeat;
+    background-size: 100%;
+    cursor: pointer;
+}
+#dropzoneForm_container > .wrapper form {
+    position: absolute;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+}
+#new_folder_popup > .wrapper {
+    width: 80%;
+    height: auto;
+    padding: 5em;
+    box-sizing: border-box;
+}
+#new_folder_popup > .wrapper form fieldset {
+    margin-bottom: 2em;
+}

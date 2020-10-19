@@ -1,0 +1,49 @@
+    
+        {% if paginator.total > 1 %}<div class="infos">{% if paginator.total_pages > 1 %}{{ paginator.offset|inc }} - {{ paginator.total_current|inc(paginator.offset) }} / {% endif %}{{ paginator.total }} résultat(s)</div>{% endif %}
+        
+        <div class="dropdown display">
+          <button class="dropdown-toggle" type="button">
+            <strong>Affichage&nbsp;:&nbsp;</strong>{{ params.display }}
+          </button>
+          <div class="dropdown-menu">
+            <a class="dropdown-item{% if params.display == 'list' %} active{% endif %}" href="{{ path('admin_page_action', {slug: page.slug, action: current_tab.route.action, display: 'list'}) }}">Liste</a>
+            <a class="dropdown-item{% if params.display == 'thumbnails' %} active{% endif %}" href="{{ path('admin_page_action', {slug: page.slug, action: current_tab.route.action, display: 'thumbnails'}) }}">Vignettes</a>
+          </div>
+        </div>
+        
+        <div class="dropdown limit">
+          <button class="dropdown-toggle" type="button">
+            <strong>Nbre rés.&nbsp;:&nbsp;</strong>{{ params.limit }}
+          </button>
+          <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+              <!--<a class="dropdown-item{% if params.limit == 5 %} active{% endif %}" href="{{ path('admin_page_action', {slug: page.slug, action: current_tab.route.action, limit: 5, offset: 0}) }}">5</a>-->
+            <a class="dropdown-item{% if params.limit == 50 %} active{% endif %}" href="{{ path('admin_page_action', {slug: page.slug, action: current_tab.route.action, limit: 50, offset: 0}) }}">50</a>
+            <a class="dropdown-item{% if params.limit == 100 %} active{% endif %}" href="{{ path('admin_page_action', {slug: page.slug, action: current_tab.route.action, limit: 100, offset: 0}) }}">100</a>
+            <a class="dropdown-item{% if params.limit == 200 %} active{% endif %}" href="{{ path('admin_page_action', {slug: page.slug, action: current_tab.route.action, limit: 200, offset: 0}) }}">200</a>
+            <a class="dropdown-item{% if params.limit == 500 %} active{% endif %}" href="{{ path('admin_page_action', {slug: page.slug, action: current_tab.route.action, limit: 500, offset: 0}) }}">500</a>
+          </div>
+        </div>
+        
+        
+        <div class="dropdown order_by">
+          <button class="dropdown-toggle" type="button">
+            <strong>Trier&nbsp;:&nbsp;</strong>{{ params.order_by }}
+          </button>
+          <div class="dropdown-menu">
+              {% set fields = model.getFields() %}
+              {% for field in fields %}
+ 
+                  <a class="dropdown-item{% if params.order_by == field.name %} active{% endif %}" href="{{ path('admin_page_action', {slug: page.slug, action: current_tab.route.action, order_by: field.name}) }}">{{ field.name }}</a>
+              {% endfor %}
+          </div>
+        </div>
+        
+        <div class="dropdown order_dir">
+          <button class="dropdown-toggle" type="button">
+            <strong>Ordre&nbsp;:&nbsp;</strong>{{ params.order_dir }}
+          </button>
+          <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+            <a class="dropdown-item{% if params.order_dir == 'asc'%} active{% endif %}" href="{{ path('admin_page_action', {slug: page.slug, action: current_tab.route.action, order_dir: 'asc'}) }}">ASC</a>
+            <a class="dropdown-item{% if params.order_dir == 'desc'%} active{% endif %}" href="{{ path('admin_page_action', {slug: page.slug, action: current_tab.route.action, order_dir: 'desc'}) }}">DESC</a>
+          </div>
+        </div>

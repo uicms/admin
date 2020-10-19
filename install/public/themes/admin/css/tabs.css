@@ -1,0 +1,61 @@
+#tabs {
+    /*margin-right: 70px;*/
+    border-bottom: 1px solid #ccc;
+    margin-bottom: 20px;
+}
+#tabs .tab {
+    display: inline-block;
+    padding: 10px 15px 10px 15px;
+    
+}
+#tabs .tab h2 {
+    display: inline-block;
+    white-space: nowrap;
+    font-size: 0.9em !important;
+    line-height: 1em !important;
+    height: 1em;
+    max-width: 8em;
+    padding-bottom: 0;
+    overflow: hidden;
+    position: relative;
+    letter-spacing: 0.5px;
+    font-family: Arial, Sans-Serif;
+    font-weight: normal;
+}
+#tabs .tab.select h2 {
+    background: url('../img/check.svg') no-repeat;
+    background-size: 12px;
+    padding-left: 20px;
+}
+#tabs .tab.index h2 {
+    /*background: url('../img/list.svg') no-repeat;
+    background-size: 15px;
+    padding-left: 25px;*/
+}
+#tabs .tab .close {
+    float: none !important;
+    /*position: absolute;
+    top: 5px;
+    right: 0;*/
+    line-height: 1em !important;
+    vertical-align: middle;
+    margin-left: 5px;
+    width: 10px;
+    height: 10px;
+    display: inline-block;
+    background: url('../img/close_black.svg') no-repeat;
+    background-size: 100%;
+    font-size: 0;
+}
+#tabs .tab.active {
+    border-top: 1px solid #ccc;
+    border-left: 1px solid #ccc;
+    border-right: 1px solid #ccc;
+    background: #fff;
+    position: relative;
+    bottom: -1px;
+    z-index: 10;
+}
+#tabs .tab.active a {
+    font-weight: bold;
+}

@@ -1,0 +1,126 @@
+a.btn,
+button.btn {
+    background: #333;
+    color: #fff;
+    border: 0;
+    padding: 0.8em;
+    font-size: 0.8em;
+}
+a.btn:hover,
+button.btn:hover {
+    background: #0074e8;
+    cursor: pointer;
+}
+button[disabled=disabled] {
+    cursor: default;
+    opacity: 0.5;
+}
+
+/* Dropdown */
+.dropdown {
+    position: relative;
+    display: inline-block;
+}
+.dropdown .dropdown-toggle {
+    border: 1px solid #ccc;
+    color: #000;
+    border-radius: 4px;
+    padding: 0.8em;
+    padding-right: 1.5em;
+    background: url('../img/dropdown.svg') no-repeat right 0.5em center;
+    background-size: 8px;
+    background-color: #fff;
+    cursor: pointer;
+}
+.dropdown .dropdown-toggle:hover {
+}
+.dropdown .dropdown-menu {
+    display: none;
+    position: absolute;
+    z-index: 100;
+    left: 0.3em;
+    top: 2.4em;
+    background: #fff;
+    width: 200px;
+    border: 1px solid #ccc;
+    padding: 10px 0;
+    box-sizing: border-box;
+    border-radius: 4px;
+}
+.dropdown:hover .dropdown-menu {
+    display: block;
+}
+.dropdown .dropdown-item {
+    display: block;
+    padding-left: 1em;
+    font-size: 0.9em;
+    line-height: 1.5em;
+}
+.dropdown .dropdown-item.active,
+.dropdown .dropdown-item:hover {
+    background: #0074e8;
+    color: #fff;
+}
+
+/* Action */
+.explorer .dropdown.action {
+    display: none;
+}
+.dropdown.action.active {
+    display: inline-block;
+    margin-left: 20px;
+}
+
+/* Form tabs */
+.nav-tabs {
+    border-bottom: 1px solid #ccc;
+}
+.nav-tabs .nav-item {
+    display: inline-block;
+    position: relative;
+    top: 1px;
+}
+.nav-tabs .nav-item a {
+    display: inline-block;
+    padding: 0.4em 0.8em 0.4em 0.8em;
+}
+.nav-tabs .nav-item a.active {
+    border-top: 1px solid #ccc;
+    border-left: 1px solid #ccc;
+    border-right: 1px solid #ccc;
+    border-bottom: 1px solid #fff;
+}
+.tab-pane {
+    display: none;
+}
+.tab-pane.active {
+    display: block;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

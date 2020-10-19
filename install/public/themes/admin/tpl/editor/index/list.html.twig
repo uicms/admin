@@ -1,0 +1,45 @@
+    <div class="grid">
+        
+        <div class="header">
+            <div class="item clearfix ">
+                <div class="col name">Name</div>
+                <div class="col extra id">#</div>
+                <!--<div class="col extra user">User</div>-->
+                <div class="col extra position">Position</div>
+            </div>
+        </div>
+        
+        <div class="sortable body">
+
+        {% for result in results %}
+            {% set result_url_dir = path('admin_page_action', {slug: page_slug, action: current_tab.route.action, dir: result.id, offset: 0}) %}
+            {% set result_url = path('admin_page_action_id', {slug: page_slug, action: 'form', id: result.id, target: 'blank'}) %}
+        
+            <div class="item result clearfix selectable-item ui-sortable-handle{% if result.isdir %} droppable folder{% endif %}{% if result.isConcealed %} concealed{% endif %}" id="item-{{ result.id }}" data-id="{{ result.id }}">
+                <div class="wrapper">
+                     <div class="col name">
+                         <!--<a href="{{ path('admin_page_action', {slug:'action', action:'delete', entity_name: page.arguments.entity_name, 'selection':[result.id]}) }}">X</a> | -->
+                         {% if result._thumbnail %}<span class="thumbnail"><img src="/uploads/{{ result._thumbnail }}" /></span>{% endif %}
+                         
+                         <a href="{% if result.isdir %}{{ result_url_dir }}{% else %}{{ result_url}}{% endif %}" class="name{% if result._thumbnail==false %} icon{% endif %}{% if result.isdir %} folder{% else %} doc{% endif %}">
+                             {{ result._name }}
+                         </a> 
+                         {% if result.isdir %}<a href="{{ result_url }}" class="edit">Éditer</a> {% endif %}
+                         
+                         {% if result._text %}<em class="text_preview">{{ result._text|html_decode|slice(0, 50)|replace({'<br />': ' '}) }}...</em>{% endif %}
+                     </div>
+
+                     <div class="col extra id">{{ result.id }}</div>
+                     <!--<div class="col extra user">
+                         {{ result.user.name }}
+                     </div>-->
+                     <div class="col extra position">{% if linked_table is defined and linked_table %}{{ result._linked_position }}{% else %}{{ result.position }}{% endif %}</div>
+                     
+                     <input type="hidden" name="position[]" class="position_input" value="{% if linked_table is defined and linked_table %}{{ result._linked_position }}{% else %}{{ result.position }}{% endif %}" />
+                     <input type="checkbox" class="check_item" name="selection[]" value="{{ result.id }}" />
+                </div>
+             </div>
+         {% endfor %}
+         
+        </div>
+    </div>

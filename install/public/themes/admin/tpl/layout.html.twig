@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="fr">
+	{% trans_default_domain 'admin' %}
+	{% set ui = app.session.get('ui_config') %}
+	{% set path = app.session.get('admin_path') %}
+    {% set current_tab = nav.getCurrentTab() %}
+	<head>
+        <meta charset="UTF-8">
+
+        <title>{% block title %}{{ ui.app.full_name }} - Welcome!{% endblock %}</title>
+        
+        {% block stylesheets %}
+            <link rel="stylesheet" href="{{ path.getUrl('css/jquery.fancybox.css') }}" />
+            <link rel="stylesheet" href="{{ path.getUrl('css/dropzone.css') }}" />
+            <link rel="stylesheet" href="{{ path.getUrl('css/init.css') }}" />
+            <link rel="stylesheet" href="{{ path.getUrl('css/layout.css') }}" />
+            <link rel="stylesheet" href="{{ path.getUrl('css/buttons.css') }}" />
+            <link rel="stylesheet" href="{{ path.getUrl('css/tabs.css') }}" />
+            <link rel="stylesheet" href="{{ path.getUrl('css/explorer.css') }}" />
+            <link rel="stylesheet" href="{{ path.getUrl('css/form.css') }}" />
+            <link rel="stylesheet" href="{{ path.getUrl('css/form.types.css') }}" />
+        {% endblock %}
+    </head>
+	
+    <body {% if params.display is defined %}data-display="{{ params.display }}"{% endif %} data-url="{{ path('admin_page_action', {slug:page.slug, action:'index'}) }}">
+		<div id="background"></div>
+        
+		{% for message in app.flashes('error') %}
+        <div class="alert alert-error">
+            {{ message }}
+        </div>
+        {% endfor %}
+        
+		{% if is_granted('IS_AUTHENTICATED_FULLY') %}
+        <div id="search_button"></div>
+        <div id="menu_button"></div>
+        <div id="menu">
+            <ul>
+                <li><a href="{{ path('admin_page_action', {slug: 'users', action: 'form', id: app.user.id }) }}" class="username">{{ app.user.email }}</a></li>
+                <li><a href="{{ ui.protocol }}://{{ ui.domain }}" class="website external">{{ ui.domain }}</a></li>
+                <li><a href="{{ path('admin_logout') }}" class="logout">Déconnexion</a></li>
+            </ul>
+        </div>
+		{% endif %}
+        
+        <div id="header">
+    		<div id="logo"><img src="{{ path.getUrl('img/logo.svg') }}" /></div>
+        </div>
+        
+        <div id="viewport">
+            {% block aside %}
+            {% if is_granted('IS_AUTHENTICATED_FULLY') %}
+            <div id="nav">
+        		<ul id="pages">
+        			{% for admin_page in ui.admin.pages %}
+        			{% if (admin_page.display is defined and admin_page.display) or admin_page.display is not defined %}
+                    <li class="{% if admin_page.slug==page.slug %}active{% endif %}"><a href="{{ path('admin_page', {'slug': admin_page.slug, linked_to:''}) }}">{{ admin_page.slug|capitalize }}</a></li>
+                    {% endif %}
+        			{% endfor %}
+        		</ul>
+            </div>
+            {% endif %}
+            {% endblock %}
+		
+            <div id="content">
+                
+                <div class="content">
+                    <div id="tabs">
+                        {% set tabs = nav.getTabs(page.slug) %}
+                        {% for tab in tabs %}
+                        <div class="tab{% if current_tab.route.id == tab.route.id %} active{% endif %} {{ tab.route.action }}">
+                            <h2><a href="{{ path(tab.route.name, tab.route.params) }}">{{ tab.title }}</a></h2>
+                             {% if tabs|length > 1 %}&nbsp;<a href="{{ path('admin_page_action', {slug: 'action', action: 'removetab', route_id: tab.route.id}) }}" class="close">x</a>{% endif %}
+                        </div>
+                        {% endfor %}
+                    </div>
+                    <div id="tabs_contents">
+                        <div class="tab_content">
+                            {% block body %}{% endblock %}
+                        </div>
+                    </div>
+                </div>
+                
+            </div>
+        </div>
+        
+        {% block javascripts %}
+        
+        <!-- JQuery -->
+        <script src="{{ path.getUrl('js/jquery/jquery-3.2.1.min.js') }}"></script>
+
+        <!-- UI -->
+        <link rel="stylesheet" type="text/css" media="screen" href="{{ path.getUrl('js/jquery/jquery.ui/themes/base/jquery-ui.min.css') }}" />
+        <script type="text/javascript" src="{{ path.getUrl('js/jquery/jquery.ui/jquery-ui.min.js') }}"></script>
+        <script type="text/javascript" src="{{ path.getUrl('js/jquery/jquery.lasso.js') }}"></script>
+        <script type="text/javascript" src="{{ path.getUrl('js/jquery/jquery.multisortable.js') }}"></script>
+        
+        <!-- Misc -->
+        <script type="text/javascript" src="{{ path.getUrl('js/tinymce/tinymce.min.js') }}"></script>
+        <script type="text/javascript" src="/themes/app/js/tiny_mce_init.js"></script>
+        <script type="text/javascript" src="{{ path.getUrl('js/jquery/jquery.fancybox.min.js') }}"></script>
+        <script type="text/javascript" src="{{ path.getUrl('js/dropzone.js') }}"></script>
+        
+        <!-- My scripts -->
+        <script type="text/javascript" src="{{ path.getUrl('js/scripts.js') }}"></script>
+        
+        {% endblock %}
+    </body>
+</html>
