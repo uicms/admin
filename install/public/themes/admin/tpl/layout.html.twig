@@ -37,7 +37,7 @@
         <div id="menu">
             <ul>
                 <li><a href="{{ path('admin_page_action', {slug: 'users', action: 'form', id: app.user.id }) }}" class="username">{{ app.user.email }}</a></li>
-                <li><a href="{{ ui.protocol }}://{{ ui.domain }}" class="website external">{{ ui.domain }}</a></li>
+                <li><a href="{{ ui.protocol }}://{{ app.request.server.get('APP_DOMAIN') }}" class="website external">{{ app.request.server.get('APP_DOMAIN') }}</a></li>
                 <li><a href="{{ path('admin_logout') }}" class="logout">Déconnexion</a></li>
             </ul>
         </div>
