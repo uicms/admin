@@ -3,5 +3,5 @@ if [ ! -d "public/themes" ]; then
     mkdir public/themes
 fi
 if [ ! -d "public/themes/admin" ]; then
-    cp -r vendor/uicms/admin/install/public/themes/admin public/themes/
+    ln -s vendor/uicms/admin/install/public/themes/admin public/themes/admin
 fi
