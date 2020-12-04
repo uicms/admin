@@ -94,9 +94,11 @@ class EditorController extends AbstractController
         }
         
         # Links
+        
         if($row->getId()) {
-            # Link
+            # Linkables entities
             $linkables_entities = $model->getLinkablesEntities();
+            $row->_total_linked = 0;
             foreach($linkables_entities as $i=>$entity) {
                 # Slug of the CMS page of the linked Entity
                 $page_slug = '';
@@ -107,12 +109,16 @@ class EditorController extends AbstractController
                 }
                 # Add link to row
                 $link_entity = $model->getLinkEntity(array($entity->getName(), $entity_name));
+                $linked_rows = $entity->getAll(array('linked_to'=>$entity_name, 'linked_to_id'=>$row->getId()));
                 $row->_links[$entity->getName()] = array(
                                         'name'=>$entity->getName(),
                                         'link_table_name'=>$link_entity->getName(),
                                         'page_slug'=>$page_slug,
-                                        'rows'=>$entity->getAll(array('linked_to'=>$entity_name, 'linked_to_id'=>$row->getId()))
+                                        'rows'=>$linked_rows,
                                     );
+                if($linked_rows) {
+                    $row->_total_linked++;
+                }
             }
         }
         

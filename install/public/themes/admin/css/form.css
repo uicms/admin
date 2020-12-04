@@ -172,9 +172,12 @@ textarea {
     opacity: 0.3;
 }
 #form aside .linked_entity .buttons > a.link {
-    width: 24px;
+    width: 20px;
     background: url('../img/link2.svg') no-repeat center center;
     background-size: 100%;
+}
+#form aside .linked_entity .buttons > a.new {
+    width: 16px;
 }
 #form aside .linked_entity .buttons > a:hover {
     opacity: 1;

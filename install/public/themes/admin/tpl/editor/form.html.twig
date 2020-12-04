@@ -65,17 +65,22 @@
     </section>
     
     <aside>
+        
+        
+        <!-- Thumbnail -->
         {% if row._thumbnail %}
         <div class="thumbnail">
             {% if row._file %}<a href="/uploads/{{ row._file }}" data-fancybox="gallery">{% endif %}<img src="/uploads/{{ row._thumbnail }}" />{% if row._file %}</a>{% endif %}
         </div>
         {% endif %}
         
-        {% if row._links is defined and row._links %}
-            
         
+        <!-- Links -->
+        {% if row._links is defined and row._links %}
         <section class="links">
         	
+            <!-- Add links -->
+            {% if row._total_linked < row._links|length %}
             <div class="buttons">
                 <div class="dropdown add_link">
                   	<button class="dropdown-toggle">
@@ -83,27 +88,28 @@
                   	</button>
                   	<div class="dropdown-menu">
                     <ul>
-					{% for linked_table in row._links %}
+                    {% for linked_table in row._links %}
+                    {% if linked_table.rows|length == 0 %}
                       <li class="linked_table">
                           {% set page_slug = linked_table.page_slug %}
 					      <strong class="name"><a href="{{ path('admin_page_action', {slug: linked_table.page_slug, action: 'select', select_action: 'link', entity_name: linked_table.name, parent: current_tab.route.id}) }}" >{{ linked_table.page_slug|capitalize }}</a></strong>               	          
                           <a class="button new" href="{{ path('admin_page_action', {slug: linked_table.page_slug, action: 'form', entity_name: linked_table.name, parent: current_tab.route.id}) }}">Créer</a>
                           <a class="button link" href="{{ path('admin_page_action', {slug: linked_table.page_slug, action: 'select', select_action: 'link', parent: current_tab.route.id}) }}" >Sélect.</a> 
 				      </li>
+                      {% endif %}
                     {% endfor %}
                     </ul>
                   	</div>
                 </div>
 			</div>
+            {% endif %}
 			
+            <!-- Link results -->
          	{% for linked_table in row._links %}
     		{% set results = linked_table.rows %}
-			
 			{% if results %}
-				
             {% set page_slug = linked_table.page_slug %}
             {% set parent = current_tab.route.id %}
-            
             <div class="linked_entity explorer list" data-offset="0" data-url="{{ path('admin_page_action', {slug:'action', action:'position', entity_name: linked_table.name, linked_to:model.name, linked_to_id:row.id }) }}">
         		<h2 class="title"><!--<a href="{{ path('admin_page_action', {slug: linked_table.page_slug, action: 'index', 'entity_name': linked_table.name, linked_to: model.name, linked_to_id: row.id, parent: current_tab.route.id}) }}">-->{{ linked_table.page_slug|capitalize }}<!--</a>--></h2>
                 
@@ -136,10 +142,9 @@
                 </div>
                 {% endif %}
             </div>
-			
 			{% endif %}
-        	
 			{% endfor %}
+            
         </section>
         {% endif %}
     </aside>
