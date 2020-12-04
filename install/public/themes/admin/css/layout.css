@@ -33,22 +33,6 @@ h1, h2 {
     z-index: 100000;
 }
 
-/* Buttons */
-.buttons {
-    margin-bottom: 20px;
-}
-a.button.link {
-    background: url('../img/check.svg') no-repeat left center;
-    background-size: 1em;
-    padding-left: 1.2em;
-}
-a.button.doc,
-a.button.new {
-    background: url('../img/doc.svg') no-repeat left center;
-    background-size: 0.8em;
-    padding-left: 1em;
-}
-
 /* Login */
 #login > form {
     padding-top: 2em;

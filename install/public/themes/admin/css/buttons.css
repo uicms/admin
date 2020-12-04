@@ -15,6 +15,28 @@ button[disabled=disabled] {
     cursor: default;
     opacity: 0.5;
 }
+a.button.link {
+    background: url('../img/link2.svg') no-repeat left center;
+    background-size: 1.2em;
+    padding-left: 1.5em;
+}
+a.button.doc {
+    background: url('../img/doc.svg') no-repeat left center;
+    background-size: 0.8em;
+    padding-left: 1em;
+}
+a.button.new {
+    background: url('../img/new.svg') no-repeat left center;
+    background-size: 1em;
+    padding-left: 1.4em;
+}
+
+
+/* Group of buttons */
+.buttons {
+    margin-bottom: 20px;
+}
+
 
 /* Dropdown */
 .dropdown {
