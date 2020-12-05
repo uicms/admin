@@ -1,7 +1,8 @@
 {% extends "admin/tpl/layout.html.twig" %}
 {% set results = rows %}
 {% set page_slug = page.slug %}
-        
+{% set current_entity = model.name|slugger %}
+
 {% block title %}{{ page.slug|capitalize }} - Parcourir{% endblock %}
 
 {% block body %}

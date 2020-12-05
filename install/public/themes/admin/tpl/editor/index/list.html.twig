@@ -15,7 +15,7 @@
             {% set result_url_dir = path('admin_page_action', {slug: page_slug, action: current_tab.route.action, dir: result.id, offset: 0}) %}
             {% set result_url = path('admin_page_action_id', {slug: page_slug, action: 'form', id: result.id, target: 'blank'}) %}
         
-            <div class="item result clearfix selectable-item ui-sortable-handle{% if result.isdir %} droppable folder{% endif %}{% if result.isConcealed %} concealed{% endif %}" id="item-{{ result.id }}" data-id="{{ result.id }}">
+            <div class="item result clearfix selectable-item ui-sortable-handle{% if result.isdir %} droppable folder{% endif %}{% if result.isConcealed %} concealed{% endif %}" id="item-{% if current_entity is defined %}{{ current_entity }}{% endif %}-{{ result.id }}" data-id="{{ result.id }}">
                 <div class="wrapper">
                      <div class="col name">
                          <!--<a href="{{ path('admin_page_action', {slug:'action', action:'delete', entity_name: page.arguments.entity_name, 'selection':[result.id]}) }}">X</a> | -->

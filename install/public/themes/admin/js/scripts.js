@@ -136,15 +136,7 @@ function initItems() {
     var axis = $('body').data('display')=='list' ? 'y' : '';
     var countdown = 5;
     
-    /* Check all */
-    $(document).keydown(function(event) {
-        if((event.ctrlKey || event.metaKey) && event.which == 65) {
-            event.preventDefault();
-            checkAllItems();
-            return false;
-        };
-    });
-    
+    /* if template == select */
     if($('section#select').length) {
         $('.item').not('.folder').each(function() {
             $(this).find('a.name').attr('href', 'javascript:;');
@@ -156,13 +148,16 @@ function initItems() {
         });
     }
     
-    if(!$('section#select').length) {
+    if(!$('section#select').length) { // Allow selecting if not in template select
+        
+        /* Double click, on item */
         $('.item').dblclick(function() {
             if(url = $(this).find('a.name').attr('href')) {
                 window.location = url;
             }
         });
         
+         /* Sorting */
         $('.sortable').multisortable({
             axis: axis,
             delay: 300,
@@ -226,13 +221,16 @@ function initItems() {
             stop: function(ev, ui) {
                 $('#tooltip,#clone').remove();
                 $('.selected').removeClass('dragging ui-sortable-helper ui-sortable-handle').show();
-        
+                
+                /* Sort items */
                 var start_pos = ui.item.data('start_pos');
                 if (start_pos != ui.item.index()) {
                     var explorer = ui.item.parentsUntil('.explorer').parent();
                     updatePositions(explorer);
                     savePositions(explorer);
                 }
+                
+                /* Move elements into folder */
                 if($('.ui-droppable-hover').length) {
                     $('.selected').hide();
                     if(confirm('Confirmez-vous le déplacement ?')) {
@@ -246,17 +244,35 @@ function initItems() {
             }
         });
     }
-
+    
+    /* Selecting */
     if($('.selectable-item').length) {
-        $(document).lasso({ 
+        var selecting = false;
+        
+        /* Select all */
+        $(document).keydown(function(event) {
+            if((event.ctrlKey || event.metaKey) && event.which == 65) {
+                event.preventDefault();
+                checkAllItems();
+                return false;
+            };
+        });
+        
+        /* Selecting with lasso */
+        $(document).lasso({
+            cancel: "input, a, .button, .btn, .mce-tinymce",
             delay: 100, 
             start: function(event, props) {
+                selecting = true;
                 if (event.metaKey == false) {
                     uncheckAllItems();
                 }
             },
             stop: function (event, props) {;
                 checkItem('.selectable-item.selecting');
+                setTimeout(function() {
+                    selecting = false;
+                }, 100);
             }, 
             drag: function (event, props) {
                 $('.selectable-item').each(function() {
@@ -275,20 +291,9 @@ function initItems() {
             }
         });
         
-        /* Event on selectable item */
-        $('.selectable-item').on('mousedown', function(e) {
-            var explorer = $(this).parentsUntil('.explorer').parent();
-            if (!$(this).hasClass('selected') && $(explorer).find('.selectable-item.selected').length) {
-                e.stopPropagation();
-            } else if (!$(this).hasClass('selected')) {
-                checkItem(this);
-            }
-        });
-	
-        $('.selectable-item').on('click', function(e) {
-            e.stopPropagation();
-            
-			if (!$(this).hasClass('selected')) {
+        /* Selecting by click */
+        $('.selectable-item').on('click', function(e) {			
+            if (!$(this).hasClass('selected')) {
 		        checkItem(this);
             } else if (e.metaKey) {
 				uncheckItem(this);
@@ -297,18 +302,31 @@ function initItems() {
 				uncheckAllItems(this);
 			}
 		});
+        /*$('.selectable-item').on('mousedown', function(e) {
+            var explorer = $(this).parentsUntil('.explorer').parent();
+            if (!$(this).hasClass('selected') && $(explorer).find('.selectable-item.selected').length) {
+                e.stopPropagation();
+            } else if (!$(this).hasClass('selected')) {
+                checkItem(this);
+            }
+        });*/
         
         /* Disable sorting if mousedown on the link (a) */
-        $('.selectable-item a').on('click mousedown', function(e) {
+        $('.selectable-item a').on('mousedown', function(e) {
             e.stopPropagation(); 
 	    });
         
-        /*$('body').on('click', function(e) {
-            uncheckAllItems();
-        });*/
-        /*$(window).on('click_section', function(e) {
-			uncheckAllItems();
-		});*/
+        /* Stop propagation of click on buttons and items */
+        $('button, input, select, textarea, .dropdown, .button, .item').on('click', function(e) {
+            e.stopPropagation();
+        });
+        
+        /* Clear selection on click outside */
+        $('body').on('click', function(e) {
+            if(!selecting) {
+                uncheckAllItems();
+            }
+        });
 	}
     
     

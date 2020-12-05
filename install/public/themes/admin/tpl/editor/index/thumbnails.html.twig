@@ -4,7 +4,7 @@
         {% set result_url_dir = path('admin_page_action', {slug: page_slug, action: current_tab.route.action, dir: result.id, offset: 0}) %}
         {% set result_url = path('admin_page_action_id', {slug: page_slug, action: 'form', id: result.id, target: 'blank'}) %}
             
-  		 <div class="item result selectable-item{% if result.isdir %} droppable folder{% else %} doc{% endif %}{% if result.isConcealed %} concealed{% endif %}" id="item-{{ result.id }}" data-id="{{ result.id }}">
+  		 <div class="item result selectable-item{% if result.isdir %} droppable folder{% else %} doc{% endif %}{% if result.isConcealed %} concealed{% endif %}" id="item-{% if current_entity is defined %}{{ current_entity }}{% endif %}-{{ result.id }}" data-id="{{ result.id }}">
             <div class="wrapper">
                 <div class="thumbnail{% if result._thumbnail==false %} icon{% endif %}">
                     {% if result._thumbnail %}
