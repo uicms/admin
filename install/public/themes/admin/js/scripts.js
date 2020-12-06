@@ -302,14 +302,16 @@ function initItems() {
 				uncheckAllItems(this);
 			}
 		});
-        /*$('.selectable-item').on('mousedown', function(e) {
+        
+        /* Select item on drag */
+        $('.selectable-item').on('mousedown', function(e) {
             var explorer = $(this).parentsUntil('.explorer').parent();
             if (!$(this).hasClass('selected') && $(explorer).find('.selectable-item.selected').length) {
                 e.stopPropagation();
             } else if (!$(this).hasClass('selected')) {
                 checkItem(this);
             }
-        });*/
+        });
         
         /* Disable sorting if mousedown on the link (a) */
         $('.selectable-item a').on('mousedown', function(e) {
