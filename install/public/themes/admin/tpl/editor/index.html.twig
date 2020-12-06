@@ -51,17 +51,7 @@
                 <input type="text" name="search" class="form-control" placeholder="Rechercher" />
             </form>
         
-            <div class="dropdown action">
-              <button class="dropdown-toggle" type="button">
-                Action
-              </button>
-              <div class="dropdown-menu">
-                <a class="dropdown-item" href="javascript:action('#form_results', 'conceal');">Masquer</a>
-                <a class="dropdown-item" href="javascript:action('#form_results', 'publish');">Publier</a>
-                <a class="dropdown-item" href="javascript:action('#form_results', 'delete');">Supprimer</a>
-                <!--<a class="dropdown-item" href="javascript:action('#form_results', 'copy');">Dupliquer</a>-->
-              </div>
-            </div>
+            {% include "admin/tpl/editor/buttons/action.html.twig" %}
         </div>
 
         <div class="display_tools">{% include "admin/tpl/editor/index/tools.html.twig" %}</div>

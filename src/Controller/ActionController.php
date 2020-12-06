@@ -64,7 +64,7 @@ class ActionController extends AbstractController
     public function publish($entity_name, $selection, Model $model, Nav $nav)
     {
         try {
-            $model->get($entity_name)->publish($selection);
+            $model->get($entity_name)->mode('admin')->publish($selection);
         } catch(\Throwable $throwable) {
             $this->addFlash('error', 'publish_error');
         }
@@ -76,7 +76,7 @@ class ActionController extends AbstractController
     public function conceal($entity_name, $selection, Model $model, Nav $nav)
     {
 		try {
-			$model->get($entity_name)->conceal($selection);
+			$model->get($entity_name)->mode('admin')->conceal($selection);
         } catch(\Throwable $throwable) {
 			$this->addFlash('error', 'conceal_error');
 		}
@@ -85,9 +85,16 @@ class ActionController extends AbstractController
        return $this->redirectToRoute($redirect['route']['name'], $redirect['route']['params']);
     }
     
-    public function lock($entity_name, $selection, Model $model, Nav $nav)
+    public function duplicate($entity_name, $selection, Model $model, Nav $nav)
     {
+        #try {
+            $model->get($entity_name)->mode('admin')->duplicate($selection);
+            #} catch(\Throwable $throwable) {
+        #    $this->addFlash('error', 'duplicate_error');
+        #}
         
+        $redirect = $nav->getCurrentTab();
+        return $this->redirectToRoute($redirect['route']['name'], $redirect['route']['params']);
     }
     
     public function position($entity_name, $selection, $position, Model $model, Nav $nav, Request $request, Params $params_service)
