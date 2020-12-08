@@ -1,5 +1,4 @@
 {% trans_default_domain 'admin' %}
-
 {% if field.vars.data.publicPath is defined %}
     {% if field.vars.data.thumbnailPath %}
     <div class="thumbnail">
@@ -7,8 +6,10 @@
             <img src="{{ field.vars.data.thumbnailPath }}" />
         </a>
     </div>
+
     {% endif %}
-    <a href="{{ field.vars.data.publicPath }}" class="external">{{ field.vars.data.publicPath }}</a>
+    
+    <a href="{{ field.vars.data.publicPath }}" class="external">{{ field.vars.data.publicPath }}</a> ({{ field.vars.data.width }} x {{ field.vars.data.height }}px, {{ field.vars.data.size|number_format(0, '.', ' ') }} octets)
 {% endif %}
 
 {{ form_widget(field) }}
