@@ -16,11 +16,11 @@ class ActionController extends AbstractController
 {
     public function delete($entity_name, $selection, Model $model, Nav $nav)
     {
-		try {
-			$model->get($entity_name)->delete($selection);
+        try {
+            $model->get($entity_name)->delete($selection);
         } catch(\Throwable $throwable) {
-			$this->addFlash('error', 'delete_error');
-		}
+            $this->addFlash('error', 'delete_error');
+        }
         
        $redirect = $nav->getCurrentTab();
        return $this->redirectToRoute($redirect['route']['name'], $redirect['route']['params']);
@@ -60,7 +60,7 @@ class ActionController extends AbstractController
         $redirect = $nav->getCurrentTab();
 		return $this->redirectToRoute($redirect['route']['name'], $redirect['route']['params']);
 	}
-
+    
     public function publish($entity_name, $selection, Model $model, Nav $nav)
     {
         try {
@@ -87,11 +87,11 @@ class ActionController extends AbstractController
     
     public function duplicate($entity_name, $selection, Model $model, Nav $nav)
     {
-        #try {
+        try {
             $model->get($entity_name)->mode('admin')->duplicate($selection);
-            #} catch(\Throwable $throwable) {
-        #    $this->addFlash('error', 'duplicate_error');
-        #}
+        } catch(\Throwable $throwable) {
+            $this->addFlash('error', 'duplicate_error');
+        }
         
         $redirect = $nav->getCurrentTab();
         return $this->redirectToRoute($redirect['route']['name'], $redirect['route']['params']);
@@ -101,11 +101,11 @@ class ActionController extends AbstractController
     {
         $ui_config = $this->getParameter('ui_config');
         $params = $params_service->get($model->get($entity_name)->getSlug(), $request);
-		#try {
-			$model->get($entity_name)->position($selection, $position, $params);
-       # } catch(\Throwable $throwable) {
-		#	$this->addFlash('error', 'position_error');
-		#}
+        try {
+            $model->get($entity_name)->position($selection, $position, $params);
+        } catch(\Throwable $throwable) {
+            $this->addFlash('error', 'position_error');
+        }
 
         if(!$request->isXmlHttpRequest()) {
             $redirect = $nav->getCurrentTab();

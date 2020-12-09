@@ -136,7 +136,7 @@ class EditorController extends AbstractController
             ]
         );
 	}
-	
+
     public function select($page, $entity_name, Params $params_service, Model $model, Request $request, Nav $nav)
     {
         $model = $model->get($entity_name)->mode('admin');

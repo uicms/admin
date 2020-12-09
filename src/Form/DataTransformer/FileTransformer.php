@@ -18,7 +18,8 @@ class FileTransformer implements DataTransformerInterface
     protected $upload_folder = 'uploads';
     protected $upload_path = 'public/uploads';
     
-    function __construct($field_config, $ui_config) {
+    function __construct($field_config, $ui_config)
+    {
         $this->field_config = $field_config;
         $this->ui_config = $ui_config;
 
@@ -59,7 +60,7 @@ class FileTransformer implements DataTransformerInterface
         
         return $file;
     }
-
+    
     public function reverseTransform($file)
     {
         if ($file === null) return '';
