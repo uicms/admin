@@ -260,7 +260,7 @@ function initItems() {
         
         /* Selecting with lasso */
         $(document).lasso({
-            cancel: "input, a, .button, .btn, .mce-tinymce",
+            cancel: "input, textarea, button, select, option, a, .button, .btn, .mce-tinymce",
             delay: 100, 
             start: function(event, props) {
                 selecting = true;
@@ -319,7 +319,7 @@ function initItems() {
 	    });
         
         /* Stop propagation of click on buttons and items */
-        $('button, input, select, textarea, .dropdown, .button, .item').on('click', function(e) {
+        $('button, input, textarea, .dropdown, .button, .item').on('click', function(e) {
             e.stopPropagation();
         });
         
