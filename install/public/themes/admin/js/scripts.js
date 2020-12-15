@@ -164,47 +164,68 @@ function initItems() {
             start: function(ev, ui) {
                 ui.item.data('start_pos', ui.item.index());
                 $('.selected').addClass('dragging ui-sortable-helper ui-sortable-handle');
-                $('.explorer.thumbnails .selected').each(function(i) { if($(this).attr('id') != ui.item.attr("id")) $(this).hide(); });
-                if($('.explorer.thumbnails .selected').length > 1) $('body').prepend('<div id="tooltip">+' + ($('.selected').length-1) + '</div>');
+                
+                // Mode thumbnails
+                $('.explorer.thumbnails .selected').each(function(i) {
+                    if($(this).attr('id') != ui.item.attr("id")) $(this).hide();
+                });
+                if($('.explorer.thumbnails .selected').length > 1) {
+                    $('body').prepend('<div id="tooltip">+' + ($('.selected').length-1) + '</div>');
+                }
             },
         
             sort: function(ev, ui) {
                 var explorer = ui.item.parentsUntil('.explorer').parent();
                 
-                if($('.explorer.thumbnails .selected').length > 1) $('#tooltip').css({'top': (ev.pageY+10) + 'px', 'left': (ev.pageX+10) + 'px'});
+                // Tooltip if more than one element dragged
+                if($('.explorer.thumbnails .selected').length > 1) {
+                    $('#tooltip').css({'top': (ev.pageY+10) + 'px', 'left': (ev.pageX+10) + 'px'});
+                }
             
+                // Display a tooltip if drag outside the grid
                 if(!isOver($(explorer).find('.results'), ev)) {
                     $(explorer).find('.selected,.placeholder').hide();
-                    if(!$('#clone').length) $('body').prepend('<div id="clone">' + ($('.selected').length) + ' elements</div>');
+                    if(!$('#clone').length) {
+                        $('body').prepend('<div id="clone">' + ($('.selected').length) + ' elements</div>');
+                    }
                     $('#clone').css({'top': (ev.pageY+10) + 'px', 'left': (ev.pageX+10) + 'px'});
-                } else {
+                } 
+                // If drag over the grid
+                else {
                     $(explorer).find('.selected,.placeholder').show();
                     $('.explorer.thumbnails .selected').each(function(i) { 
                         $(this).attr('id') != ui.item.attr("id") ? $(this).hide() : $(this).show();
                     });
                     $('#clone').remove();
                 }
-
+                
+                // Droppable elements
                 $('.droppable').each(function() {
                     var is_touched = false;
                     var droppable_element = $(this);
                 
                     // Outside the grid
                     if($('#clone').length) {
-                        if(collision(droppable_element, $('#clone'))) is_touched = true;
+                        if(collision(droppable_element, $('#clone'))) {
+                            is_touched = true;
+                        }
                         $('#tooltip').hide();
                     } else 
                     // List mode
                     if($('.explorer.list').length){
                         $('#tooltip').show();
                         $('.selected').each(function() {
-                            if(!droppable_element.hasClass('selected') && collision(droppable_element, $(this))) is_touched = true;
+                            if(!droppable_element.hasClass('selected') && collision(droppable_element, $(this))) {
+                                is_touched = true;
+                            }
                         });
                     } else 
                     // Thumbnails mode
                     if($('.explorer.thumbnails').length){
                         $('#tooltip').show();
-                        if(!droppable_element.hasClass('selected') && collision(droppable_element.find('.wrapper'), ui.item.find('.wrapper'))) is_touched = true;
+                        if(!droppable_element.hasClass('selected') && collision(droppable_element.find('.wrapper'), ui.item.find('.wrapper'))) {
+                            is_touched = true;
+                        } 
                     }
                 
                     if(is_touched) {
@@ -363,14 +384,14 @@ function initItems() {
 function collision($div1, $div2) {
 	var x1 = $div1.offset().left;
 	var y1 = $div1.offset().top;
-	var h1 = $div1.outerHeight(true);
-	var w1 = $div1.outerWidth(true);
+	var h1 = $div1.outerHeight(false);
+	var w1 = $div1.outerWidth(false);
 	var b1 = y1 + h1;
 	var r1 = x1 + w1;
 	var x2 = $div2.offset().left;
 	var y2 = $div2.offset().top;
-	var h2 = $div2.outerHeight(true);
-	var w2 = $div2.outerWidth(true);
+	var h2 = $div2.outerHeight(false);
+	var w2 = $div2.outerWidth(false);
 	var b2 = y2 + h2;
 	var r2 = x2 + w2;
     
@@ -387,8 +408,8 @@ function isOver(element, ev) {
 	var r1 = x1 + w1;
 	var x2 = $(element).offset().left;
 	var y2 = $(element).offset().top;
-	var h2 = $(element).outerHeight(true);
-	var w2 = $(element).outerWidth(true);
+	var h2 = $(element).outerHeight(false);
+	var w2 = $(element).outerWidth(false);
 	var b2 = y2 + h2;
 	var r2 = x2 + w2;
 

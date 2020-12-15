@@ -15,7 +15,7 @@ class IndexController extends AbstractController
     public function index(Request $request, Nav $nav, $slug='', $action='', $id=0)
     {
         # Version strategy
-		$path_package = new PathPackage('themes/admin', new StaticVersionStrategy('v3'));
+		$path_package = new PathPackage('themes/admin', new StaticVersionStrategy('v3.1'));
 		$this->get('session')->set('admin_path', $path_package);
         
         # UI Config & browser params

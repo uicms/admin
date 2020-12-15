@@ -114,7 +114,7 @@ input.check_item {
 }
 .explorer.list .placeholder {
     float: none;
-    background: #f2f7fc;
+    height: 34px !important;
 }
 .dragging {
     opacity: 0.5;

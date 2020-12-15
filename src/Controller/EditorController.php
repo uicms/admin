@@ -94,7 +94,6 @@ class EditorController extends AbstractController
         }
         
         # Links
-        
         if($row->getId()) {
             # Linkables entities
             $linkables_entities = $model->getLinkablesEntities();

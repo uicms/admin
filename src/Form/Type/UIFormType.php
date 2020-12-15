@@ -40,6 +40,22 @@ class UIFormType extends AbstractType
         # Fields
         foreach($form_config['fields'] as $field_config) {
             
+            # Entity Type : order by main field asc
+            if($field_config['type'] == 'EntityType') {
+                $field_config['options']['query_builder'] = function($model) {
+                    $query = $model->createQueryBuilder('t');
+                    $name_field = $model->getConfig('name_field');
+                    if($model->isTranslatable()) {
+                        $query->join('t.translations', 'i');
+                        $query->where("i.locale = 'fr'");
+                        $query->orderBy("i.$name_field", 'ASC');
+                    } else {
+                        $query->orderBy("t.$name_field", 'ASC');
+                    }
+                    return $query;
+                };
+            }
+
             # Add field to form
             $builder->add($field_config['name'], $field_config['namespace'] . '\\' . $field_config['type'], $field_config['options']);
             
