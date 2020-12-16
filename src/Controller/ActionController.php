@@ -29,7 +29,7 @@ class ActionController extends AbstractController
     public function move($entity_name, $selection, $target, Model $model, Nav $nav)
     {
         try {
-			$model->get($entity_name)->move($selection, $target);
+			$model->get($entity_name)->mode('admin')->move($selection, $target);
         } catch(\Throwable $throwable) {
 			$this->addFlash('error', 'move_error');
 		}
@@ -102,7 +102,7 @@ class ActionController extends AbstractController
         $ui_config = $this->getParameter('ui_config');
         $params = $params_service->get($model->get($entity_name)->getSlug(), $request);
         try {
-            $model->get($entity_name)->position($selection, $position, $params);
+            $model->get($entity_name)->mode('admin')->position($selection, $position, $params);
         } catch(\Throwable $throwable) {
             $this->addFlash('error', 'position_error');
         }
@@ -152,7 +152,7 @@ class ActionController extends AbstractController
     public function link($entity_name, $selection, $action_entity_name, $action_selection, Model $model, Nav $nav)
     {
 		try {
-			$model->get($entity_name)->link($selection, $action_entity_name, $action_selection);
+			$model->get($entity_name)->mode('admin')->link($selection, $action_entity_name, $action_selection);
         } catch(\Throwable $throwable) {
 			$this->addFlash('error', 'link_error');
 		}
