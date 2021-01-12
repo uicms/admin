@@ -17,6 +17,7 @@ class FileTransformer implements DataTransformerInterface
     protected $preview_prefix = '_';
     protected $upload_folder = 'uploads';
     protected $upload_path = 'public/uploads';
+    protected $video_generate_thumbnail = true;
     
     function __construct($field_config, $ui_config)
     {
@@ -30,6 +31,7 @@ class FileTransformer implements DataTransformerInterface
         if(isset($ui_config['preview_max_width'])) $this->preview_max_width = $ui_config['preview_max_width'];
         if(isset($ui_config['preview_max_height'])) $this->preview_max_height = $ui_config['preview_max_height'];
         if(isset($ui_config['preview_prefix'])) $this->preview_prefix = $ui_config['preview_prefix'];
+        if(isset($ui_config['video_generate_thumbnail'])) $this->video_generate_thumbnail = $ui_config['video_generate_thumbnail'];
     }
     
     public function transform($string)
@@ -92,7 +94,7 @@ class FileTransformer implements DataTransformerInterface
         }
         
         /* Make video thumbnail */
-        if(strpos($mime_type, 'video') === 0) {
+        if($this->video_generate_thumbnail && strpos($mime_type, 'video') === 0) {
     		$cmd_duration = "ffmpeg -i \"" . addslashes($path_file) . "\" 2>&1 | grep Duration | awk '{print $2}' | tr -d ,";
     		if($duration = exec($cmd_duration)) {
         		# Calculate half time

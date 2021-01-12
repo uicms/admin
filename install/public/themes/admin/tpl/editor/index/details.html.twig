@@ -1,11 +1,11 @@
-  	<div class="sortable thumbnails clearfix">
+  	<div class="sortable details clearfix">
         	
         {% for result in results %}
         {% set result_url_dir = path('admin_page_action', {slug: page_slug, action: current_tab.route.action, dir: result.id, offset: 0}) %}
         {% set result_url = path('admin_page_action_id', {slug: page_slug, action: 'form', id: result.id, target: 'blank'}) %}
             
   		 <div class="item result selectable-item{% if result.isdir %} droppable folder{% else %} doc{% endif %}{% if result.isConcealed %} concealed{% endif %}" id="item-{% if current_entity is defined %}{{ current_entity }}{% endif %}-{{ result.id }}" data-id="{{ result.id }}">
-            <div class="wrapper">
+            <div class="wrapper clearfix">
                 <div class="thumbnail{% if result._thumbnail==false %} icon{% endif %}">
                     {% if result._thumbnail %}
                     <span>
@@ -16,6 +16,7 @@
                 <div class="details">
                     <a class="name" href="{% if result.isdir %}{{ result_url_dir }}{% else %}{{ result_url}}{% endif %}">{{ result._name }}</a>
                     {% if result.isdir %}<a href="{{ result_url }}" class="edit">Éditer</a> {% endif %}
+                    {% if result._text %}<em class="text_preview">{{ result._text|html_decode|slice(0, 200)|replace({'<br />': ' '}) }}...</em>{% endif %}
                 </div>
             </div>
             <input type="hidden" name="position[]" class="position_input" value="{{ result.position }}" />

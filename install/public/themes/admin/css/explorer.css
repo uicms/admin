@@ -104,18 +104,6 @@ input.check_item {
 /* Items manipulation */
 .sortable {
 }
-.explorer.thumbnails .placeholder {
-    float: left;
-    background: #f2f7fc;
-    width: 230px !important;
-    height: 300px !important;
-    margin-right: 20px;
-    margin-bottom: 20px;
-}
-.explorer.list .placeholder {
-    float: none;
-    height: 34px !important;
-}
 .dragging {
     opacity: 0.5;
 }
@@ -150,13 +138,17 @@ span.ui-droppable-hover,
 }
 
 
-/* Grid */
+/* List mode */
 .explorer.list .grid .header {
     background-color: #f8f8f8;
 }
 .explorer.list .item {
     border-bottom: 1px solid #eee;
     overflow: hidden;
+}
+.explorer.list .placeholder {
+    float: none;
+    height: 34px !important;
 }
 .explorer.list .item .col {
     float: left;
@@ -199,8 +191,6 @@ span.ui-droppable-hover,
     padding-left: 1.5em;
 }
 
-
-
 /* Selecting */
 .explorer.list .item.selecting .text_preview,
 .explorer.list .item.selecting:hover .text_preview,
@@ -239,6 +229,14 @@ span.ui-droppable-hover,
     float: left;
     margin-bottom: 20px;
     margin-right: 20px;
+}
+.explorer.thumbnails .placeholder {
+    float: left;
+    background: #f2f7fc;
+    width: 230px !important;
+    height: 300px !important;
+    margin-right: 20px;
+    margin-bottom: 20px;
 }
 .explorer.thumbnails .item > .wrapper {
     border: 1px solid #ccc;
@@ -297,6 +295,90 @@ span.ui-droppable-hover,
     background: #fbfbfb;
     padding: 5px;
 }
+
+
+/* Details */
+.explorer.details .item {
+    width: 50%;
+    box-sizing: border-box;
+    float: left;
+    margin-bottom: 20px;
+}
+.explorer.details .placeholder {
+    float: left;
+    background: #f2f7fc;
+    box-sizing: border-box;
+    width: calc(50% - 20px) !important;
+    height: 300px !important;
+    margin-bottom: 20px;
+    margin-right: 20px;
+}
+.explorer.details .item > .wrapper {
+    border: 1px solid #ccc;
+    height: 300px;
+    padding: 15px;
+    box-sizing: border-box;
+    position: relative;
+    background: #fff;
+    margin-right: 20px;
+}
+.explorer.details .item.selecting > .wrapper .details,
+.explorer.details .item.selecting:hover > .wrapper .details,
+.explorer.details .item.selected > .wrapper .details,
+.explorer.details .item.selected:hover > .wrapper .details,
+.explorer.details .item.selecting > .wrapper a,
+.explorer.details .item.selected > .wrapper a {
+    background: #3849e8;
+    color: #fff;
+}
+.explorer.details .item.selecting > .wrapper,
+.explorer.details .item.selected > .wrapper {
+    border: 1px solid #3849e8;
+}
+.explorer.details .item > .wrapper .thumbnail {
+    height: 200px;
+    margin-bottom: 15px;
+    float: left;
+    width: 50%;
+}
+.explorer.details .item.doc > .wrapper .thumbnail.icon {
+    background: url('../img/doc.svg') no-repeat center center;
+    background-size: 30%;
+    opacity: 0.2;
+}
+.explorer.details .item.folder > .wrapper .thumbnail.icon {
+    background: url('../img/folder.svg') no-repeat center center;
+    background-size: 30%;
+    opacity: 0.2;
+}
+.explorer.details .item > .wrapper .thumbnail img {
+    max-width: calc(100% - 15px);
+    max-height: 200px;
+}
+.explorer.details .item > .wrapper .details {
+    position: absolute;
+    top: 0;
+    right: 0;
+    left: 50%;
+    bottom: 0;
+    background: #fbfbfb;
+    padding: 15px;
+    box-sizing: border-box;
+}
+.explorer.details .item > .wrapper .details .text_preview {
+    display: block;
+    margin-top: 15px;
+}
+
+.explorer.details .item > .wrapper .details .name {
+    font-weight: bold;
+    width: 90%;
+    display: inline-block;
+    overflow: hidden;
+    white-space: nowrap;
+}
+
+
 
 /* Popup */
 #new_folder_popup,
