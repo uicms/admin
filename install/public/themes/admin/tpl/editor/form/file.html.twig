@@ -9,7 +9,7 @@
 
     {% endif %}
     
-    <a href="{{ field.vars.data.publicPath }}" class="external">{{ field.vars.data.publicPath }}</a> ({{ field.vars.data.width }} x {{ field.vars.data.height }}px, {{ field.vars.data.size|number_format(0, '.', ' ') }} octets)
+    <a href="{{ field.vars.data.publicPath }}" class="external">{{ field.vars.data.publicPath }}</a> ({% if field.vars.data.width is defined %}{{ field.vars.data.width }} x {{ field.vars.data.height }}px, {% endif %}{{ field.vars.data.size|number_format(0, '.', ' ') }} octets)
 {% endif %}
 
 {{ form_widget(field) }}
