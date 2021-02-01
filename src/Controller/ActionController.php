@@ -127,13 +127,15 @@ class ActionController extends AbstractController
         
         try {
             if ($file = $request->files->get('file')) {
-                $file_field = $model->getField(array('type'=>'UIFileType'));
-                $field_name_method = 'set' . $file_field['name'];
-                $transformer = new FileTransformer($file_field, $ui_config);
-                $new_file_name = $transformer->reverseTransform($file);
+                $file_field_config = $model->getField(array('type'=>'UIFileType'));
+                $file_set_method = 'set' . $file_field_config['name'];
+                $file_transformer = new FileTransformer($file_field_config, $ui_config);
+                $file_path = $file_transformer->reverseTransform($file);
+                $file_infos = pathinfo($file->getClientOriginalName());
+                
                 $new = $model->new($this->getUser());
-                $new->$field_name_method($new_file_name);
-                $new->setName($new_file_name);
+                $new->$file_set_method($file_path);
+                $new->setName($file_infos['filename']);
                 $new->setParent($model->find($params['dir']));
                 $new_id = $model->persist($new);
             }
