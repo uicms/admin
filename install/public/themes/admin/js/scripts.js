@@ -148,7 +148,8 @@ function initItems() {
         });
     }
     
-    if(!$('section#select').length) { // Allow selecting if not in template select
+    // Allow sorting if not in template select
+    if(!$('section#select').length) {
         
         /* Double click, on item */
         $('.item').dblclick(function() {
@@ -270,11 +271,18 @@ function initItems() {
     if($('.selectable-item').length) {
         var selecting = false;
         
-        /* Select all */
+        /* Keyboard */
         $(document).keydown(function(event) {
             if((event.ctrlKey || event.metaKey) && event.which == 65) {
                 event.preventDefault();
                 checkAllItems();
+                return false;
+            };
+            if($('#form_results').length && (event.which == 46 || event.which == 8)) {
+                event.preventDefault();
+                if($('.selected').length) {
+                    action('#form_results', 'delete');
+                }
                 return false;
             };
         });
@@ -366,10 +374,8 @@ function initItems() {
         
         var params = '';
         $(explorer).find('.results .result').each(function(i) {
-            console.log('result');
         	params += '&selection[]=' + $(this).data('id') + '&position[]=' + $(this).find('.position_input').val();
         });
-        console.log(params);
     	$.ajax(
             {
     	        url: $(explorer).data('url') + params,

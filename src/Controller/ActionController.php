@@ -44,7 +44,7 @@ class ActionController extends AbstractController
             $model = $model->get($entity_name);
             $params = $params_service->get($model->getSlug(), $request);
 			$row = $model->new($this->getUser());
-            $method = $model->method($model->config['name_field'], 'set');
+            $method = $model->method($model->getConfig('name_field'), 'set');
             $row->setIsDir(1);
             $row->$method($new_folder_name);
             if(isset($params['dir']) && (int)$params['dir']) {
