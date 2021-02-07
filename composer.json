@@ -8,5 +8,10 @@
       "psr-4": {
           "Uicms\\Admin\\": "src/" 
       }
+    },
+    "scripts": {
+        "post-package-update": [
+            "bash vendor/uicms/admin/install/update.sh"
+        ]
     }
 }
