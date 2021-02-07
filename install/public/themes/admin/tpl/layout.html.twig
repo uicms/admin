@@ -2,7 +2,8 @@
 <html lang="fr">
 	{% trans_default_domain 'admin' %}
 	{% set ui = app.session.get('ui_config') %}
-	{% set path = app.session.get('admin_path') %}
+	{% set theme_path = app.session.get('theme_path') %}
+    {% set js_path = app.session.get('js_path') %}
     {% set current_tab = nav.getCurrentTab() %}
 	<head>
         <meta charset="UTF-8">
@@ -10,15 +11,19 @@
         <title>{% block title %}{{ ui.app.full_name }} - Welcome!{% endblock %}</title>
         
         {% block stylesheets %}
-            <link rel="stylesheet" href="{{ path.getUrl('css/jquery.fancybox.css') }}" />
-            <link rel="stylesheet" href="{{ path.getUrl('css/dropzone.css') }}" />
-            <link rel="stylesheet" href="{{ path.getUrl('css/init.css') }}" />
-            <link rel="stylesheet" href="{{ path.getUrl('css/layout.css') }}" />
-            <link rel="stylesheet" href="{{ path.getUrl('css/buttons.css') }}" />
-            <link rel="stylesheet" href="{{ path.getUrl('css/tabs.css') }}" />
-            <link rel="stylesheet" href="{{ path.getUrl('css/explorer.css') }}" />
-            <link rel="stylesheet" href="{{ path.getUrl('css/form.css') }}" />
-            <link rel="stylesheet" href="{{ path.getUrl('css/form.types.css') }}" />
+            <!-- Node modules -->
+            <link rel="stylesheet" href="{{ js_path.getUrl('dropzone/dist/dropzone.css') }}" />
+            <link rel="stylesheet" href="{{ js_path.getUrl('@fancyapps/fancybox/dist/jquery.fancybox.min.css') }}" />
+            <link rel="stylesheet" href="{{ js_path.getUrl('jquery-ui-dist/jquery-ui.min.css') }}" />
+            
+            <!-- Admin -->
+            <link rel="stylesheet" href="{{ theme_path.getUrl('css/reset.css') }}" />
+            <link rel="stylesheet" href="{{ theme_path.getUrl('css/layout.css') }}" />
+            <link rel="stylesheet" href="{{ theme_path.getUrl('css/buttons.css') }}" />
+            <link rel="stylesheet" href="{{ theme_path.getUrl('css/tabs.css') }}" />
+            <link rel="stylesheet" href="{{ theme_path.getUrl('css/explorer.css') }}" />
+            <link rel="stylesheet" href="{{ theme_path.getUrl('css/form.css') }}" />
+            <link rel="stylesheet" href="{{ theme_path.getUrl('css/form.types.css') }}" />
         {% endblock %}
     </head>
 	
@@ -44,7 +49,7 @@
 		{% endif %}
         
         <div id="header">
-    		<div id="logo"><img src="{{ path.getUrl('img/logo.svg') }}" /></div>
+    		<div id="logo"><img src="{{ theme_path.getUrl('img/logo.svg') }}" /></div>
         </div>
         
         <div id="viewport">
@@ -86,23 +91,16 @@
         
         {% block javascripts %}
         
-        <!-- JQuery -->
-        <script src="{{ path.getUrl('js/jquery/jquery-3.2.1.min.js') }}"></script>
-
-        <!-- UI -->
-        <link rel="stylesheet" type="text/css" media="screen" href="{{ path.getUrl('js/jquery/jquery.ui/themes/base/jquery-ui.min.css') }}" />
-        <script type="text/javascript" src="{{ path.getUrl('js/jquery/jquery.ui/jquery-ui.min.js') }}"></script>
-        <script type="text/javascript" src="{{ path.getUrl('js/jquery/jquery.lasso.js') }}"></script>
-        <script type="text/javascript" src="{{ path.getUrl('js/jquery/jquery.multisortable.js') }}"></script>
+        <!-- Node Modules -->
+        <script type="text/javascript" src="{{ js_path.getUrl('jquery/dist/jquery.min.js') }}"></script>
+        <script type="text/javascript" src="{{ js_path.getUrl('tinymce/tinymce.min.js') }}"></script>
+        <script type="text/javascript" src="{{ js_path.getUrl('dropzone/dist/dropzone.js') }}"></script>
+        <script type="text/javascript" src="{{ js_path.getUrl('@fancyapps/fancybox/dist/jquery.fancybox.min.js') }}"></script>
+        <script type="text/javascript" src="{{ js_path.getUrl('jquery-ui-dist/jquery-ui.min.js') }}"></script>
         
-        <!-- Misc -->
-        <script type="text/javascript" src="{{ path.getUrl('js/tinymce/tinymce.min.js') }}"></script>
-        <script type="text/javascript" src="/themes/app/js/tiny_mce_init.js"></script>
-        <script type="text/javascript" src="{{ path.getUrl('js/jquery/jquery.fancybox.min.js') }}"></script>
-        <script type="text/javascript" src="{{ path.getUrl('js/dropzone.js') }}"></script>
-        
-        <!-- My scripts -->
-        <script type="text/javascript" src="{{ path.getUrl('js/scripts.js') }}"></script>
+        <!-- Admin -->
+        <script type="text/javascript" src="{{ theme_path.getUrl('js/modules.js') }}"></script>
+        <script type="text/javascript" src="{{ theme_path.getUrl('js/admin.js') }}"></script>
         
         {% endblock %}
     </body>
