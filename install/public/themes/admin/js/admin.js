@@ -23,18 +23,12 @@ tinymce.init({
 	selector: '.tinymce',
     content_css : "/themes/app/css/mce.css",
 	plugins: [
-		'colorpicker advlist autolink lists link image charmap print preview anchor',
+		'colorpicker advlist autolink lists link image charmap anchor',
 		'searchreplace visualblocks code fullscreen',
 		'importcss insertdatetime media table contextmenu paste code save autoresize spellchecker textcolor'
 	],
 	setup: function(editor) {
 		editor.on('keydown', function(e) {
-            if (e.keyCode == 83 && (e.ctrlKey || e.metaKey)) {
-                e.preventDefault();
-                //if ($('.submit_button').attr('disabled') != 'disabled') {
-					//submitForm();
-                //}
-			}
   	    });
     	editor.on('change', function(e) {
     	});
@@ -277,11 +271,12 @@ function initItems() {
                 return false;
             };
             if($('#form_results').length && (event.which == 46 || event.which == 8)) {
-                event.preventDefault();
                 if($('.selected').length) {
+                    event.preventDefault();
                     action('#form_results', 'delete');
+                    return false;
                 }
-                return false;
+                return true;
             };
         });
         
