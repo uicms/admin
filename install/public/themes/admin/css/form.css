@@ -44,7 +44,6 @@ label {
 }
 #form .field .thumbnail img {
     width: 100%;
-    max-width: 100px;
 }
 #form .nav-tabs {
     margin-bottom: 20px;

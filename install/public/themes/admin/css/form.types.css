@@ -8,7 +8,15 @@
     padding: 15px;
     border-radius: 5px;
 }
+.field.file .body .thumbnail {
+    width: 30%;
+}
+.field.file .body .thumbnail img {
+    width: 100%;
+    display: block;
+}
 .field.file .infos {
+    line-height: 1.4em;
     margin-bottom: 5px;
 }
 
