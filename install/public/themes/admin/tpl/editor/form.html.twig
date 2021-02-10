@@ -47,6 +47,7 @@
                <strong>Créé :</strong> {{ row.created|date("m/d/Y H:i:s") }} | 
                <strong>Modifié :</strong> {{ row.modified|date("m/d/Y  H:i:s") }} | 
                <strong>État : </strong>{% if row.isconcealed==0 %}Publié{% else %}Masqué{% endif %}
+               {% if page.public_route is defined and page.public_route and row.isconcealed==0 %} | <a class="external public_view" href="{{ include(template_from_string(page.public_route)) }}">Afficher sur le site</a>{% endif %}
            </p>
         </div>
         {% endif %}
