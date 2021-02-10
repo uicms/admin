@@ -15,6 +15,9 @@ h1, h2 {
 
 
 /* Misc */
+.dropzone {
+    border: 2px dashed #94c0e5;
+}
 .ui-lasso-helper {
 	background: #3b99fc;
 	opacity: 0.2;
