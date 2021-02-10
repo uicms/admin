@@ -1,4 +1,23 @@
-/* repeatedType */
+.field.file {
+    
+}
+.field.file .body {
+    display: flex;
+    column-gap: 15px;
+    background: #f8f8f8;
+    padding: 15px;
+    border-radius: 5px;
+}
+.field.file .infos {
+    margin-bottom: 5px;
+}
+
+
+.field.date label {
+    display: inline;
+}
+
+
 .repeatedType .form-group {
     display: none;
 }

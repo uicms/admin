@@ -51,8 +51,8 @@ class FileTransformer implements DataTransformerInterface
         $file->publicPath = '/' . trim($this->upload_folder, '/') . '/' . $string;
         
         # Add thumbnail path to object
-        $thumbnail_path = '/' . trim($this->upload_folder, '/') . '/' . $this->preview_prefix . $string;
-        $file->thumbnailPath = file_exists($thumbnail_path) ? $thumbnail_path : '';
+        $thumbnail_string = $this->preview_prefix . $string;
+        $file->thumbnailPath = file_exists($this->upload_path . '/' . $thumbnail_string) ? '/' . trim($this->upload_folder, '/') . '/' . $thumbnail_string : '';
         
         # Add dimensions
         if($size = getImageSize($file->getRealPath())) {

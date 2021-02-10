@@ -92,9 +92,6 @@ class UIFormType extends AbstractType
                 }
             }
         });
-        
-        # Submit button
-        #$builder->add('submit', SubmitType::class, array('attr' => array('class' => 'btn btn-primary')));
     }
     
     public function configureOptions(OptionsResolver $resolver)

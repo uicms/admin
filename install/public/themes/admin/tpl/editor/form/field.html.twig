@@ -1,13 +1,17 @@
-<div class="field">
+<div class="field {{ field.vars.block_prefixes.1 }}">
     {% trans_default_domain 'admin' %}
     {% set template = "default" %}
     {% if field.vars.options.template is defined %}{% set template = field.vars.options.template %}{% endif %}
     {% set template = "admin/tpl/editor/form/" ~ template ~ ".html.twig" %}
 
     {% if field.vars.name != '_token' and field.vars.name != 'translations' %}
+    <header>
         {% if field.vars.label is defined %}<h3>{{ form_label(field, field.vars.label|trans) }}</h3>{% endif %}
-        {% if field.vars.help is defined %}<div class="help"><em>{{ field.vars.help|trans }}</em></h3></div>{% endif %}
+        {% if field.vars.help is defined %}<div class="help"><em>{{ field.vars.help|trans }}</em></div>{% endif %}
+    </header>
     {% endif %}
-
+    
+    <div class="body">
     {% include template %}
+    </div>
 </div>

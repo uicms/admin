@@ -1,15 +1,20 @@
 {% trans_default_domain 'admin' %}
-{% if field.vars.data.publicPath is defined %}
-    {% if field.vars.data.thumbnailPath %}
-    <div class="thumbnail">
-        <a href="{{ field.vars.data.publicPath }}" data-fancybox="gallery">
-            <img src="{{ field.vars.data.thumbnailPath }}" />
-        </a>
-    </div>
 
-    {% endif %}
-    
-    <a href="{{ field.vars.data.publicPath }}" class="external">{{ field.vars.data.publicPath }}</a> ({% if field.vars.data.width is defined %}{{ field.vars.data.width }} x {{ field.vars.data.height }}px, {% endif %}{{ field.vars.data.size|number_format(0, '.', ' ') }} octets)
+{% if field.vars.data.publicPath is defined and field.vars.data.thumbnailPath %}
+<div class="thumbnail">
+    <a href="{{ field.vars.data.publicPath }}" data-fancybox="gallery">
+        <img src="{{ field.vars.data.thumbnailPath }}" />
+    </a>
+</div>
 {% endif %}
 
-{{ form_widget(field) }}
+<div class="content">
+    {% if field.vars.data.publicPath is defined %}
+    <p class="infos"><a href="{{ field.vars.data.publicPath }}" class="external">{{ field.vars.data.publicPath }}</a> ({% if field.vars.data.width is defined %}{{ field.vars.data.width }} x {{ field.vars.data.height }}px, {% endif %}{{ field.vars.data.size|number_format(0, '.', ' ') }} octets)</p>
+    {% endif %}
+    
+    {{ form_widget(field) }}
+</div>
+
+
+

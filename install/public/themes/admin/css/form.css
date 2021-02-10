@@ -12,6 +12,9 @@ textarea {
 textarea {
     resize: none;
 }
+label {
+    padding: 5px 0;
+}
 
 
 /* Layout */

@@ -1,14 +1,14 @@
-    
+{% trans_default_domain 'admin' %}
         {% if paginator.total > 1 %}<div class="infos">{% if paginator.total_pages > 1 %}{{ paginator.offset|inc }} - {{ paginator.total_current|inc(paginator.offset) }} / {% endif %}{{ paginator.total }} résultat(s)</div>{% endif %}
         
         <div class="dropdown display">
           <button class="dropdown-toggle" type="button">
-            <strong>Affichage&nbsp;:&nbsp;</strong>{{ params.display }}
+            <strong>Affichage&nbsp;:&nbsp;</strong>{{ params.display|trans }}
           </button>
           <div class="dropdown-menu">
-            <a class="dropdown-item{% if params.display == 'list' %} active{% endif %}" href="{{ path('admin_page_action', {slug: page.slug, action: current_tab.route.action, display: 'list'}) }}">Liste</a>
-            <a class="dropdown-item{% if params.display == 'details' %} active{% endif %}" href="{{ path('admin_page_action', {slug: page.slug, action: current_tab.route.action, display: 'details'}) }}">Détails</a>
-            <a class="dropdown-item{% if params.display == 'thumbnails' %} active{% endif %}" href="{{ path('admin_page_action', {slug: page.slug, action: current_tab.route.action, display: 'thumbnails'}) }}">Vignettes</a>
+            <a class="dropdown-item{% if params.display == 'list' %} active{% endif %}" href="{{ path('admin_page_action', {slug: page.slug, action: current_tab.route.action, display: 'list'}) }}">{{ 'list'|trans }}</a>
+            <a class="dropdown-item{% if params.display == 'details' %} active{% endif %}" href="{{ path('admin_page_action', {slug: page.slug, action: current_tab.route.action, display: 'details'}) }}">{{ 'details'|trans }}</a>
+            <a class="dropdown-item{% if params.display == 'thumbnails' %} active{% endif %}" href="{{ path('admin_page_action', {slug: page.slug, action: current_tab.route.action, display: 'thumbnails'}) }}">{{ 'thumbnails'|trans }}</a>
           </div>
         </div>
         
@@ -41,10 +41,10 @@
         
         <div class="dropdown order_dir">
           <button class="dropdown-toggle" type="button">
-            <strong>Ordre&nbsp;:&nbsp;</strong>{{ params.order_dir }}
+            <strong>Ordre&nbsp;:&nbsp;</strong>{{ params.order_dir|trans }}
           </button>
           <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-            <a class="dropdown-item{% if params.order_dir == 'asc'%} active{% endif %}" href="{{ path('admin_page_action', {slug: page.slug, action: current_tab.route.action, order_dir: 'asc'}) }}">ASC</a>
-            <a class="dropdown-item{% if params.order_dir == 'desc'%} active{% endif %}" href="{{ path('admin_page_action', {slug: page.slug, action: current_tab.route.action, order_dir: 'desc'}) }}">DESC</a>
+            <a class="dropdown-item{% if params.order_dir == 'asc'%} active{% endif %}" href="{{ path('admin_page_action', {slug: page.slug, action: current_tab.route.action, order_dir: 'asc'}) }}">{{ 'asc'|trans }}</a>
+            <a class="dropdown-item{% if params.order_dir == 'desc'%} active{% endif %}" href="{{ path('admin_page_action', {slug: page.slug, action: current_tab.route.action, order_dir: 'desc'}) }}">{{ 'desc'|trans }}</a>
           </div>
         </div>

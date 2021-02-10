@@ -11,8 +11,8 @@ input,
 textarea,
 button,
 body {
-    font-family: Arial;
-	color: #000;
+    font-family: 'Avenir';
+	color: #333;
 	font-size: 0.9em;
 	line-height: 1.2em;
 }

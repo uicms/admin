@@ -6,6 +6,8 @@
 {% block title %}{{ page.slug|capitalize }} - Parcourir{% endblock %}
 
 {% block body %}
+    
+<!-- Dropzone -->
 <div id="dropzoneForm_container">
     <div class="wrapper">
         <div class="close"></div>
@@ -18,20 +20,24 @@
     </div>
 </div>
 
+<!-- Explorer section -->
 <section id="explorer" class="explorer {{ params.display }}" data-offset="{{ paginator.offset }}" data-url="{{ path('admin_page_action', {slug:'action', action:'position', entity_name: page.arguments.entity_name, linked_to:params.linked_to}) }}">
     
+    
+    <!-- Linked to -->
     {% if params.linked_to_row is defined %}
     <div class="linked_to_row">
         <h3><a href="{{ path('admin_page_action_id', {slug:params.linked_to_slug, action: 'form', id:params.linked_to_id}) }}">{{ params.linked_to_slug }} \ {{ params.linked_to_row._name }}</a></h3>
     </div>
     {% endif %}
     
+    
+    <!-- Tools 1 -->
     <div class="tools1">
 	    <a href="{{ path('admin_page_action', {slug: page.slug, action: 'form', target: 'blank'}) }}" class="button new_row">Nouveau</a>{% if model.config.is_tree is defined and model.config.is_tree %} | <a href="javascript:;" data-url="{{ path('admin_page_action', {slug: 'action', action: 'new_folder', target: 'blank'}) }}" class="button new_folder">Dossier</a>{% endif %} |
         <a href="javascript:;" class="button import">Importer</a>
         <!-- | <a href="{{ path('admin_page_action', {slug: page.slug, action: 'form'}) }}" class="button export">Exporter</a>
          | <a href="{{ path('admin_page_action', {slug: page.slug, action: 'form'}) }}" class="button batch">Traitement par lot</a>-->
-        
         <div id="new_folder_popup">
             <div class="wrapper">
                 <div class="close"></div>
@@ -45,6 +51,8 @@
         </div>
     </div>
     
+    
+    <!-- Tools 2 -->
     <div class="tools2 clearfix">
         <div class="misc_tools">
             <form class="search_form" method="get" action="">
@@ -57,6 +65,8 @@
         <div class="display_tools">{% include "admin/tpl/editor/index/tools.html.twig" %}</div>
     </div>
     
+    
+    <!-- Path -->
     <div class="path">
         <h1>
             <a href="{{ path('admin_page_action', {slug: page_slug, action: 'index', dir: 0, offset: 0}) }}">
@@ -74,6 +84,8 @@
         </h1>
     </div>
 
+
+    <!-- Results -->
     <div id="results" class="results">
         <form id="form_results" name="index" action="{{ path('admin_page', {slug:'action', entity_name:model.name, linked_to:params.linked_to, linked_to_id:params.linked_to_id}) }}" method="post">
             
