@@ -7,12 +7,17 @@ a:hover {
     text-decoration: none;
 }
 h1, h2 {
+    font-family: 'Proxima Bold';
     font-size: 1.4em;
     line-height: normal;
     letter-spacing: 0.5px;
     padding-bottom: 20px;
+    font-weight: 100;
 }
-
+strong {
+    font-family: 'Proxima Bold';
+    font-weight: 100;
+}
 
 /* Misc */
 .dropzone {
