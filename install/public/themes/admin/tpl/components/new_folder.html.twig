@@ -1,0 +1,11 @@
+<div class="cpnt cpnt_new_folder popup">
+    <div class="wrapper">
+        <div class="close"></div>
+        <form name="new_folder_form" action="{{ path('admin_page_action', {slug: 'action', action: 'newfolder', entity_name: model.name}) }}" method="post"> 
+            <fieldset>
+                <input type="text" value="" name="new_folder_name" required="required" placeholder="Nom du dossier" />
+            </fieldset>
+            <button type="button" class="btn cancel">Annuler</button> <button type="submit" class="btn">Créer</button>
+        </form>
+    </div>
+</div>

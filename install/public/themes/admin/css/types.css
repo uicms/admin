@@ -1,3 +1,4 @@
+/* File */
 .field.file {
     
 }
@@ -9,10 +10,10 @@
     border-radius: 5px;
 }
 .field.file .body .thumbnail {
-    width: 30%;
 }
 .field.file .body .thumbnail img {
-    width: 100%;
+    max-height: 100px;
+    max-width: 100px;
     display: block;
 }
 .field.file .infos {
@@ -21,11 +22,13 @@
 }
 
 
+/* Date */
 .field.date label {
     display: inline;
 }
 
 
+/* Repeated */
 .repeatedType .form-group {
     display: none;
 }

@@ -1,0 +1,17 @@
+    <div class="cpnt cpnt_path">
+        <h1>
+            <a href="{{ path('admin_page_action', {slug: page_slug, action: 'index', dir: 0, offset: 0}) }}">
+                <span class="droppable" data-id="0"><span class="wrapper">{{ page.slug|capitalize }}</span></span>
+            </a>
+            
+            {% for path_item in params.path %}
+                \ <span class="name {% if path_item.isdir %} folder{% else %} doc{% endif %}">
+                {% if path_item.isdir %}<a href="{{ path('admin_page_action', {slug:page.slug, action: 'index', dir:path_item.id, offset:0 }) }}">{% endif %}
+                {{ path_item._name }}
+                {% if path_item.isdir %}</a>{% endif %}
+            </span>
+            {% endfor %}
+            
+            {% if row is defined and row.id %}\ <span class="name icon {% if row.isdir %} folder{% else %} doc{% endif %}">{{ row._name }}</span>{% endif %}
+        </h1>
+    </div>

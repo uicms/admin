@@ -1,0 +1,30 @@
+/* Layout */
+#form > .content {
+    display: flex;
+    column-gap: var(--default-spacing);
+}
+#form .content .form {
+    box-sizing: border-box;
+    position: relative;
+    flex-grow: 2;
+    width: 60%;
+}
+#form .content aside {
+    width: 400px;
+    box-sizing: border-box;
+}
+#form .content aside > *,
+#form .content .form > form .field,
+#form .content .form > form > *,
+#form > header > * {
+    margin-bottom: var(--default-spacing);
+}
+#form .content aside > .thumbnail {
+    height: 300px;
+    background: #f8f8f8;
+}
+#form .content aside > .thumbnail img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+}

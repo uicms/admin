@@ -1,126 +1,12 @@
-/* Path */
-.path {
-    /*border-top: 1px solid #ccc;
-    padding-top: 15px;*/
+/* Layout */
+#explorer > * {
+    margin-bottom: var(--default-spacing);
 }
-h1 .name.icon.folder {
-    background: url('../img/folder.svg') no-repeat left center;
-    background-size: 1em;
-    padding-left: 1.2em;
+#explorer .tools {
+    display: flex;
 }
-
-/* Notice */
-.notice {
-    margin-bottom: 20px;
-}
-
-/* Select section */
-section#select .tools_db {
-    display: none;
-}
-section#select .item.doc a:hover {
-    color: #000;
-    cursor: default;
-}
-section#select .item.selecting a:hover,
-section#select .item.selected a:hover {
-    color: #fff;
-}
-
-/* Position */
-#loading {
-    background: url('../img/loading.svg') no-repeat left center;
-    background-size: 1.6em;
-    padding-left: 1.8em;
-    position: absolute;
-    top: 20px;
-    left: 50%;
-    transform: translateX(-50%);
-}
-
-/* Tools */
-.tools1 {
-    margin-bottom: 20px;
-}
-.tools2 .misc_tools {
-    margin-bottom: 20px;
-    float: left;
-    height: 40px;
-    line-height: 40px;
-    vertical-align: middle;
-}
-.tools2 .display_tools {
-    margin-bottom: 20px;
-    float: right;
-    height: 40px;
-    line-height: 40px;
-}
-.tools2 .display_tools .infos {
-    display: inline-block;
-    padding-right: 20px;
-}
-.pagination {
-    margin: 20px 0;
-}
-.pagination li {
-    display: inline-block;
-}
-.pagination li.active {
-    text-decoration: underline !important;
-}
-.search_form {
-    display: inline-block;
-    margin-bottom: 1.2em;
-}
-.search_form input[type=text] {
-    background: url('../img/search.svg') no-repeat 8px 10px;
-    background-size: 15px;
-    padding-left: 30px;
-    width: 100%;
-    max-width: 300px;
-}
-
-
-
-/* Selection */
-input.check_item {
-    display: none;
-}
-
-
-/* Results */
-.results {
-    padding-bottom: 1.2em;
-}
-.item.concealed {
-    opacity: 0.5;
-}
-.item.selected.concealed,
-.item.selecting.concealed {
-    opacity: 1;
-}
-
-
-/* Items manipulation */
-.sortable {
-}
-.dragging {
-    opacity: 0.5;
-}
-#clone,
-#tooltip {
-    position: absolute;
-    z-index: 10000;
-    background: #3849e8;
-    padding: .4em;
-    color: #fff;
-}
-span.ui-droppable-hover,
-.explorer.list .ui-droppable-hover {
-    background: #ffc800 !important;
-}
-.explorer.thumbnails .ui-droppable-hover .wrapper {
-    background: #ffc800 !important;
+#explorer .tools .cpnt_action {
+    flex-grow: 2;
 }
 
 /* Folder edit */
@@ -136,6 +22,11 @@ span.ui-droppable-hover,
 .explorer .item:hover .edit {
     display: inline-block;
 }
+
+
+
+
+
 
 
 /* List mode */
@@ -215,8 +106,6 @@ span.ui-droppable-hover,
 }
 .explorer.list .item.selected .col.name a.name.icon.doc,
 .explorer.list .item.selecting .col.name a.name.icon.doc {
-    /*background: url('../img/doc.svg') no-repeat left center;
-    background-size: 0.7em;*/
 }
 .explorer.list .item.hidden {
     display: none;
@@ -369,73 +258,10 @@ span.ui-droppable-hover,
     display: block;
     margin-top: 15px;
 }
-
 .explorer.details .item > .wrapper .details .name {
     font-weight: bold;
     width: 90%;
     display: inline-block;
     overflow: hidden;
     white-space: nowrap;
-}
-
-
-
-/* Popup */
-#new_folder_popup,
-#dropzoneForm_container {
-    display: none;
-    z-index: 10000;
-    position: fixed;
-    left: 0;
-    top: 0;
-    bottom: 0;
-    right: 0;
-    background: rgba(255, 255, 255, 0.7);
-}
-#new_folder_popup.active,
-#dropzoneForm_container.active {
-    display: block;
-}
-#new_folder_popup > .wrapper,
-#dropzoneForm_container > .wrapper {
-    width: 80%;
-    height: 60vh;
-    background: #fff;
-    position: absolute;
-    left: 50%;
-    top: 50%;
-    transform: translate(-50%,-50%);
-}
-#new_folder_popup > .wrapper {
-    top: 20%;
-    left: 10%;
-    transform: none;
-}
-#new_folder_popup > .wrapper .close,
-#dropzoneForm_container > .wrapper .close {
-    position: absolute;
-    z-index: 10001;
-    right: 1em;
-    top: 1em;
-    width: 1.5em;
-    height: 1.5em;
-    background: url('../img/close_black.svg') no-repeat;
-    background-size: 100%;
-    cursor: pointer;
-}
-#dropzoneForm_container > .wrapper form {
-    position: absolute;
-    top: 0;
-    left: 0;
-    bottom: 0;
-    right: 0;
-}
-#new_folder_popup > .wrapper {
-    width: 80%;
-    height: auto;
-    padding: 5em;
-    box-sizing: border-box;
-}
-#new_folder_popup > .wrapper form fieldset {
-    margin-bottom: 2em;
 }

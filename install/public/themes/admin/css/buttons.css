@@ -3,8 +3,8 @@ button.btn {
     background: #333;
     color: #fff;
     border: 0;
-    padding: 0.8em;
-    font-size: 0.8em;
+    padding: 10px;
+    font-size: 10px;
 }
 a.btn:hover,
 button.btn:hover {
@@ -31,13 +31,6 @@ a.button.new {
     padding-left: 1.4em;
 }
 
-
-/* Group of buttons */
-.buttons {
-    margin-bottom: 20px;
-}
-
-
 /* Dropdown */
 .dropdown {
     position: relative;
@@ -46,8 +39,8 @@ a.button.new {
 .dropdown .dropdown-toggle {
     border: 1px solid #ccc;
     border-radius: 4px;
-    padding: 0.8em;
-    padding-right: 1.5em;
+    padding: 10px;
+    padding-right: 20px;
     background: url('../img/dropdown.svg') no-repeat right 0.5em center;
     background-size: 8px;
     background-color: #fff;

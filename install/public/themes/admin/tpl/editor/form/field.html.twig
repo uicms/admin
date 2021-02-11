@@ -2,7 +2,7 @@
     {% trans_default_domain 'admin' %}
     {% set template = "default" %}
     {% if field.vars.options.template is defined %}{% set template = field.vars.options.template %}{% endif %}
-    {% set template = "admin/tpl/editor/form/" ~ template ~ ".html.twig" %}
+    {% set template = "admin/tpl/editor/form/types/" ~ template ~ ".html.twig" %}
 
     {% if field.vars.name != '_token' and field.vars.name != 'translations' %}
     <header>

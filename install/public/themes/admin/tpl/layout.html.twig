@@ -20,21 +20,24 @@
             <link rel="stylesheet" href="{{ theme_path.getUrl('css/fonts.css') }}" />
             <link rel="stylesheet" href="{{ theme_path.getUrl('css/reset.css') }}" />
             <link rel="stylesheet" href="{{ theme_path.getUrl('css/global.css') }}" />
+            <link rel="stylesheet" href="{{ theme_path.getUrl('css/layout.css') }}" />
+            
+            <link rel="stylesheet" href="{{ theme_path.getUrl('css/components.css') }}" />
             <link rel="stylesheet" href="{{ theme_path.getUrl('css/buttons.css') }}" />
-            <link rel="stylesheet" href="{{ theme_path.getUrl('css/tabs.css') }}" />
-            <link rel="stylesheet" href="{{ theme_path.getUrl('css/explorer.css') }}" />
-            <link rel="stylesheet" href="{{ theme_path.getUrl('css/form.css') }}" />
-            <link rel="stylesheet" href="{{ theme_path.getUrl('css/form.types.css') }}" />
+            <link rel="stylesheet" href="{{ theme_path.getUrl('css/types.css') }}" />
+            <link rel="stylesheet" href="{{ theme_path.getUrl('css/items.css') }}" />
+            
+            <link rel="stylesheet" href="{{ theme_path.getUrl('css/section.explorer.css') }}" />
+            <link rel="stylesheet" href="{{ theme_path.getUrl('css/section.select.css') }}" />
+            <link rel="stylesheet" href="{{ theme_path.getUrl('css/section.form.css') }}" />
+            
         {% endblock %}
     </head>
 	
     <body {% if params.display is defined %}data-display="{{ params.display }}"{% endif %} data-url="{{ path('admin_page_action', {slug:page.slug, action:'index'}) }}">
-		<div id="background"></div>
         
 		{% for message in app.flashes('error') %}
-        <div class="alert alert-error">
-            {{ message }}
-        </div>
+        <div class="cpnt_message">{{ message }}</div>
         {% endfor %}
         
 		{% if is_granted('IS_AUTHENTICATED_FULLY') %}
@@ -49,44 +52,40 @@
         </div>
 		{% endif %}
         
-        <div id="header">
-    		<div id="logo"><img src="{{ theme_path.getUrl('img/logo.svg') }}" /></div>
-        </div>
+        <div id="container">
+            <header id="header">
+        		<h1 id="logo">UI5</h1>
+            
+                {% block aside %}
+                {% if is_granted('IS_AUTHENTICATED_FULLY') %}
+                <div id="nav">
+            		<ul id="pages">
+            			{% for admin_page in ui.admin.pages %}
+            			{% if (admin_page.display is defined and admin_page.display) or admin_page.display is not defined %}
+                        <li class="{% if admin_page.slug==page.slug %}active{% endif %}"><a href="{{ path('admin_page', {'slug': admin_page.slug, linked_to:''}) }}">{{ admin_page.slug|capitalize }}</a></li>
+                        {% endif %}
+            			{% endfor %}
+            		</ul>
+                </div>
+                {% endif %}
+                {% endblock %}
+            </header>
         
-        <div id="viewport">
-            {% block aside %}
-            {% if is_granted('IS_AUTHENTICATED_FULLY') %}
-            <div id="nav">
-        		<ul id="pages">
-        			{% for admin_page in ui.admin.pages %}
-        			{% if (admin_page.display is defined and admin_page.display) or admin_page.display is not defined %}
-                    <li class="{% if admin_page.slug==page.slug %}active{% endif %}"><a href="{{ path('admin_page', {'slug': admin_page.slug, linked_to:''}) }}">{{ admin_page.slug|capitalize }}</a></li>
-                    {% endif %}
-        			{% endfor %}
-        		</ul>
-            </div>
-            {% endif %}
-            {% endblock %}
-		
             <div id="content">
-                
-                <div class="content">
-                    <div id="tabs">
-                        {% set tabs = nav.getTabs(page.slug) %}
-                        {% for tab in tabs %}
-                        <div class="tab{% if current_tab.route.id == tab.route.id %} active{% endif %} {{ tab.route.action }}">
-                            <h2><a href="{{ path(tab.route.name, tab.route.params) }}">{{ tab.title }}</a></h2>
-                             {% if tabs|length > 1 %}&nbsp;<a href="{{ path('admin_page_action', {slug: 'action', action: 'removetab', route_id: tab.route.id}) }}" class="close">x</a>{% endif %}
-                        </div>
-                        {% endfor %}
+                <div id="tabs">
+                    {% set tabs = nav.getTabs(page.slug) %}
+                    {% for tab in tabs %}
+                    <div class="tab{% if current_tab.route.id == tab.route.id %} active{% endif %} {{ tab.route.action }}">
+                        <a href="{{ path(tab.route.name, tab.route.params) }}">{{ tab.title }}</a>
+                         {% if tabs|length > 1 %}&nbsp;<a href="{{ path('admin_page_action', {slug: 'action', action: 'removetab', route_id: tab.route.id}) }}" class="close">x</a>{% endif %}
                     </div>
-                    <div id="tabs_contents">
-                        <div class="tab_content">
-                            {% block body %}{% endblock %}
-                        </div>
+                    {% endfor %}
+                </div>
+                <div id="tabs_contents">
+                    <div class="tab_content">
+                        {% block body %}{% endblock %}
                     </div>
                 </div>
-                
             </div>
         </div>
         

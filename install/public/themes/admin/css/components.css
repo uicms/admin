@@ -1,0 +1,231 @@
+/*
+/* Components 
+*/
+
+/* Message */
+.cpnt_message {
+    position: fixed;
+    left: 50%;
+    top: 10px;
+    transform: translateX(-50%);
+    background: #a30000;
+    color: #fff;
+    padding: 5px;
+    z-index: 100000;
+}
+
+/* Notice */
+.cpnt_notice {
+    background: #fbf2d4;
+    padding: 20px;
+    border-radius: 5px;
+    text-align: center;
+}
+.cpnt_notice strong {
+    display: block;
+    font-size: 1.4em;
+    margin-bottom: 20px;
+}
+
+/* Loading */
+.cpnt_loading {
+    background: url('../img/loading.svg') no-repeat left center;
+    background-size: 20px;
+    padding-left: 25px;
+    position: absolute;
+    top: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+}
+
+/* Dropzone */
+.cpnt_dropzone .dropzone {
+    border: 2px dashed #94c0e5;
+}
+
+/* Path */
+.cpnt_path {
+}
+.cpnt_path h1 .folder {
+    background: url('../img/folder.svg') no-repeat left center;
+    background-size: 15px;
+    padding-left: 20px;
+}
+
+/* Quick search */
+.cpnt_quick_search {
+}
+.cpnt_quick_search form input[type=text] {
+    background: url('../img/search.svg') no-repeat 8px 10px;
+    background-size: 15px;
+    padding-left: 30px;
+    width: 100%;
+    max-width: 300px;
+}
+
+/* Results tools (Display, sorting etc) */
+.cpnt_results_tools {
+    display: flex;
+    column-gap: 10px;
+    line-height: 40px;
+    white-space: nowrap;
+}
+
+/* pagination */
+.cpnt_pagination {
+}
+.cpnt_pagination li {
+    display: inline-block;
+}
+.cpnt_pagination li.active {
+    text-decoration: underline !important;
+}
+
+/* Form pagination */
+.cpnt_view_pagination {
+}
+.cpnt_view_pagination a.prev {
+    padding-left: var(--default-spacing);
+    padding-right: 15px;
+    background: url('../img/prev.svg') no-repeat left center;
+    background-size: 15px;
+}
+.cpnt_view_pagination a.next {
+    padding-left: 15px;
+    padding-right: var(--default-spacing);
+    background: url('../img/next.svg') no-repeat right center;
+    background-size: 15px;
+}
+
+/* Popup */
+.cpnt.popup {
+    display: none;
+    z-index: 10000;
+    position: fixed;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    right: 0;
+    background: rgba(255, 255, 255, 0.7);
+}
+.cpnt.popup.active {
+    display: block;
+}
+.cpnt.popup > .wrapper {
+    width: 80%;
+    height: 60vh;
+    background: white;
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%,-50%);
+    box-shadow: 3px 3px 3px var(--grey3);
+}
+.cpnt.popup > .wrapper .close {
+    position: absolute;
+    z-index: 10001;
+    right: 15px;
+    top: 15px;
+    width: 20px;
+    height: 20px;
+    background: url('../img/close_black.svg') no-repeat;
+    background-size: 100%;
+    cursor: pointer;
+}
+.cpnt.popup > .wrapper form {
+    position: absolute;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    padding: var(--default-spacing);
+}
+.cpnt.popup > .wrapper form input[type=text]{
+    max-width: 300px;
+}
+.cpnt.popup > .wrapper form fieldset {
+    margin-bottom: 30px;
+}
+
+/* Add links */
+.cpnt_add_link .dropdown .dropdown-menu {
+    width: 320px;
+}
+.cpnt_add_link .dropdown .dropdown-menu li {
+    box-sizing: border-box;
+    padding: 8px 15px 8px 8px;
+}
+.cpnt_add_link .dropdown .dropdown-menu li .button {
+    display: none;
+}
+.cpnt_add_link .dropdown .dropdown-menu li:hover {
+    background: var(--grey6);
+}
+.cpnt_add_link .dropdown .dropdown-menu li:hover .button {
+    display: inline-block;
+}
+.cpnt_add_link .name {
+    display: inline-block;
+    width: 30%;
+}
+.cpnt_add_link .name a {
+    display: block;
+}
+.cpnt_add_link .button {
+    float: right;
+    margin-left: 15px;
+    box-sizing: border-box;
+}
+
+/* Links */
+.cpnt_links .linked_entity {
+    padding: 0 0 30px 0;
+    position: relative;
+}
+.cpnt_links .linked_entity .grid .user,
+.cpnt_links .linked_entity .grid .text_preview {
+    display: none;
+}
+.cpnt_links .linked_entity .title {
+    font-size: 1.5em !important;
+    letter-spacing: 0.5px;
+    padding-bottom: 15px;
+}
+.cpnt_links .linked_entity .dropdown.action {
+    text-align: left;
+    margin-right: 10px;
+}
+.cpnt_links .linked_entity .dropdown .dropdown-menu {
+    right: 5px;
+    left: auto;
+}
+.cpnt_links .linked_entity .buttons {
+    position: absolute;
+    right: 0;
+    top: -8px;
+    text-align: right;
+    line-height: 40px;
+}
+.cpnt_links .linked_entity .buttons > a {
+    display: inline-block;
+    margin-right: 10px;
+    width: 20px;
+    height: 20px;
+    overflow: hidden;
+    vertical-align: middle;
+    padding: 0;
+    font-size: 0;
+    background-size: 100%;
+    opacity: 0.3;
+}
+.cpnt_links .linked_entity .buttons > a.link {
+    width: 20px;
+    background: url('../img/link2.svg') no-repeat center center;
+    background-size: 100%;
+}
+.cpnt_links .linked_entity .buttons > a.new {
+    width: 16px;
+}
+.cpnt_links .linked_entity .buttons > a:hover {
+    opacity: 1;
+}

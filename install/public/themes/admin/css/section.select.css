@@ -1,0 +1,10 @@
+/* Layout */
+#select > * {
+    margin-bottom: var(--default-spacing);
+}
+#select .tools {
+    display: flex;
+}
+#select .tools .cpnt_quick_search {
+    flex-grow: 2;
+}

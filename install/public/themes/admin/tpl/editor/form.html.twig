@@ -1,157 +1,63 @@
 {% extends "admin/tpl/layout.html.twig" %}
 {% trans_default_domain 'admin' %}
-	
+{% set page_slug = page.slug %}
+
 {% block title %}{{ row._name }} - Édition{% endblock %}
 
 {% block body %}
 <section id="form" class="clearfix">
     
     <header class="header">
-        {% if params.linked_to_row is defined %}
-        <div class="linked_to_row">
-            <h3><a href="{{ path('admin_page_action_id', {slug:params.linked_to_slug, action: 'form', id:params.linked_to_id}) }}">{{ params.linked_to_slug }} \ {{ params.linked_to_row._name }}</a></h3>
-        </div>
-        {% endif %}
-        
-        {% if row.id and (view_nav.prev or view_nav.next) %}
-        <div class="view_nav">
-            {% if view_nav.prev %}<a class="prev" href="{{ path('admin_page_action_id', {slug: page.slug, action: 'form', id: view_nav.prev.id}) }}">Précédent</a>{% endif %}
-                
-            <span class="infos">{{ view_nav.offset }} / {{ view_nav.total }}</span>    
-            
-            {% if view_nav.next %}<a class="next" href="{{ path('admin_page_action_id', {slug: page.slug, action: 'form', id: view_nav.next.id}) }}">Suivant</a>{% endif %}
-        </div>
-        {% endif %}
+        <!-- Linked to -->
+        {% include "admin/tpl/components/linked_row.html.twig" %}
 
-    	<h1>
-            
-            <a href="{{ path('admin_page', {slug: page.slug}) }}">{{ page.slug|capitalize }}</a> \ 
-            
-            {% for path_item in params.path %}
-                <span class="name icon {% if path_item.isdir %} folder{% else %} doc{% endif %}">
-                {% if path_item.isdir %}<a href="{{ path('admin_page_action', {slug:page.slug, action: 'index', dir:path_item.id, offset:0 }) }}">{% endif %}
-                {{ path_item._name }}
-                {% if path_item.isdir %}</a>{% endif %}
-                \ 
-            </span>
-            {% endfor %}
+        <!-- Nav -->
+        {% include "admin/tpl/components/view_pagination.html.twig" %}
 
-            {% if row.id %}<span class="name icon {% if row.isdir %} folder{% else %} doc{% endif %}">{{ row._name }}</span>{% else %}<span class="name icon doc">Nouveau</span>{% endif %}
-         </h1>
-        
+        <!-- Path -->
+        {% include "admin/tpl/components/path.html.twig" %}
+    
+        <!-- Infos -->
         {% if row.id %}
         <div class="infos">
-            <p>
-                <strong>ID : </strong> {{ row.id }} | 
-               <strong>Propriétaire :</strong> {{ row.user.name }} | 
-               <strong>Créé :</strong> {{ row.created|date("m/d/Y H:i:s") }} | 
-               <strong>Modifié :</strong> {{ row.modified|date("m/d/Y  H:i:s") }} | 
-               <strong>État : </strong>{% if row.isconcealed==0 %}Publié{% else %}Masqué{% endif %}
-               {% if page.public_route is defined and page.public_route and row.isconcealed==0 %} | <a class="external public_view" href="{{ include(template_from_string(page.public_route)) }}">Afficher sur le site</a>{% endif %}
-           </p>
+            <strong>ID : </strong> {{ row.id }} | <strong>Propriétaire :</strong> {{ row.user.name }} | <strong>Créé :</strong> {{ row.created|date("m/d/Y H:i:s") }} | <strong>Modifié :</strong> {{ row.modified|date("m/d/Y  H:i:s") }} | <strong>État : </strong>{% if row.isconcealed==0 %}Publié{% else %}Masqué{% endif %}
+           {% if page.public_route is defined and page.public_route and row.isconcealed==0 %} | <a class="external public_view" href="{{ include(template_from_string(page.public_route)) }}">Afficher sur le site</a>{% endif %}
         </div>
         {% endif %}
     </header>
-
-    <section class="form">
-    	{{ form_start(form) }}
-            {% include "admin/tpl/editor/form/buttons.html.twig" %}
-            
-    		<div class="form-group">
-    		{% include "admin/tpl/editor/form/fieldset.html.twig" %}
-            </div>
-
-            {% include "admin/tpl/editor/form/buttons.html.twig" %}
-    	{{ form_end(form) }}
-    </section>
     
-    <aside>
+    <div class="content">
         
-        
-        <!-- Thumbnail -->
-        {% if row._thumbnail %}
-        <div class="thumbnail">
-            {% if row._file %}<a href="/uploads/{{ row._file }}" data-fancybox="gallery">{% endif %}<img src="/uploads/{{ row._thumbnail }}" />{% if row._file %}</a>{% endif %}
-        </div>
-        {% endif %}
-        
-        
-        <!-- Links -->
-        {% if row._links is defined and row._links %}
-        <section class="links">
-        	
-            <!-- Add links -->
-            {% if row._total_linked < row._links|length %}
-            <div class="buttons">
-                <div class="dropdown add_link">
-                  	<button class="dropdown-toggle">
-                    	Associer des données
-                  	</button>
-                  	<div class="dropdown-menu">
-                    <ul>
-                    {% for linked_table in row._links %}
-                    {% if linked_table.rows|length == 0 %}
-                      <li class="linked_table">
-                          {% set page_slug = linked_table.page_slug %}
-					      <strong class="name"><a href="{{ path('admin_page_action', {slug: linked_table.page_slug, action: 'select', select_action: 'link', entity_name: linked_table.name, parent: current_tab.route.id}) }}" >{{ linked_table.page_slug|capitalize }}</a></strong>               	          
-                          <a class="button new" href="{{ path('admin_page_action', {slug: linked_table.page_slug, action: 'form', entity_name: linked_table.name, parent: current_tab.route.id}) }}">Nouveau</a>
-                          <a class="button link" href="{{ path('admin_page_action', {slug: linked_table.page_slug, action: 'select', select_action: 'link', parent: current_tab.route.id}) }}" >Sélect.</a> 
-				      </li>
-                      {% endif %}
-                    {% endfor %}
-                    </ul>
-                  	</div>
-                </div>
-			</div>
-            {% endif %}
-			
-            <!-- Link results -->
-         	{% for linked_table in row._links %}
-    		{% set results = linked_table.rows %}
-            {% set current_entity = linked_table.name|slugger %}
+        <!-- Form -->
+        <section class="form">
+        	{{ form_start(form) }}
+                {% include "admin/tpl/components/form_buttons.html.twig" %}
             
-			{% if results %}
-            {% set page_slug = linked_table.page_slug %}
-            {% set parent = current_tab.route.id %}
-            <div class="linked_entity explorer list" data-offset="0" data-url="{{ path('admin_page_action', {slug:'action', action:'position', entity_name: linked_table.name, linked_to:model.name, linked_to_id:row.id }) }}">
-        		<h2 class="title"><!--<a href="{{ path('admin_page_action', {slug: linked_table.page_slug, action: 'index', 'entity_name': linked_table.name, linked_to: model.name, linked_to_id: row.id, parent: current_tab.route.id}) }}">-->{{ linked_table.page_slug|capitalize }}<!--</a>--></h2>
-                
-                <div class="buttons">
-                    <div class="dropdown action">
-                      <button class="dropdown-toggle" type="button">Action</button>
-                      <div class="dropdown-menu">
-                        <a class="dropdown-item" href="javascript:action('#form_linked_results_{{ page_slug }}', 'unlink');">Retirer</a>
-                        <!--<a class="dropdown-item" href="javascript:action('#form_linked_results_{{ page_slug }}', 'delete');">Supprimer</a>
-                        <a class="dropdown-item" href="javascript:action('#form_linked_results_{{ page_slug }}', 'conceal');">Masquer</a>
-                        <a class="dropdown-item" href="javascript:action('#form_linked_results_{{ page_slug }}', 'publish');">Publier</a>-->
-                      </div>
-                    </div>
-                    
-                    <a class="button link" href="{{ path('admin_page_action', {slug: linked_table.page_slug, action: 'select', select_action: 'link', parent: current_tab.route.id}) }}" >Sélect.</a>
-                    <a class="button new" href="{{ path('admin_page_action', {slug: linked_table.page_slug, action: 'form', entity_name: linked_table.name, parent: current_tab.route.id}) }}">Créer</a>
-                    
+        		<div class="form-group">
+                {% for field in form %}
+                   {% include "admin/tpl/editor/form/field.html.twig" %}
+                {% endfor %}
                 </div>
-                
-                {% if results %}
-                <div class="results">
-                    <div class="results_infos"></div>
-                    <form id="form_linked_results_{{ page_slug }}" name="rows" action="{{ path('admin_page', {slug:'action', entity_name:linked_table.name, action_entity_name: model.getName(), action_selection:[row.id], parent: current_tab.route.id}) }}" method="post">
-                        
-                        {% include "admin/tpl/editor/index/list.html.twig" %}
-                        
-                        <input type="hidden" name="action" value="" />
-                    </form>
-                    
-                </div>
-                {% endif %}
-            </div>
-			{% endif %}
-			{% endfor %}
-            
-        </section>
-        {% endif %}
-    </aside>
 
+                {% include "admin/tpl/components/form_buttons.html.twig" %}
+        	{{ form_end(form) }}
+        </section>
+        
+        <aside>
+            <!-- Thumbnail -->
+            {% if row._thumbnail %}
+            <div class="thumbnail">
+                {% if row._file %}<a href="/uploads/{{ row._file }}" data-fancybox="gallery">{% endif %}<img src="/uploads/{{ row._thumbnail }}" />{% if row._file %}</a>{% endif %}
+            </div>
+            {% endif %}
+        
+            <!-- Links -->
+            {% if row._links is defined and row._links %}
+            {% include 'admin/tpl/components/add_links.html.twig' %}
+            {% include 'admin/tpl/components/links.html.twig' %}    
+            {% endif %}
+        </aside>
+    </div>
 </section>
 
 {% endblock %}

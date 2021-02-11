@@ -10,10 +10,10 @@ Dropzone.options.dropzoneForm = {
         });
     }
 };
-document.querySelectorAll('.button.import, #dropzoneForm_container .close').forEach(function(button) {
+document.querySelectorAll('.button.import, .cpnt_dropzone .close').forEach(function(button) {
     button.addEventListener('click', function(e) {
         e.stopPropagation();
-        document.querySelector('#dropzoneForm_container').classList.toggle('active');
+        document.querySelector('.cpnt_dropzone').classList.toggle('active');
     });
 });
 
@@ -79,11 +79,11 @@ initFormTypes();
 
 /* Folder functions */
 $('.button.new_folder').click(function() {
-    $('#new_folder_popup').toggleClass('active');
-    $('#new_folder_popup input[type=text]').focus();
+    $('.cpnt_new_folder').toggleClass('active');
+    $('.cpnt_new_folder input[type=text]').focus();
 });
-$('#new_folder_popup .close,#new_folder_popup .cancel').click(function() {
-    $('#new_folder_popup').removeClass('active');
+$('.cpnt_new_folder .close,.cpnt_new_folder .cancel').click(function() {
+    $('.cpnt_new_folder').removeClass('active');
 });
 
 

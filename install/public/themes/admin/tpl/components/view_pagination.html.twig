@@ -1,0 +1,9 @@
+{% if row.id and (view_nav.prev or view_nav.next) %}
+<div class="cpnt cpnt_view_pagination">
+    {% if view_nav.prev %}<a class="prev" href="{{ path('admin_page_action_id', {slug: page.slug, action: 'form', id: view_nav.prev.id}) }}">Précédent</a>{% endif %}
+    
+    <span class="infos">{{ view_nav.offset }} / {{ view_nav.total }}</span>    
+
+    {% if view_nav.next %}<a class="next" href="{{ path('admin_page_action_id', {slug: page.slug, action: 'form', id: view_nav.next.id}) }}">Suivant</a>{% endif %}
+</div>
+{% endif %}

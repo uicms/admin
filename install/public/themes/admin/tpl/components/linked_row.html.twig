@@ -1,0 +1,5 @@
+{% if params.linked_to_row is defined %}
+<div class="cpnt cpnt_linked_row">
+    <h3><a href="{{ path('admin_page_action_id', {slug:params.linked_to_slug, action: 'form', id:params.linked_to_id}) }}">{{ params.linked_to_slug }} \ {{ params.linked_to_row._name }}</a></h3>
+</div>
+{% endif %}

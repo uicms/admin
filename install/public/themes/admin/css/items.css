@@ -1,0 +1,34 @@
+/* Items manipulation */
+.item.concealed {
+    opacity: 0.5;
+}
+.item.selected.concealed,
+.item.selecting.concealed {
+    opacity: 1;
+}
+.dragging {
+    opacity: 0.5;
+}
+#clone,
+#tooltip {
+    position: absolute;
+    z-index: 10000;
+    background: #3849e8;
+    padding: .4em;
+    color: #fff;
+}
+span.ui-droppable-hover,
+.explorer.list .ui-droppable-hover {
+    background: #ffc800 !important;
+}
+.explorer.thumbnails .ui-droppable-hover .wrapper {
+    background: #ffc800 !important;
+}
+.ui-lasso-helper {
+	background: #3b99fc;
+	opacity: 0.2;
+	border: 1px dotted #3b99fc;
+}
+input.check_item {
+    display: none;
+}

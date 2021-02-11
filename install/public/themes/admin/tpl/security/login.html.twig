@@ -7,20 +7,20 @@
         <meta charset="UTF-8">
         <title>{{ ui.full_name }} - UI5 Login</title>
         <link rel="stylesheet" href="/themes/admin/css/reset.css" />
+        <link rel="stylesheet" href="/themes/admin/css/fonts.css" />
+        <link rel="stylesheet" href="/themes/admin/css/global.css" />
         <link rel="stylesheet" href="/themes/admin/css/layout.css" />
         <link rel="stylesheet" href="/themes/admin/css/buttons.css" />
         <link rel="stylesheet" href="/themes/admin/css/tabs.css" />
         <link rel="stylesheet" href="/themes/admin/css/form.css" />
     </head>
     <body>
-        <div id="login">
+        <section id="login">
             <form method="post">
                 {% if error %}
                     <div class="alert alert-danger">{{ error.messageKey|trans(error.messageData, 'security') }}</div>
                 {% endif %}
-
-                <h1 class="h3 mb-3 font-weight-normal">{{ ui.full_name }}</h1>
-	
+                <h1>{{ ui.full_name }}</h1>
             	<p>
                 	<label for="inputEmail" class="sr-only">Email</label>
                 	<input type="email" value="{{ last_username }}" name="email" id="inputEmail" class="form-control" placeholder="Email" required autofocus>
@@ -29,18 +29,14 @@
                 	<label for="inputPassword" class="sr-only">Password</label>
                 	<input type="password" name="password" id="inputPassword" class="form-control" placeholder="Password" required>
             	</p>
-                
-                
             	<input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}">
-
-                <p class="checkbox mb-3">
+                <p>
                     <label>
                         <input type="checkbox" name="_remember_me"> Remember me
                     </label>
                 </p>
-
-                <button class="btn btn-lg btn-primary" type="submit">Sign in</button>
+                <button type="submit">Sign in</button>
             </form>
-        </div>
+        </section>
     </body>
 </html>

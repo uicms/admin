@@ -6,16 +6,6 @@ body, img, a, p, span, div, strong, em, ul, ol, li, label, input, textarea, form
 	margin: 0;
 	padding: 0;
 }
-select,
-input,
-textarea,
-button,
-body {
-    font-family: 'Proxima Regular';
-	color: #333;
-	font-size: 0.9em;
-	line-height: 1.2em;
-}
 table, td, tr, th {
 	border-spacing: 0;
 	vertical-align: middle;
@@ -33,6 +23,7 @@ html, body {
   min-height: 100vh;
 }
 .clearfix:after {
+    font-size: 0;
 	content: "."; 
 	display: block; 
 	height: 0; 

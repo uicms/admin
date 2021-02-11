@@ -1,0 +1,43 @@
+<div class="cpnt cpnt_links">
+    {% for linked_table in row._links %}
+    {% set results = linked_table.rows %}
+    {% set current_entity = linked_table.name|slugger %}
+
+    {% if results %}
+    {% set page_slug = linked_table.page_slug %}
+    {% set parent = current_tab.route.id %}
+    <div class="linked_entity explorer list" data-offset="0" data-url="{{ path('admin_page_action', {slug:'action', action:'position', entity_name: linked_table.name, linked_to:model.name, linked_to_id:row.id }) }}">
+    	<h2 class="title"><!--<a href="{{ path('admin_page_action', {slug: linked_table.page_slug, action: 'index', 'entity_name': linked_table.name, linked_to: model.name, linked_to_id: row.id, parent: current_tab.route.id}) }}">-->{{ linked_table.page_slug|capitalize }}<!--</a>--></h2>
+
+        <div class="buttons">
+            <div class="dropdown action">
+              <button class="dropdown-toggle" type="button">Action</button>
+              <div class="dropdown-menu">
+                <a class="dropdown-item" href="javascript:action('#form_linked_results_{{ page_slug }}', 'unlink');">Retirer</a>
+                <!--<a class="dropdown-item" href="javascript:action('#form_linked_results_{{ page_slug }}', 'delete');">Supprimer</a>
+                <a class="dropdown-item" href="javascript:action('#form_linked_results_{{ page_slug }}', 'conceal');">Masquer</a>
+                <a class="dropdown-item" href="javascript:action('#form_linked_results_{{ page_slug }}', 'publish');">Publier</a>-->
+              </div>
+            </div>
+    
+            <a class="button link" href="{{ path('admin_page_action', {slug: linked_table.page_slug, action: 'select', select_action: 'link', parent: current_tab.route.id}) }}" >Sélect.</a>
+            <a class="button new" href="{{ path('admin_page_action', {slug: linked_table.page_slug, action: 'form', entity_name: linked_table.name, parent: current_tab.route.id}) }}">Créer</a>
+    
+        </div>
+
+        {% if results %}
+        <div class="results">
+            <div class="results_infos"></div>
+            <form id="form_linked_results_{{ page_slug }}" name="rows" action="{{ path('admin_page', {slug:'action', entity_name:linked_table.name, action_entity_name: model.getName(), action_selection:[row.id], parent: current_tab.route.id}) }}" method="post">
+        
+                {% include "admin/tpl/editor/index/list.html.twig" %}
+        
+                <input type="hidden" name="action" value="" />
+            </form>
+    
+        </div>
+        {% endif %}
+    </div>
+    {% endif %}
+    {% endfor %}
+</div>

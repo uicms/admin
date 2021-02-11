@@ -8,68 +8,34 @@
 
 <section id="select" class="explorer {{ params.display }}">
 
+    <!-- Tools -->
+    <div class="tools">
+        {% include "admin/tpl/components/quick_search.html.twig" %}
+        {% include "admin/tpl/components/results_tools.html.twig" %}
+    </div>
+
+    <!-- Path -->
+    {% include "admin/tpl/components/path.html.twig" %}
+        
     <form id="form_results"  name="select" action="{{ path('admin_page_action', {slug:'action', action:params.select_action, entity_name:model.name, action_entity_name:current_tab.parent.route.params.entity_name, action_selection:[current_tab.parent.route.params.id]}) }}" method="post">
-        
-        
-        <div class="notice">
+    
+        <div class="cpnt_notice">
             <strong>{{ ("select_message_" ~ params.select_action)|trans }} "{{ current_tab.parent.title }}"</strong>
-            
+        
             <div class="buttons">
                 <a href="{{ path('admin_page_action', {slug:'action', action:'canceltab', entity_name:model.name, 'route_id':current_tab.route.id}) }}" class="btn">Annuler</a> <button type="submit" class="btn btn-primary btn-valid-selection hold-selection" disabled="disabled">Valider la sélection</button>
             </div>
         </div>
         
-        
-        <div class="tools2 clearfix">
-            <div class="misc_tools">
-                <form class="search_form" method="get" action="">
-                    <input type="text" name="search" class="form-control" placeholder="Rechercher" />
-                </form>
-        
-                <div class="dropdown action">
-                  <button class="dropdown-toggle" type="button">
-                    Action
-                  </button>
-                  <div class="dropdown-menu">
-                    <a class="dropdown-item" href="javascript:action('#form_results', 'conceal');">Masquer</a>
-                    <a class="dropdown-item" href="javascript:action('#form_results', 'publish');">Publier</a>
-                    <a class="dropdown-item" href="javascript:action('#form_results', 'delete');">Supprimer</a>
-                    <!--<a class="dropdown-item" href="javascript:action('#form_results', 'copy');">Dupliquer</a>-->
-                  </div>
-                </div>
-            </div>
-
-            <div class="display_tools">{% include "admin/tpl/editor/index/tools.html.twig" %}</div>
-        </div>
-    
-    
-        <div class="path">
-            <h1>
-                <a href="{{ path('admin_page_action', {slug: page_slug, action: 'select', dir: 0, offset: 0}) }}">
-                    <span class="droppable" data-id="0"><span class="wrapper">{{ page.slug|capitalize }}</span></span>
-                </a>
-            
-                {% for path_item in params.path %}
-                    \ <span class="name icon {% if path_item.isdir %} folder{% else %} doc{% endif %}">
-                    {% if path_item.isdir %}<a href="{{ path('admin_page_action', {slug:page_slug, action: 'select', dir:path_item.id, offset:0 }) }}">{% endif %}
-                    {{ path_item._name }}
-                    {% if path_item.isdir %}</a>{% endif %}
-                </span>
-                {% endfor %}
-            
-            </h1>
-        </div>
-    
-    
         {% set results = rows %}
         {% set page_slug = page.slug %}
         <div id="results">
             {% include "admin/tpl/editor/index/" ~ params.display ~ ".html.twig" %}
         </div>
-
+        
     </form>
-
-    {% include "admin/tpl/editor/index/pagination.html.twig" %}
+    
+    {% include "admin/tpl/components/pagination.html.twig" %}
 </section>
 
 {% endblock %}

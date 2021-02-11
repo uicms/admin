@@ -1,0 +1,23 @@
+{% if row._total_linked < row._links|length %}
+<div class="cpnt cpnt_add_link">
+    <div class="dropdown">
+      	<button class="dropdown-toggle">
+        	Associer des données
+      	</button>
+      	<div class="dropdown-menu">
+        <ul>
+        {% for linked_table in row._links %}
+        {% if linked_table.rows|length == 0 %}
+          <li class="linked_table">
+              {% set page_slug = linked_table.page_slug %}
+		      <strong class="name"><a href="{{ path('admin_page_action', {slug: linked_table.page_slug, action: 'select', select_action: 'link', entity_name: linked_table.name, parent: current_tab.route.id}) }}" >{{ linked_table.page_slug|capitalize }}</a></strong>               	          
+              <a class="button new" href="{{ path('admin_page_action', {slug: linked_table.page_slug, action: 'form', entity_name: linked_table.name, parent: current_tab.route.id}) }}">Nouveau</a>
+              <a class="button link" href="{{ path('admin_page_action', {slug: linked_table.page_slug, action: 'select', select_action: 'link', parent: current_tab.route.id}) }}" >Sélect.</a> 
+	      </li>
+          {% endif %}
+        {% endfor %}
+        </ul>
+      	</div>
+    </div>
+</div>
+{% endif %}
