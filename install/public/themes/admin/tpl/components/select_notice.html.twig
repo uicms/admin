@@ -1,0 +1,8 @@
+{% trans_default_domain 'admin' %}
+<div class="cpnt_notice select">
+    <strong>{{ ("select_message_" ~ params.select_action)|trans }} "{{ current_tab.parent.title }}"</strong>
+
+    <div class="buttons">
+        <a href="{{ path('admin_page_action', {slug:'action', action:'canceltab', entity_name:model.name, 'route_id':current_tab.route.id}) }}" class="btn">Annuler</a> <button type="submit" class="btn btn-primary btn-valid-selection hold-selection" disabled="disabled">Valider la sélection</button>
+    </div>
+</div>

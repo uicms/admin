@@ -1,6 +1,6 @@
     <div class="cpnt cpnt_path">
         <h1>
-            <a href="{{ path('admin_page_action', {slug: page_slug, action: 'index', dir: 0, offset: 0}) }}">
+            <a href="{{ path('admin_page_action', {slug: page_slug, action: current_tab.route.action, dir: 0, offset: 0}) }}">
                 <span class="droppable" data-id="0"><span class="wrapper">{{ page.slug|capitalize }}</span></span>
             </a>
             

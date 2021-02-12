@@ -110,31 +110,6 @@ a.button.new {
 .tab-pane.active {
     display: block;
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+.tab-content {
+    padding-top: var(--default-spacing);
+}

@@ -61,13 +61,15 @@ document.querySelector('body').addEventListener('click', function(e) {
 
 
 /* Misc */
+
 // External links
 document.querySelectorAll('a.external').forEach(function(link) {
     link.setAttribute('target', '_blank');
 });
+
 // Warn fading
-if(warn = document.querySelector('.alert')) {
-    setTimeout(function(){ warn.classList.add('fade') }, 3000);
+if(message = document.querySelector('.cpnt_message')) {
+    setTimeout(function(){ message.classList.add('fade') }, 2000);
 }
 
 
@@ -117,6 +119,7 @@ $(window).on('unselect', function() {
     $('.btn-valid-selection').attr('disabled', true);
     $('body').removeClass('body-selection');
 });
+
 function initItems() {
     var positionTimer = null;
     var countdownTimer = null;

@@ -8,11 +8,11 @@
         <ul>
         {% for linked_table in row._links %}
         {% if linked_table.rows|length == 0 %}
-          <li class="linked_table">
+          <li>
               {% set page_slug = linked_table.page_slug %}
 		      <strong class="name"><a href="{{ path('admin_page_action', {slug: linked_table.page_slug, action: 'select', select_action: 'link', entity_name: linked_table.name, parent: current_tab.route.id}) }}" >{{ linked_table.page_slug|capitalize }}</a></strong>               	          
+              <a class="button link" href="{{ path('admin_page_action', {slug: linked_table.page_slug, action: 'select', select_action: 'link', parent: current_tab.route.id}) }}" >Sélect.</a>
               <a class="button new" href="{{ path('admin_page_action', {slug: linked_table.page_slug, action: 'form', entity_name: linked_table.name, parent: current_tab.route.id}) }}">Nouveau</a>
-              <a class="button link" href="{{ path('admin_page_action', {slug: linked_table.page_slug, action: 'select', select_action: 'link', parent: current_tab.route.id}) }}" >Sélect.</a> 
 	      </li>
           {% endif %}
         {% endfor %}

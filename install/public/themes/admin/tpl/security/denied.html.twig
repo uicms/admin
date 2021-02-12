@@ -1,0 +1,10 @@
+{% extends "admin/tpl/layout.html.twig" %}
+
+{% block title %}{{ page.slug|capitalize }}{% endblock %}
+
+{% block body %}
+<section id="denied">
+    <h1>Vous ne disposez pas des droits nécessaires pour afficher cette page !</h1>
+</section>
+
+{% endblock %}

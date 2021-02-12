@@ -72,6 +72,8 @@ strong {
 input[type=text],
 input[type=password],
 input[type=email],
+input[type=date],
+input[type=number],
 textarea {
     border: 1px solid var(--grey3);
     box-sizing: border-box;

@@ -82,7 +82,12 @@ class EditorController extends AbstractController
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
             $data = $form->getData()->setParent($model->find($params['dir']));
-            $id = $model->persist($data, $current);
+            
+            try {
+                $id = $model->persist($data, $current);
+            } catch (\Throwable $throwable) {
+                $this->addFlash('error', $throwable->getMessage());
+            }
             
             if(isset($current_tab['parent']) && $current_tab['parent']) {
                 $model->link(array($id), $current_tab['parent']['route']['params']['entity_name'], array($current_tab['parent']['route']['params']['id']));

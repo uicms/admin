@@ -8,3 +8,6 @@
 #select .tools .cpnt_quick_search {
     flex-grow: 2;
 }
+#select #form_results > * {
+    margin-bottom: var(--default-spacing);
+}

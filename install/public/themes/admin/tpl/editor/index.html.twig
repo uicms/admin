@@ -33,7 +33,10 @@
     
     <!-- Path -->
     {% include "admin/tpl/components/path.html.twig" %}
-
+    
+    <!-- Pager -->
+    {% include "admin/tpl/components/pagination.html.twig" %}
+    
     <!-- Results -->
     <div id="results" class="results">
         <form id="form_results" name="index" action="{{ path('admin_page', {slug:'action', entity_name:model.name, linked_to:params.linked_to, linked_to_id:params.linked_to_id}) }}" method="post">
