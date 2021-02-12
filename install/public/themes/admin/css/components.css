@@ -240,7 +240,7 @@
 }
 .cpnt_links .linked_entity .buttons > a.link {
     width: 20px;
-    background: url('../img/link2.svg') no-repeat center center;
+    background: url('../img/link.svg') no-repeat center center;
     background-size: 100%;
 }
 .cpnt_links .linked_entity .buttons > a.new {

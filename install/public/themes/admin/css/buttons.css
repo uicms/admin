@@ -16,7 +16,7 @@ button[disabled=disabled] {
     opacity: 0.5;
 }
 a.button.link {
-    background: url('../img/link2.svg') no-repeat left center;
+    background: url('../img/link.svg') no-repeat left center;
     background-size: 1.2em;
     padding-left: 1.5em;
 }
