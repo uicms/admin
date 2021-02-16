@@ -31,7 +31,7 @@ class ActionController extends AbstractController
         try {
 			$model->get($entity_name)->mode('admin')->move($selection, $target);
         } catch(\Throwable $throwable) {
-			$this->addFlash('error', 'move_error');
+			$this->addFlash('error', $throwable->getMessage());
 		}
         
         $redirect = $nav->getCurrentTab();
@@ -54,7 +54,7 @@ class ActionController extends AbstractController
             $model->persist($row);
 
         } catch(\Throwable $throwable) {
-			$this->addFlash('error', 'folder_error');
+			$this->addFlash('error', $throwable->getMessage());
         }
         
         $redirect = $nav->getCurrentTab();
@@ -66,7 +66,7 @@ class ActionController extends AbstractController
         try {
             $model->get($entity_name)->mode('admin')->publish($selection);
         } catch(\Throwable $throwable) {
-            $this->addFlash('error', 'publish_error');
+            $this->addFlash('error', $throwable->getMessage());
         }
         
        $redirect = $nav->getCurrentTab();
@@ -78,7 +78,7 @@ class ActionController extends AbstractController
 		try {
 			$model->get($entity_name)->mode('admin')->conceal($selection);
         } catch(\Throwable $throwable) {
-			$this->addFlash('error', 'conceal_error');
+			$this->addFlash('error', $throwable->getMessage());
 		}
         
        $redirect = $nav->getCurrentTab();
@@ -90,7 +90,7 @@ class ActionController extends AbstractController
         try {
             $model->get($entity_name)->mode('admin')->duplicate($selection);
         } catch(\Throwable $throwable) {
-            $this->addFlash('error', 'duplicate_error');
+            $this->addFlash('error', $throwable->getMessage());
         }
         
         $redirect = $nav->getCurrentTab();
@@ -104,7 +104,7 @@ class ActionController extends AbstractController
         try {
             $model->get($entity_name)->mode('admin')->position($selection, $position, $params);
         } catch(\Throwable $throwable) {
-            $this->addFlash('error', 'position_error');
+            $this->addFlash('error', $throwable->getMessage());
         }
 
         if(!$request->isXmlHttpRequest()) {
@@ -140,7 +140,7 @@ class ActionController extends AbstractController
                 $new_id = $model->persist($new);
             }
         } catch(\Throwable $throwable) {
-            $this->addFlash('error', 'upload_error');
+            $this->addFlash('error', $throwable->getMessage());
         }
 
         if(!$request->isXmlHttpRequest()) {
@@ -156,7 +156,7 @@ class ActionController extends AbstractController
 		try {
 			$model->get($entity_name)->mode('admin')->link($selection, $action_entity_name, $action_selection);
         } catch(\Throwable $throwable) {
-			$this->addFlash('error', 'link_error');
+			$this->addFlash('error', $throwable->getMessage());
 		}
         
         $current_tab = $nav->getCurrentTab();
@@ -170,7 +170,7 @@ class ActionController extends AbstractController
 		try {
 			$model->get($entity_name)->unlink($selection, $action_entity_name, $action_selection);
         } catch(\Throwable $throwable) {
-			$this->addFlash('error', 'unlink_error');
+			$this->addFlash('error', $throwable->getMessage());
 		}
         
         $redirect = $nav->getCurrentTab();    
@@ -183,7 +183,7 @@ class ActionController extends AbstractController
             $tab = $nav->getTab($route_id);
 			$nav->removeTab($route_id);
         } catch(\Throwable $throwable) {
-			$this->addFlash('error', 'tab_not_found');
+			$this->addFlash('error', $throwable->getMessage());
 		}
         
         if($tab && isset($tab['route'])) {
@@ -201,7 +201,7 @@ class ActionController extends AbstractController
             $tab = $nav->getTab($route_id);
 			$nav->removeTab($route_id);
         } catch(\Throwable $throwable) {
-			$this->addFlash('error', 'tab_not_found');
+			$this->addFlash('error', $throwable->getMessage());
 		}
 
         $redirect = $nav->getTab($tab['parent']['route']['id']);      

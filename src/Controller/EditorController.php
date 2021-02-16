@@ -37,6 +37,10 @@ class EditorController extends AbstractController
         $current_tab = $nav->getCurrentTab();
         $nav->setCurrentTabAttribute('title', ucfirst($current_tab['route']['slug']));
         
+        # Data
+        $results = $model->getAll($params);
+        $paginator = new Paginator($params['offset'], $params['limit'], $model->count($params));
+        
         return $this->render(
                 'admin/tpl/editor/index.html.twig',
                 [
@@ -44,8 +48,8 @@ class EditorController extends AbstractController
                      'nav'=>$nav,
                      'params'=>$params,
                      'model'=>$model, 
-                     'rows'=>$model->getAll($params), 
-                     'paginator'=>new Paginator($params['offset'], $params['limit'], $model->count($params)),
+                     'rows'=>$results, 
+                     'paginator'=>$paginator,
                 ]
             );
     }

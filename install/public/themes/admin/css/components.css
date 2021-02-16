@@ -61,16 +61,38 @@
     background-size: 15px;
     padding-left: 20px;
 }
+.cpnt_path h1 .search {
+    background: url('../img/search.svg') no-repeat 0 center;
+    background-size: 15px;
+    padding-left: 20px;
+}
 
 /* Quick search */
 .cpnt_quick_search {
+    position: relative;
 }
-.cpnt_quick_search form input[type=text] {
+.cpnt_quick_search form input[name=search] {
     background: url('../img/search.svg') no-repeat 8px 10px;
     background-size: 15px;
     padding-left: 30px;
     width: 100%;
     max-width: 300px;
+}
+.cpnt_quick_search.active form input[name=search] {
+}
+.cpnt_quick_search form .clear {
+    display: none;
+}
+.cpnt_quick_search.active form .clear {
+    position: absolute;
+    display: block;
+    right: 10px;
+    top: 10px;
+    width: 15px;
+    height: 15px;
+    background: url('../img/close_grey.svg') no-repeat;
+    background-size: 100%;
+    font-size: 0;
 }
 
 /* Results tools (Display, sorting etc) */
