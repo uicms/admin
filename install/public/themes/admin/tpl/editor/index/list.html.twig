@@ -1,12 +1,17 @@
         <div class="items_header">
             <div class="cell name">Name</div>
             <!--<div class="col extra user">User</div>-->
+            {% for field_name in ui['admin']['pages'][page.slug]['displayed_fields'] %}
+                <div class="cell extra">
+                {{ field_name|ucfirst }}
+                </div>
+            {% endfor %}
             <div class="cell extra position">Position</div>
             <div class="cell extra id">#</div>
         </div>
         
         <div class="items list sortable">
-
+                
         {% for result in results %}
             {% set result_url_dir = path('admin_page_action', {slug: page_slug, action: current_tab.route.action, dir: result.id, offset: 0}) %}
             {% set result_url = path('admin_page_action_id', {slug: page_slug, action: 'form', id: result.id, target: 'blank'}) %}
@@ -27,12 +32,26 @@
                  <!--<div class="col extra user">
                      {{ result.user.name }}
                  </div>-->
-                 <div class="cell extra position">{% if linked_table is defined and linked_table %}{{ result._linked_position }}{% else %}{{ result.position }}{% endif %}</div>
-                 <div class="cell extra id">{{ result.id }}</div>
+                     
+                {% for field_name in ui['admin']['pages'][page.slug]['displayed_fields'] %}
+                    <div class="cell extra">
+                        {% set value = attribute(result, field_name) %}
+                        {% if value.id is defined %}
+                            {% set linked_entity_name = ui['entity'][model.getName()]['form']['fields'][field_name]['options']['class'] %}
+                            {% set name_field = ui['entity'][linked_entity_name]['name_field'] %}
+                            {{ attribute(value, name_field) }}
+                        {% else %}
+                            {{ value }}
+                        {% endif %}
+                     </div>
+                {% endfor %}
+                     
+                <div class="cell extra position">{% if linked_table is defined and linked_table %}{{ result._linked_position }}{% else %}{{ result.position }}{% endif %}</div>
+                <div class="cell extra id">{{ result.id }}</div>
                  
-                 <input type="hidden" name="position[]" class="position_input" value="{% if linked_table is defined and linked_table %}{{ result._linked_position }}{% else %}{{ result.position }}{% endif %}" />
-                 <input type="checkbox" class="check_item" name="selection[]" value="{{ result.id }}" />
-             </div>
-         {% endfor %}
+                <input type="hidden" name="position[]" class="position_input" value="{% if linked_table is defined and linked_table %}{{ result._linked_position }}{% else %}{{ result.position }}{% endif %}" />
+                <input type="checkbox" class="check_item" name="selection[]" value="{{ result.id }}" />
+            </div>
+        {% endfor %}
          
         </div>

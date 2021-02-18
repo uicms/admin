@@ -198,7 +198,7 @@ span.ui-droppable-hover,
 }
 .items.thumbnails .item.doc > .wrapper .thumbnail.icon {
     background: url('../img/doc.svg') no-repeat center center;
-    background-size: 30%;
+    background-size: 26%;
     opacity: 0.4;
 }
 .items.thumbnails .item.folder > .wrapper .thumbnail.icon {
