@@ -1,16 +1,17 @@
 <div class="cpnt cpnt_form_buttons">
-    <button type="submit" class="btn btn-primary">Sauvegarder</button> 
-    <!--<button type="submit" class="btn btn-primary">Sauvegarder + Suivant</button> 
-    <button type="submit" class="btn btn-primary">Sauvegarder + nouveau</button>
+    <button type="submit" class="btn" disabled="disabled">Sauvegarder</button> 
+    <button type="button" class="btn next" data-step="next" disabled="disabled">Sauvegarder + Suivant</button> 
+    <button type="button" class="btn new" data-step="new" disabled="disabled">Sauvegarder + nouveau</button>
     
     <div class="dropdown action">
       <button class="dropdown-toggle" type="button">
         Action
       </button>
       <div class="dropdown-menu">
-        <a class="dropdown-item" href="#">Supprimer</a>
-        <a class="dropdown-item" href="#">Masquer</a>
-        <a class="dropdown-item" href="#">Publier</a>
+        <a class="dropdown-item" href="{{ path('admin_page', {slug: 'action', action:'delete', entity_name: model.name, selection:[row.id]}) }}">Supprimer</a>
+        <a class="dropdown-item" href="{{ path('admin_page', {slug: 'action', action:'conceal', entity_name: model.name, selection:[row.id]}) }}">Masquer</a>
+        <a class="dropdown-item" href="{{ path('admin_page', {slug: 'action', action:'publish', entity_name: model.name, selection:[row.id]}) }}">Publier</a>
+        <a class="dropdown-item" href="{{ path('admin_page', {slug: 'action', action:'duplicate', entity_name: model.name, selection:[row.id]}) }}">Dupliquer</a>
       </div>
-    </div>-->
+    </div>
 </div>

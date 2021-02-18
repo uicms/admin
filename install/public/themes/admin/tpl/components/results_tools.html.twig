@@ -9,7 +9,7 @@
         </button>
         <div class="dropdown-menu">
             <a class="dropdown-item{% if params.display == 'list' %} active{% endif %}" href="{{ path('admin_page_action', {slug: page.slug, action: current_tab.route.action, display: 'list'}) }}">{{ 'list'|trans }}</a>
-            <a class="dropdown-item{% if params.display == 'details' %} active{% endif %}" href="{{ path('admin_page_action', {slug: page.slug, action: current_tab.route.action, display: 'details'}) }}">{{ 'details'|trans }}</a>
+            <!--<a class="dropdown-item{% if params.display == 'details' %} active{% endif %}" href="{{ path('admin_page_action', {slug: page.slug, action: current_tab.route.action, display: 'details'}) }}">{{ 'details'|trans }}</a>-->
             <a class="dropdown-item{% if params.display == 'thumbnails' %} active{% endif %}" href="{{ path('admin_page_action', {slug: page.slug, action: current_tab.route.action, display: 'thumbnails'}) }}">{{ 'thumbnails'|trans }}</a>
         </div>
     </div>

@@ -39,8 +39,6 @@
 
 
 /* Fonts */
-select,
-option,
 input,
 textarea,
 button,
@@ -79,6 +77,7 @@ textarea {
     box-sizing: border-box;
     width: 100%;
     padding: var(--alt-spacing);
+    border-radius: 3px;
 }
 textarea {
     resize: none;

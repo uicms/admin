@@ -16,14 +16,19 @@ class ActionController extends AbstractController
 {
     public function delete($entity_name, $selection, Model $model, Nav $nav)
     {
-        #try {
+        try {
             $model->get($entity_name)->delete($selection);
-        #} catch(\Throwable $throwable) {
-        #$this->addFlash('error', 'delete_error');
-        #}
+        } catch(\Throwable $throwable) {
+            $this->addFlash('error', $throwable->getMessage());
+        }
         
        $redirect = $nav->getCurrentTab();
-       return $this->redirectToRoute($redirect['route']['name'], $redirect['route']['params']);
+       if(isset($redirect['route']['params']['action']) && $redirect['route']['params']['action'] == 'form') {
+           $nav->removeTab($redirect['route']['id']);
+           return $this->redirectToRoute('admin_page', ['slug'=>$redirect['route']['params']['slug']]);
+       } else {
+           return $this->redirectToRoute($redirect['route']['name'], $redirect['route']['params']);
+       }
 	}
     
     public function move($entity_name, $selection, $target, Model $model, Nav $nav)
@@ -94,7 +99,11 @@ class ActionController extends AbstractController
         }
         
         $redirect = $nav->getCurrentTab();
-        return $this->redirectToRoute($redirect['route']['name'], $redirect['route']['params']);
+        if(isset($redirect['route']['params']['action']) && $redirect['route']['params']['action'] == 'form') {
+            return $this->redirectToRoute('admin_page', ['slug'=>$redirect['route']['params']['slug']]);
+        } else {
+            return $this->redirectToRoute($redirect['route']['name'], $redirect['route']['params']);
+        }
     }
     
     public function position($entity_name, $selection, $position, Model $model, Nav $nav, Request $request, Params $params_service)

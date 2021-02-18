@@ -38,8 +38,12 @@
                    {% include "admin/tpl/editor/form/field.html.twig" %}
                 {% endfor %}
                 </div>
-
+                
+                {% if form|length > 5 %}
                 {% include "admin/tpl/components/form_buttons.html.twig" %}
+                {% endif %}
+                
+                <input type="hidden" class="next_step" name="next_step" value="" />
         	{{ form_end(form) }}
         </section>
         

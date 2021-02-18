@@ -22,7 +22,15 @@
     box-sizing: border-box;
     flex-grow: 2;
 }
-
+#loading {
+    position: absolute;
+    left: 50%;
+    top: 20px;
+    transform: translateX(-50%);
+    padding-left: 27px;
+    background: url('../img/loading.svg') no-repeat left center;
+    background-size: 25px;
+}
 
 /*
 /* Navigation left
@@ -171,6 +179,7 @@ body.menu_expanded #menu {
     border-top: 1px solid var(--grey3);
     border-left: 1px solid var(--grey3);
     border-right: 1px solid var(--grey3);
+    border-radius: 3px 3px 0 0;
     background: white;
     position: relative;
     bottom: -1px;

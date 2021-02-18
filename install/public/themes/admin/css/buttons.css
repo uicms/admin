@@ -1,10 +1,10 @@
 a.btn,
 button.btn {
-    background: #333;
+    background: #666;
     color: #fff;
     border: 0;
     padding: 10px;
-    font-size: 10px;
+    border-radius: 3px;
 }
 a.btn:hover,
 button.btn:hover {
@@ -13,7 +13,10 @@ button.btn:hover {
 }
 button[disabled=disabled] {
     cursor: default;
-    opacity: 0.5;
+    opacity: 0.3;
+}
+button[disabled=disabled]:hover {
+    background: #666;
 }
 a.button.link {
     background: url('../img/link.svg') no-repeat left center;
@@ -103,6 +106,7 @@ a.button.new {
     border-left: 1px solid #ccc;
     border-right: 1px solid #ccc;
     border-bottom: 1px solid #fff;
+    border-radius: 3px 3px 0 0;
 }
 .tab-pane {
     display: none;

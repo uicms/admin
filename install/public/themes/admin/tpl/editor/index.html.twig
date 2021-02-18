@@ -14,7 +14,7 @@
 {% include "admin/tpl/components/dropzone.html.twig" %}
 
 <!-- Explorer section -->
-<section id="explorer" class="explorer {{ params.display }}" data-offset="{{ paginator.offset }}" data-url="{{ path('admin_page_action', {slug:'action', action:'position', entity_name: page.arguments.entity_name, linked_to:params.linked_to}) }}">
+<section id="explorer" class="explorer" data-offset="{{ paginator.offset }}" data-url="{{ path('admin_page_action', {slug:'action', action:'position', entity_name: page.arguments.entity_name, linked_to:params.linked_to}) }}">
     
     <!-- Linked to -->
     {% include "admin/tpl/components/linked_row.html.twig" %}

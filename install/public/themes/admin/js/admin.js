@@ -31,6 +31,7 @@ tinymce.init({
 		editor.on('keydown', function(e) {
   	    });
     	editor.on('change', function(e) {
+            $('.cpnt_form_buttons button').attr('disabled', false);
     	});
 	},
 	paste_as_text: true,
@@ -164,10 +165,10 @@ function initItems() {
                 $('.selected').addClass('dragging ui-sortable-helper ui-sortable-handle');
                 
                 // Mode thumbnails
-                $('.explorer.thumbnails .selected').each(function(i) {
+                $('.items.thumbnails .selected').each(function(i) {
                     if($(this).attr('id') != ui.item.attr("id")) $(this).hide();
                 });
-                if($('.explorer.thumbnails .selected').length > 1) {
+                if($('.items.thumbnails .selected').length > 1) {
                     $('body').prepend('<div id="tooltip">+' + ($('.selected').length-1) + '</div>');
                 }
             },
@@ -175,7 +176,7 @@ function initItems() {
                 var explorer = ui.item.parentsUntil('.explorer').parent();
                 
                 // Tooltip if more than one element dragged
-                if($('.explorer.thumbnails .selected').length > 1) {
+                if($('.items.thumbnails .selected').length > 1) {
                     $('#tooltip').css({'top': (ev.pageY+10) + 'px', 'left': (ev.pageX+10) + 'px'});
                 }
             
@@ -190,7 +191,7 @@ function initItems() {
                 // If drag over the grid
                 else {
                     $(explorer).find('.selected,.placeholder').show();
-                    $('.explorer.thumbnails .selected').each(function(i) { 
+                    $('.items.thumbnails .selected').each(function(i) { 
                         $(this).attr('id') != ui.item.attr("id") ? $(this).hide() : $(this).show();
                     });
                     $('#clone').remove();
@@ -209,7 +210,7 @@ function initItems() {
                         $('#tooltip').hide();
                     } else 
                     // List mode
-                    if($('.explorer.list').length){
+                    if($('.items.list').length){
                         $('#tooltip').show();
                         $('.selected').each(function() {
                             if(!droppable_element.hasClass('selected') && collision(droppable_element, $(this))) {
@@ -218,7 +219,7 @@ function initItems() {
                         });
                     } else 
                     // Thumbnails mode
-                    if($('.explorer.thumbnails').length){
+                    if($('.items.thumbnails').length){
                         $('#tooltip').show();
                         if(!droppable_element.hasClass('selected') && collision(droppable_element.find('.wrapper'), ui.item.find('.wrapper'))) {
                             is_touched = true;
@@ -447,8 +448,24 @@ function uncheckAllItems(excepted_element) {
 
 
 /*
-/* Form funtions
+/* Form functions
 */
+// Enable submit buttons
+$("form select, form input, form textarea").on('input', function(){
+    $('.cpnt_form_buttons button').attr('disabled', false);
+});
+
+// Save+action
+var buttons = document.querySelectorAll('.cpnt_form_buttons .btn[type=button]');
+buttons.forEach(function(button) {
+    var step = button.getAttribute('data-step');
+    button.addEventListener('click', function(e) {
+        document.querySelector('.next_step').value = step;
+        document.querySelector('form[name=ui_form]').submit();
+    });
+})
+
+
 // Form translations tabs
 tabs = document.querySelectorAll('.nav-tabs .nav-item a');
 tabs.forEach(function(tab) {
@@ -495,15 +512,3 @@ function initFormTypes() {
         });
     }
 }
-
-/*$('*').click(function(e) {
-    var tags = ['H1', 'DIV', 'SECTION', 'BODY', 'HTML'];
-    if(tags.indexOf($(this).prop('tagName')) == -1) {
-        e.stopPropagation();
-        console.log($(this).prop('tagName'));
-    }
-    if($(this).prop('tagName') == 'SECTION') {
-        $(window).trigger('click_section');
-        console.log('click_section ' + $(this).prop('tagName'));
-    }
-});*/

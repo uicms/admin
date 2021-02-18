@@ -1,4 +1,4 @@
-  	<div class="sortable thumbnails clearfix">
+  	<div class="items thumbnails sortable clearfix">
         	
         {% for result in results %}
         {% set result_url_dir = path('admin_page_action', {slug: page_slug, action: current_tab.route.action, dir: result.id, offset: 0}) %}

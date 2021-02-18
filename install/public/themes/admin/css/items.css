@@ -1,4 +1,6 @@
-/* Items manipulation */
+/* Common */
+.item {
+}
 .item.concealed {
     opacity: 0.5;
 }
@@ -6,6 +8,31 @@
 .item.selecting.concealed {
     opacity: 1;
 }
+.item .edit {
+    font-size: 0;
+    width: 12px;
+    height: 20px;
+    margin-left: 4px;
+    background: url('../img/pen.svg') no-repeat left center;
+    background-size: 100%;
+    display: none;
+}
+.item:hover .edit {
+    display: inline-block;
+}
+.item.selecting .edit,
+.item.selecting:hover .edit,
+.item.selected .edit,
+.item.selected:hover .edit {
+    background: url('../img/pen_white.svg') no-repeat left center;
+    background-size: 100%;
+}
+.item input.check_item {
+    display: none;
+}
+
+
+/* Items manipulation */
 .dragging {
     opacity: 0.5;
 }
@@ -18,17 +45,296 @@
     color: #fff;
 }
 span.ui-droppable-hover,
-.explorer.list .ui-droppable-hover {
-    background: #ffc800 !important;
-}
-.explorer.thumbnails .ui-droppable-hover .wrapper {
-    background: #ffc800 !important;
+.items.list .ui-droppable-hover,
+.items.thumbnails .ui-droppable-hover .wrapper  {
+    background: #fbf2d4 !important;
 }
 .ui-lasso-helper {
 	background: #3b99fc;
 	opacity: 0.2;
 	border: 1px dotted #3b99fc;
 }
-input.check_item {
+
+
+/* List mode */
+.items_header {
+    background-color: #f8f8f8;
+    display: flex;
+}
+.items.list .item {
+    display: flex;
+    border-bottom: 1px solid #eee;
+    overflow: hidden;
+}
+.items.list .placeholder {
+    float: none;
+    height: 34px !important;
+}
+.items.list .item.selecting .text_preview,
+.items.list .item.selecting:hover .text_preview,
+.items.list .item.selected .text_preview,
+.items.list .item.selected:hover .text_preview {
+    color: #999;
+    opacity: 0.5;
+}
+.items.list .item.selecting,
+.items.list .item.selecting:hover,
+.items.list .item.selected,
+.items.list .item.selected:hover {
+    background-color: #0074e8;
+    color: #fff;
+}
+.items.list .item:hover {
+    background-color: #f8f9fa;
+}
+.items.list .item.selecting a,
+.items.list .item.selected a {
+    color: #fff;
+}
+.items.list .item.selected .cell.name a.name.icon.doc,
+.items.list .item.selecting .cell.name a.name.icon.doc {
+}
+.items.list .item.hidden {
     display: none;
 }
+
+
+/* Cells */
+.cell {
+    line-height: 20px;
+    padding: 5px 0;
+}
+.cell.name {
+    flex: 2;
+    display: flex;
+    box-sizing: border-box;
+    padding-left: 15px;
+}
+.cell.name .name {
+}
+.cell.name .text_preview {
+    flex: 2;
+    padding-left: 5px;
+    color: #999;
+    height: 20px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+.cell.extra {
+    width: 5%;
+    text-align: center;
+}
+.cell .thumbnail {
+    display: inline-block;
+    width: 20px;
+    text-align: left;
+}
+.cell .thumbnail img {
+    max-width: 15px;
+    max-height: 20px;
+    vertical-align: middle;
+}
+.cell.name a.name.icon.doc {
+    background: url('../img/doc.svg') no-repeat left center;
+    background-size: 12px;
+    padding-left: 18px;
+}
+.cell.name a.name.icon.folder {
+    background: url('../img/folder.svg') no-repeat left center;
+    background-size: 15px;
+    padding-left: 20px;
+}
+.items.list .item.selecting .cell.name a.name.icon.folder,
+.items.list .item.selecting:hover .cell.name a.name.icon.folder,
+.items.list .item.selected .cell.name a.name.icon.folder,
+.items.list .item.selected:hover .cell.name a.name.icon.folder {
+    background: url('../img/folder_white.svg') no-repeat left center;
+    background-size: 15px;
+}
+.items.list .item.selecting .cell.name a.name.icon.doc,
+.items.list .item.selecting:hover .cell.name a.name.icon.doc,
+.items.list .item.selected .cell.name a.name.icon.doc,
+.items.list .item.selected:hover .cell.name a.name.icon.doc {
+    background: url('../img/doc_white.svg') no-repeat left center;
+    background-size: 12px;
+}
+.items.list .item.selecting .cell.name .text_preview,
+.items.list .item.selecting:hover .cell.name .text_preview,
+.items.list .item.selected .cell.name .text_preview,
+.items.list .item.selected:hover .cell.name .text_preview {
+    color: #fff;
+}
+
+/* Thumbnails */
+.items.thumbnails {
+}
+.items.thumbnails .item {
+    float: left;
+    width: 230px;
+    box-sizing: border-box;
+    margin-bottom: 20px;
+    margin-right: 20px;
+}
+.items.thumbnails .placeholder {
+    float: left;
+    background: #f2f7fc;
+    width: 230px !important;
+    height: 300px !important;
+    margin-right: 20px;
+    margin-bottom: 20px;
+}
+.items.thumbnails .item > .wrapper {
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    height: 300px;
+    padding: 15px;
+    box-sizing: border-box;
+    position: relative;
+    background: #fff;
+}
+.items.thumbnails .item > .wrapper .thumbnail {
+    height: 200px;
+    margin-bottom: 15px;
+}
+.items.thumbnails .item.doc > .wrapper .thumbnail.icon {
+    background: url('../img/doc.svg') no-repeat center center;
+    background-size: 30%;
+    opacity: 0.4;
+}
+.items.thumbnails .item.folder > .wrapper .thumbnail.icon {
+    background: url('../img/folder.svg') no-repeat center center;
+    background-size: 35%;
+    opacity: 0.4;
+}
+.items.thumbnails .item > .wrapper .thumbnail img {
+    max-width: 100%;
+    max-height: 200px;
+    display: block;
+    margin: auto;
+}
+.items.thumbnails .item > .wrapper .details .name {
+    width: 90%;
+    display: inline-block;
+    overflow: hidden;
+    white-space: nowrap;
+}
+.items.thumbnails .item > .wrapper .details {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 65px;
+    background: #fbfbfb;
+    padding: 5px;
+    border-radius: 0 0 4px 4px;
+}
+.items.thumbnails .item .edit {
+    position: absolute;
+    top: 2px;
+    right: 5px;
+}
+.items.thumbnails .item.selecting > .wrapper .details,
+.items.thumbnails .item.selecting:hover > .wrapper .details,
+.items.thumbnails .item.selected > .wrapper .details,
+.items.thumbnails .item.selected:hover > .wrapper .details,
+.items.thumbnails .item.selecting > .wrapper a.name,
+.items.thumbnails .item.selected > .wrapper a.name {
+    background: #3849e8;
+    color: #fff;
+}
+.items.thumbnails .item.selecting > .wrapper,
+.items.thumbnails .item.selected > .wrapper {
+    border: 1px solid #3849e8;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+/* Details */
+/*.explorer.details .item {
+    width: 50%;
+    box-sizing: border-box;
+    float: left;
+    margin-bottom: 20px;
+}
+.explorer.details .placeholder {
+    float: left;
+    background: #f2f7fc;
+    box-sizing: border-box;
+    width: calc(50% - 20px) !important;
+    height: 300px !important;
+    margin-bottom: 20px;
+    margin-right: 20px;
+}
+.explorer.details .item > .wrapper {
+    border: 1px solid #ccc;
+    height: 300px;
+    padding: 15px;
+    box-sizing: border-box;
+    position: relative;
+    background: #fff;
+    margin-right: 20px;
+}
+.explorer.details .item.selecting > .wrapper .details,
+.explorer.details .item.selecting:hover > .wrapper .details,
+.explorer.details .item.selected > .wrapper .details,
+.explorer.details .item.selected:hover > .wrapper .details,
+.explorer.details .item.selecting > .wrapper a,
+.explorer.details .item.selected > .wrapper a {
+    background: #3849e8;
+    color: #fff;
+}
+.explorer.details .item.selecting > .wrapper,
+.explorer.details .item.selected > .wrapper {
+    border: 1px solid #3849e8;
+}
+.explorer.details .item > .wrapper .thumbnail {
+    height: 200px;
+    margin-bottom: 15px;
+    float: left;
+    width: 50%;
+}
+.explorer.details .item.doc > .wrapper .thumbnail.icon {
+    background: url('../img/doc.svg') no-repeat center center;
+    background-size: 30%;
+    opacity: 0.2;
+}
+.explorer.details .item.folder > .wrapper .thumbnail.icon {
+    background: url('../img/folder.svg') no-repeat center center;
+    background-size: 30%;
+    opacity: 0.2;
+}
+.explorer.details .item > .wrapper .thumbnail img {
+    max-width: calc(100% - 15px);
+    max-height: 200px;
+}
+.explorer.details .item > .wrapper .details {
+    position: absolute;
+    top: 0;
+    right: 0;
+    left: 50%;
+    bottom: 0;
+    background: #fbfbfb;
+    padding: 15px;
+    box-sizing: border-box;
+}
+.explorer.details .item > .wrapper .details .text_preview {
+    display: block;
+    margin-top: 15px;
+}
+.explorer.details .item > .wrapper .details .name {
+    font-weight: bold;
+    width: 90%;
+    display: inline-block;
+    overflow: hidden;
+    white-space: nowrap;
+}*/

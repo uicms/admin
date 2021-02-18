@@ -54,7 +54,7 @@ class EditorController extends AbstractController
             );
     }
 
-    public function form($page, $entity_name, $id=null, Params $params_service, Model $model, Request $request, Nav $nav, Viewnav $viewnav)
+    public function form($page, $entity_name, $id=null, $next_step='', Params $params_service, Model $model, Request $request, Nav $nav, Viewnav $viewnav)
     {
         # Init
         $params = $params_service->get($page['slug'], $request);
@@ -98,7 +98,19 @@ class EditorController extends AbstractController
                 $nav->removeTab($current_tab['route']['id']);
                 return $this->redirectToRoute($current_tab['parent']['route']['name'], $current_tab['parent']['route']['params']);
             } else {
-                return $this->redirectToRoute('admin_page_action_id', array('slug'=>$request->get('slug'), 'action'=>'form', 'id'=>$id));
+                switch($next_step) {
+                    case 'new':
+                        return $this->redirectToRoute('admin_page_action', array('slug'=>$request->get('slug'), 'action'=>'form'  ));
+                        break;
+                    
+                    case 'next':
+                        return $this->redirectToRoute('admin_page_action_id', array('slug'=>$request->get('slug'), 'action'=>'form', 'id'=>$view_nav['next']->getId()));
+                        break;
+                    
+                    default:
+                        return $this->redirectToRoute('admin_page_action_id', array('slug'=>$request->get('slug'), 'action'=>'form', 'id'=>$id));
+                }
+                
             }
         }
         
