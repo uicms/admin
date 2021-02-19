@@ -70,6 +70,7 @@ class UIFormType extends AbstractType
         $builder->addEventListener(FormEvents::SUBMIT, function(FormEvent $event) {
             $entity_name = $event->getForm()->getConfig()->getDataClass();
             $options = $event->getForm()->getConfig()->getOptions();
+            $parent = $options['parent'];
             $form_config = $options['form_config'];
             $fields = $form_config['fields'];
             if(isset($form_config['translations']) && !empty($form_config['translations'])) {
@@ -81,16 +82,20 @@ class UIFormType extends AbstractType
             }
             $data = $event->getData();
             
+            # Parent
+            $data->setParent($parent);
             
+            # Modifiers
             foreach($fields as $field_name => $field_config) {
                 if(isset($field_config['modifier']) && $field_config['modifier']) {
-                    eval("\$modifier = new " . $field_config['modifier'] . "(\$field_config, \$entity_config, \$data);");
+                    eval("\$modifier = new " . $field_config['modifier'] . "(\$field_config, \$entity_config, \$data, \$parent);");
                     $set_method = 'set' . str_replace('_', '', ucwords($field_name, '_'));
                     $get_method = 'get' . str_replace('_', '', ucwords($field_name, '_'));
                     $data->$set_method($modifier->modify($data->$get_method()));
-                    $event->setData($data);
                 }
             }
+            
+            $event->setData($data);
         });
     }
     
@@ -99,6 +104,7 @@ class UIFormType extends AbstractType
         $resolver->setDefaults([
             'ui_config' => array(),
             'form_config' => array(),
+            'parent' => null,
         ]);
     }
 }

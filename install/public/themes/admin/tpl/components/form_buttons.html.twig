@@ -1,8 +1,9 @@
 <div class="cpnt cpnt_form_buttons">
     <button type="submit" class="btn" disabled="disabled">Sauvegarder</button> 
+    
+    {% if row.id is defined and row.id %}
     <button type="button" class="btn next" data-step="next" disabled="disabled">Sauvegarder + Suivant</button> 
     <button type="button" class="btn new" data-step="new" disabled="disabled">Sauvegarder + nouveau</button>
-    
     <div class="dropdown action">
       <button class="dropdown-toggle" type="button">
         Action
@@ -14,4 +15,5 @@
         <a class="dropdown-item" href="{{ path('admin_page', {slug: 'action', action:'duplicate', entity_name: model.name, selection:[row.id]}) }}">Dupliquer</a>
       </div>
     </div>
+    {% endif %}
 </div>

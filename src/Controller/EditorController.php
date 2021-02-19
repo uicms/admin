@@ -78,17 +78,16 @@ class EditorController extends AbstractController
         $view_nav = $viewnav->get($entity_name, $row, array_merge($params, array('dir'=>$row->getParent() ? $row->getParent()->getId() : 0)));
         $nav->setCurrentTabAttribute('title', $row->_name);
         $current_tab = $nav->getCurrentTab();
+        $parent = (int)$params['dir'] ? $model->getRowById($params['dir']) : null;
 
         # Create form
-        $form = $this->createForm(UIFormType::class, $row, array('ui_config'=>$ui_config, 'form_config'=>$form_config));
+        $form = $this->createForm(UIFormType::class, $row, array('ui_config'=>$ui_config, 'form_config'=>$form_config, 'parent'=>$parent));
         
         # Handle request data & redirect
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
-            $data = $form->getData()->setParent($model->find($params['dir']));
-            
             try {
-                $id = $model->persist($data, $current);
+                $id = $model->persist($form->getData(), $current);
             } catch (\Throwable $throwable) {
                 $this->addFlash('error', $throwable->getMessage());
             }
