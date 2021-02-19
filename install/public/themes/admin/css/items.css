@@ -11,7 +11,7 @@
 .item .edit {
     font-size: 0;
     width: 12px;
-    height: 20px;
+    height: 15px;
     margin-left: 4px;
     background: url('../img/pen.svg') no-repeat left center;
     background-size: 100%;
@@ -70,13 +70,6 @@ span.ui-droppable-hover,
     float: none;
     height: 34px !important;
 }
-.items.list .item.selecting .text_preview,
-.items.list .item.selecting:hover .text_preview,
-.items.list .item.selected .text_preview,
-.items.list .item.selected:hover .text_preview {
-    color: #999;
-    opacity: 0.5;
-}
 .items.list .item.selecting,
 .items.list .item.selecting:hover,
 .items.list .item.selected,
@@ -91,9 +84,6 @@ span.ui-droppable-hover,
 .items.list .item.selected a {
     color: #fff;
 }
-.items.list .item.selected .cell.name a.name.icon.doc,
-.items.list .item.selecting .cell.name a.name.icon.doc {
-}
 .items.list .item.hidden {
     display: none;
 }
@@ -105,38 +95,42 @@ span.ui-droppable-hover,
     padding: 5px 0;
 }
 .cell.name {
-    flex: 2;
-    display: flex;
-    box-sizing: border-box;
-    padding-left: 15px;
-}
-.cell.name .name {
-}
-.cell.name .text_preview {
-    flex: 2;
+    flex: 1;
+    min-width: 0; /* Arbitrary but necessary */
+    width: 20px; /* Arbitrary but necessary */
     padding-left: 5px;
-    color: #999;
-    height: 20px;
+}
+.cell.name > .wrapper {
     overflow: hidden;
     text-overflow: ellipsis;
+    white-space: nowrap;
+    box-sizing: border-box;
 }
 .cell.extra {
-    width: 5%;
+    width: 10%;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
     text-align: center;
 }
-.cell .thumbnail {
+.cell.name .description {
+    color: #999;
+    padding-left: 5px;
+}
+
+.cell.name .thumbnail {
     display: inline-block;
     width: 20px;
     text-align: left;
 }
-.cell .thumbnail img {
+.cell.name .thumbnail img {
     max-width: 15px;
     max-height: 20px;
     vertical-align: middle;
 }
 .cell.name a.name.icon.doc {
     background: url('../img/doc.svg') no-repeat left center;
-    background-size: 12px;
+    background-size: 11px;
     padding-left: 18px;
 }
 .cell.name a.name.icon.folder {
@@ -144,6 +138,7 @@ span.ui-droppable-hover,
     background-size: 15px;
     padding-left: 20px;
 }
+
 .items.list .item.selecting .cell.name a.name.icon.folder,
 .items.list .item.selecting:hover .cell.name a.name.icon.folder,
 .items.list .item.selected .cell.name a.name.icon.folder,
@@ -158,11 +153,11 @@ span.ui-droppable-hover,
     background: url('../img/doc_white.svg') no-repeat left center;
     background-size: 12px;
 }
-.items.list .item.selecting .cell.name .text_preview,
-.items.list .item.selecting:hover .cell.name .text_preview,
-.items.list .item.selected .cell.name .text_preview,
-.items.list .item.selected:hover .cell.name .text_preview {
-    color: #fff;
+.items.list .item.selecting .cell.name .description,
+.items.list .item.selecting:hover .cell.name .description,
+.items.list .item.selected .cell.name .description,
+.items.list .item.selected:hover .cell.name .description {
+    color: #7cb7f3;
 }
 
 /* Thumbnails */
@@ -230,7 +225,7 @@ span.ui-droppable-hover,
 }
 .items.thumbnails .item .edit {
     position: absolute;
-    top: 2px;
+    top: 5px;
     right: 5px;
 }
 .items.thumbnails .item.selecting > .wrapper .details,

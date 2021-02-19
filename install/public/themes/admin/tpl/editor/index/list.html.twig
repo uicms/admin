@@ -1,12 +1,15 @@
         <div class="items_header">
             <div class="cell name">Name</div>
+            <div class="cell description"></div>
             <!--<div class="col extra user">User</div>-->
-            {% for field_name in ui['admin']['pages'][page.slug]['displayed_fields'] %}
+            {% if ui['admin']['pages'][page_slug]['displayed_fields'] is defined %}
+            {% for field_name in ui['admin']['pages'][page_slug]['displayed_fields'] %}
                 <div class="cell extra">
                 {{ field_name|ucfirst }}
                 </div>
             {% endfor %}
-            <div class="cell extra position">Position</div>
+            {% endif %}
+            <!--<div class="cell extra position">Position</div>-->
             <div class="cell extra id">#</div>
         </div>
         
@@ -17,27 +20,32 @@
             {% set result_url = path('admin_page_action_id', {slug: page_slug, action: 'form', id: result.id, target: 'blank'}) %}
         
             <div class="item result selectable-item ui-sortable-handle{% if result.isdir %} droppable folder{% endif %}{% if result.isConcealed %} concealed{% endif %}" id="item-{% if current_entity is defined %}{{ current_entity }}{% endif %}-{{ result.id }}" data-id="{{ result.id }}">
-                 <div class="cell name">
-                     <!--<a href="{{ path('admin_page_action', {slug:'action', action:'delete', entity_name: page.arguments.entity_name, 'selection':[result.id]}) }}">X</a> | -->
-                     {% if result._thumbnail %}<span class="thumbnail"><img src="/uploads/{{ result._thumbnail }}" /></span>{% endif %}
-                     
-                     <a href="{% if result.isdir %}{{ result_url_dir }}{% else %}{{ result_url}}{% endif %}" class="name{% if result._thumbnail==false %} icon{% endif %}{% if result.isdir %} folder{% else %} doc{% endif %}">
-                         {{ result._name }}
-                     </a> 
-                     {% if result.isdir %}<a href="{{ result_url }}" class="edit">Éditer</a> {% endif %}
-                     
-                     {% if result._text %}<div class="text_preview">{{ result._text|html_decode|slice(0, 500)|replace({'<br />': ' '}) }}</div>{% endif %}
-                 </div>
                  
+                 <div class="cell name">
+                     <div class="wrapper">
+                         {% if result._thumbnail %}<span class="thumbnail"><img src="/uploads/{{ result._thumbnail }}" /></span>{% endif %}
+                     
+                         <a href="{% if result.isdir %}{{ result_url_dir }}{% else %}{{ result_url}}{% endif %}" class="name{% if result._thumbnail==false %} icon{% endif %}{% if result.isdir %} folder{% else %} doc{% endif %}">
+                             {{ result._name }}
+                         </a> 
+                         {% if result._text %}<span class="description">{{ result._text|html_decode|slice(0, 300)|replace({'<br />': ' '}) }}</span>{% endif %}
+                         {% if result.isdir %}<a href="{{ result_url }}" class="edit">Éditer</a> {% endif %}
+                    </div>
+                 </div>
                  <!--<div class="col extra user">
                      {{ result.user.name }}
                  </div>-->
-                     
-                {% for field_name in ui['admin']['pages'][page.slug]['displayed_fields'] %}
+                {% if ui['admin']['pages'][page_slug]['displayed_fields'] is defined %}
+                {% for field_name in ui['admin']['pages'][page_slug]['displayed_fields'] %}
                     <div class="cell extra">
                         {% set value = attribute(result, field_name) %}
                         {% if value.id is defined %}
-                            {% set linked_entity_name = ui['entity'][model.getName()]['form']['fields'][field_name]['options']['class'] %}
+                            {% if linked_table.name is defined %}
+                                {% set current_entity_name = linked_table.name %}
+                            {% else %}
+                                {% set current_entity_name = model.getName() %}
+                            {% endif %}
+                            {% set linked_entity_name = ui['entity'][current_entity_name]['form']['fields'][field_name]['options']['class'] %}
                             {% set name_field = ui['entity'][linked_entity_name]['name_field'] %}
                             {{ attribute(value, name_field) }}
                         {% else %}
@@ -45,8 +53,9 @@
                         {% endif %}
                      </div>
                 {% endfor %}
-                     
-                <div class="cell extra position">{% if linked_table is defined and linked_table %}{{ result._linked_position }}{% else %}{{ result.position }}{% endif %}</div>
+                {% endif %}
+                
+                <!--<div class="cell extra position">{% if linked_table is defined and linked_table %}{{ result._linked_position }}{% else %}{{ result.position }}{% endif %}</div>-->
                 <div class="cell extra id">{{ result.id }}</div>
                  
                 <input type="hidden" name="position[]" class="position_input" value="{% if linked_table is defined and linked_table %}{{ result._linked_position }}{% else %}{{ result.position }}{% endif %}" />
