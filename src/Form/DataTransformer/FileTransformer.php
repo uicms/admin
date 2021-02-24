@@ -70,8 +70,8 @@ class FileTransformer implements DataTransformerInterface
         
         # Upload
         $uploader = new Uploader($this->upload_path);
-        $result = $uploader->upload($file);
-        $path_file = $this->upload_path . '/' . $result;
+        $file_name = $uploader->upload($file);
+        $path_file = $this->upload_path . '/' . $file_name;
         
         /* Limit image width */
         if(strpos($mime_type, 'image') === 0) {
@@ -80,7 +80,7 @@ class FileTransformer implements DataTransformerInterface
                 $constraint->aspectRatio();
                 $constraint->upsize();
             });
-            $img->save($this->upload_path . '/' . $result);
+            $img->save($this->upload_path . '/' . $file_name);
         }
         
         /* Make image thumbnail */
@@ -90,7 +90,7 @@ class FileTransformer implements DataTransformerInterface
                 $constraint->aspectRatio();
                 $constraint->upsize();
             });
-            $img->save($this->upload_path . '/' . $this->preview_prefix . $result);
+            $img->save($this->upload_path . '/' . $this->preview_prefix . $file_name);
         }
         
         /* Make video thumbnail */
@@ -110,6 +110,6 @@ class FileTransformer implements DataTransformerInterface
     		}
         }
         
-        return $result;
+        return $file_name;
     }
 }
