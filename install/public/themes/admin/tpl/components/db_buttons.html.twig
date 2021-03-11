@@ -1,5 +1,13 @@
 <div class="cpnt cpnt_db_buttons">
     <a href="{{ path('admin_page_action', {slug: page.slug, action: 'form', target: 'blank'}) }}" class="button new_row">Nouveau</a>{% if model.config.is_tree is defined and model.config.is_tree %} | 
-    <a href="javascript:;" data-url="{{ path('admin_page_action', {slug: 'action', action: 'new_folder', target: 'blank'}) }}" class="button new_folder">Dossier</a>{% endif %} | 
-    <a href="javascript:;" class="button import">Importer</a>
+    <a href="javascript:;" data-url="{{ path('admin_page_action', {slug: 'action', action: 'new_folder', target: 'blank'}) }}" class="button new_folder">Dossier</a>{% endif %} |     
+    <div class="dropdown import">
+        <button class="dropdown-toggle" type="button">
+            Importer
+        </button>
+        <div class="dropdown-menu">
+            <a class="dropdown-item files" href="javascript:;">Des fichiers</a>
+            <a class="dropdown-item data" href="javascript:;">Des données (.csv)</a>
+        </div>
+    </div>
 </div>

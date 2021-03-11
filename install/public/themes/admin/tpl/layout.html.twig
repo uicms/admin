@@ -37,7 +37,10 @@
     <body {% if params.display is defined %}data-display="{{ params.display }}"{% endif %} data-url="{{ path('admin_page_action', {slug:page.slug, action:'index'}) }}">
         
 		{% for message in app.flashes('error') %}
-        <div class="cpnt_message">{{ message }}</div>
+        <div class="cpnt_message error">{{ message }}</div>
+        {% endfor %}
+		{% for message in app.flashes('success') %}
+        <div class="cpnt_message success">{{ message }}</div>
         {% endfor %}
         
 		{% if is_granted('IS_AUTHENTICATED_FULLY') %}

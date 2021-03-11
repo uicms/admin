@@ -13,6 +13,9 @@
     padding: 5px;
     z-index: 100000;
 }
+.cpnt_message.success {
+    background: #49854f;
+}
 .cpnt_message.fade {
     opacity: 0;
     transition: 0.5s;
@@ -48,9 +51,33 @@
     transform: translateX(-50%);
 }
 
-/* Dropzone */
-.cpnt_dropzone .dropzone {
-    border: 2px dashed #94c0e5;
+/* Upload */
+.cpnt_upload .dropzone {
+    height: 100%;
+}
+form.dropzone {
+    border: 3px dashed #0678f4;
+}
+
+/* Import */
+.cpnt_import .content > * {
+    margin-bottom: 10px;
+}
+.cpnt_import .content form.dropzone.csv {
+    margin-bottom: 30px;
+}
+.cpnt_import footer {
+    text-align: right;
+}
+
+/* Db buttons */
+.cpnt_db_buttons .dropdown.import button {
+    border: 0;
+    font-size: 1em;
+    padding-left: 0;
+}
+.cpnt_db_buttons .dropdown.import .dropdown-menu {
+    top: 30px;
 }
 
 /* Path */
@@ -145,7 +172,7 @@
 }
 .cpnt.popup > .wrapper {
     width: 80%;
-    height: 60vh;
+    height: 80vh;
     background: white;
     position: absolute;
     left: 50%;
@@ -153,33 +180,43 @@
     transform: translate(-50%,-50%);
     box-shadow: 3px 3px 3px var(--grey3);
 }
-.cpnt.popup > .wrapper .close {
+.cpnt.popup > .wrapper > header .close {
     position: absolute;
     z-index: 10001;
-    right: 15px;
-    top: 15px;
+    right: 0;
+    top: 0;
     width: 20px;
     height: 20px;
     background: url('../img/close_black.svg') no-repeat;
     background-size: 100%;
     cursor: pointer;
 }
-.cpnt.popup > .wrapper form {
+.cpnt.popup > .wrapper > header {
     position: absolute;
-    top: 0;
-    left: 0;
-    bottom: 0;
-    right: 0;
-    padding: 20px;
+    top: 20px;
+    left: 20px;
+    right: 20px;
+}
+.cpnt.popup > .wrapper > .content {
+    position: absolute;
+    top: 60px;
+    left: 20px;
+    bottom: 75px;
+    right: 20px;
+    overflow: scroll;
+}
+.cpnt.popup > .wrapper > footer {
+    position: absolute;
+    bottom: 20px;
+    left: 20px;
+    right: 20px;
 }
 .cpnt.popup > .wrapper form fieldset {
-    margin-bottom: 30px;
 }
 
 /* New folder */
 .cpnt.popup.cpnt_new_folder > .wrapper {
-    height: auto;
-    width: 40%;
+    height: 175px;
 }
 .cpnt.popup.cpnt_new_folder > .wrapper form {
     position: static;

@@ -1,0 +1,16 @@
+<div class="cpnt cpnt_upload popup">
+    <div class="wrapper">
+        <header>
+            <h2>Importer des fichiers</h2>
+            <div class="close"></div>
+        </header>
+        <div class="content">
+        	<form action="{{ path('admin_page_action', {slug:'action', action:'upload', entity_name: page.arguments.entity_name}) }}" id="dropzoneForm" class="dropzone files">
+        		<div class="dz-message" data-dz-message><span>Cliquer ou déposer des fichiers</span></div>
+        		<div class="fallback">
+        	  		<input name="file" type="file" multiple />
+        		</div>
+        	</form>
+        </div>
+    </div>
+</div>

@@ -72,7 +72,7 @@ class EditorController extends AbstractController
             $row = $model->new($this->getUser());
         }
         $current = clone $row;
-
+        
         # Tab & nav
         $params['path'] = $model->getPath($row->getParent() ? $row->getParent()->getId() : 0, true);
         $view_nav = $viewnav->get($entity_name, $row, array_merge($params, array('dir'=>$row->getParent() ? $row->getParent()->getId() : 0)));

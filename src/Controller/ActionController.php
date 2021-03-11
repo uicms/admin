@@ -160,6 +160,80 @@ class ActionController extends AbstractController
         }
     }
     
+    public function uploadimportdata($token, $entity_name, Model $model, Nav $nav, Request $request, Params $params_service)
+    {
+        $current_tab = $nav->getCurrentTab();
+        $params = $params_service->get($current_tab['route']['slug'], $request);
+
+        try {
+            if ($file = $request->files->get('file')) {
+                if(!is_dir('../import')) {
+                    mkdir('../import');
+                }
+                if(!is_dir('../import/' . $token)) {
+                    mkdir('../import/' . $token);
+                }
+                $file_name = $file->getClientOriginalName();
+                $mime_type = $file->getMimeType();
+                $file->move('../import/' . $token, $file_name);
+            }
+        } catch(\Throwable $throwable) {
+            $this->addFlash('error', $throwable->getMessage());
+        }
+        
+        if(!$request->isXmlHttpRequest()) {
+            $redirect = $nav->getCurrentTab();
+            return $this->redirectToRoute($redirect['route']['name'], $redirect['route']['params']);
+        } else {
+            return new JsonResponse(['message' => $file_name], Response::HTTP_OK);
+        }
+    }
+    
+    public function uploadimportfiles($token, $entity_name, Model $model, Nav $nav, Request $request, Params $params_service)
+    {
+        $current_tab = $nav->getCurrentTab();
+        $params = $params_service->get($current_tab['route']['slug'], $request);
+
+        try {
+            if ($file = $request->files->get('file')) {
+                if(!is_dir('../import')) {
+                    mkdir('../import');
+                }
+                if(!is_dir('../import/' . $token)) {
+                    mkdir('../import/' . $token);
+                }
+                if(!is_dir('../import/' . $token . '/files')) {
+                    mkdir('../import/' . $token . '/files');
+                }
+                $file_name = $file->getClientOriginalName();
+                $mime_type = $file->getMimeType();
+                $file->move('../import/' . $token . '/files', $file_name);
+            }
+        } catch(\Throwable $throwable) {
+            $this->addFlash('error', $throwable->getMessage());
+        }
+        
+        if(!$request->isXmlHttpRequest()) {
+            $redirect = $nav->getCurrentTab();
+            return $this->redirectToRoute($redirect['route']['name'], $redirect['route']['params']);
+        } else {
+            return new JsonResponse(['message' => $file_name], Response::HTTP_OK);
+        }
+    }
+    
+    public function import($token, $entity_name, Model $model, Nav $nav, Request $request, Params $params_service)
+    {
+        #$output = null;
+        #$retval = null;
+        $split = explode('\\', $entity_name);
+        $entity_name = end($split);
+        $command = "../bin/console app:import $entity_name import/$token/ > /dev/null 2>&1 &";
+        exec($command);
+        $this->addFlash('success', 'import_in_progress');
+        $redirect = $nav->getCurrentTab();
+        return $this->redirectToRoute($redirect['route']['name'], $redirect['route']['params']);
+    }
+    
     public function link($entity_name, $selection, $action_entity_name, $action_selection, Model $model, Nav $nav)
     {
 		try {

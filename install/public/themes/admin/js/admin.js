@@ -1,19 +1,59 @@
 /* Dropzone */
-Dropzone.options.dropzoneForm = {
-  	paramName: "file", // The name that will be used to transfer the file
-  	maxFilesize: 500, // MB
-    init: function () {
-        this.on("complete", function (file) {
-            if (this.getUploadingFiles().length === 0 && this.getQueuedFiles().length === 0) {
-                setTimeout(window.location = document.querySelector('body').getAttribute('data-url'), 1000);
-            }
-        });
-    }
-};
-document.querySelectorAll('.button.import, .cpnt_dropzone .close').forEach(function(button) {
+Dropzone.autoDiscover = false;
+var csv_uploaded = 0;
+var linked_files_uploaded = 0;
+var files_uploaded = 0;
+
+if(document.querySelector('.cpnt_import')) {
+    document.querySelector('.cpnt_import .start_import').addEventListener('click', function() {
+        window.location = document.querySelector('.cpnt_import .start_import').getAttribute('data-url');
+    }); 
+    var myDropzone = new Dropzone(".dropzone.csv", {
+      	paramName: "file",
+      	maxFilesize: 1000,
+        init: function () {
+            this.on("complete", function (file) {
+                document.querySelector('.cpnt_import .start_import').removeAttribute('disabled');
+            });
+        }
+    });
+    var myDropzone = new Dropzone(".dropzone.files-linked", {
+      	paramName: "file",
+      	maxFilesize: 1000,
+        init: function () {
+            this.on("complete", function (file) {
+            
+            });
+        }
+    });
+}
+if(document.querySelector('.cpnt_upload')) {
+    var myDropzone = new Dropzone(".dropzone.files", {
+      	paramName: "file",
+      	maxFilesize: 1000,
+        init: function () {
+            this.on("complete", function (file) {
+                if (this.getUploadingFiles().length === 0 && this.getQueuedFiles().length === 0) {
+                    setTimeout(window.location = document.querySelector('body').getAttribute('data-url'), 1000);
+                }
+            });
+        }
+    });
+}
+
+
+
+/* Import buttons */
+document.querySelectorAll('.dropdown.import a.files, .cpnt_upload .close').forEach(function(button) {
     button.addEventListener('click', function(e) {
         e.stopPropagation();
-        document.querySelector('.cpnt_dropzone').classList.toggle('active');
+        document.querySelector('.cpnt_upload').classList.toggle('active');
+    });
+});
+document.querySelectorAll('.dropdown.import a.data, .cpnt_import .close').forEach(function(button) {
+    button.addEventListener('click', function(e) {
+        e.stopPropagation();
+        document.querySelector('.cpnt_import').classList.toggle('active');
     });
 });
 

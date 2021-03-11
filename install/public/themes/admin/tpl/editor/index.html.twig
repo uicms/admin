@@ -10,8 +10,11 @@
 <!-- New folder -->
 {% include "admin/tpl/components/new_folder.html.twig" %}
 
-<!-- Dropzone -->
-{% include "admin/tpl/components/dropzone.html.twig" %}
+<!-- Upload -->
+{% include "admin/tpl/components/upload.html.twig" %}
+
+<!-- Import -->
+{% include "admin/tpl/components/import.html.twig" %}
 
 <!-- Explorer section -->
 <section id="explorer" class="explorer" data-offset="{{ paginator.offset }}" data-url="{{ path('admin_page_action', {slug:'action', action:'position', entity_name: page.arguments.entity_name, linked_to:params.linked_to}) }}">
