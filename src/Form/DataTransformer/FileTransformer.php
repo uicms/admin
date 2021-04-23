@@ -106,7 +106,7 @@ class FileTransformer implements DataTransformerInterface
                 $path_parts = pathinfo($path_file);
         		exec("ffmpeg -i \"". addslashes($path_file) . "\" -an -ss $half -r 1 -vframes 1 -y -filter:v scale=\"" . $this->preview_max_width . ":-1\" \"" . $this->upload_path . '/' . $this->preview_prefix . $path_parts['filename']. '.jpg' . "\"");
     		} else {
-    		    throw new Exception('Video not readable or in wrong format!');
+    		    throw new \Exception('Video not readable or in wrong format or FFMpeg is not installed!');
     		}
         }
         
