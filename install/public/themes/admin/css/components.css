@@ -203,7 +203,7 @@ form.dropzone {
     left: 20px;
     bottom: 75px;
     right: 20px;
-    overflow: scroll;
+    overflow-y: auto;
 }
 .cpnt.popup > .wrapper > footer {
     position: absolute;

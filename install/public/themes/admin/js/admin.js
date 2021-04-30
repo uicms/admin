@@ -125,6 +125,11 @@ $('.button.new_folder').click(function() {
     $('.cpnt_new_folder').toggleClass('active');
     $('.cpnt_new_folder input[type=text]').focus();
 });
+$('.cpnt_new_folder footer button[type=submit]').click(function() {
+    if($('.cpnt_new_folder input[type=text]').val()) {
+        $('.cpnt_new_folder form').submit();
+    }
+});
 $('.cpnt_new_folder .close,.cpnt_new_folder .cancel').click(function() {
     $('.cpnt_new_folder').removeClass('active');
 });
