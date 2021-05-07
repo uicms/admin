@@ -65,7 +65,7 @@ tinymce.init({
 	plugins: [
 		'colorpicker advlist autolink lists link image charmap anchor',
 		'searchreplace visualblocks code fullscreen',
-		'importcss insertdatetime media table contextmenu paste code save autoresize spellchecker textcolor'
+		'importcss insertdatetime media table contextmenu paste code save autoresize spellchecker textcolor nonbreaking'
 	],
 	setup: function(editor) {
 		editor.on('keydown', function(e) {

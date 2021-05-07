@@ -8,6 +8,7 @@ use Symfony\Component\Form\FormEvent;
 use Symfony\Component\Form\FormEvents;
 use Symfony\Component\Form\Forms;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
+use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
 
 use A2lix\TranslationFormBundle\Form\Type\TranslationsType;
 use Uicms\Admin\Form\DataTransformer\DefaultTransformer;
@@ -17,6 +18,11 @@ use Uicms\Admin\Form\DataModifier\SlugModifier;
 
 class UIFormType extends AbstractType
 {
+	public function __construct(ParameterBagInterface $params)
+    {
+        $this->params = $params;
+    }
+    
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $ui_config = $options['ui_config'];
@@ -47,7 +53,7 @@ class UIFormType extends AbstractType
                     $name_field = $model->getConfig('name_field');
                     if($model->isTranslatable()) {
                         $query->join('t.translations', 'i');
-                        $query->where("i.locale = 'fr'");
+                        $query->where("i.locale = '" . $this->params->get('locale') . "'");
                         $query->orderBy("i.$name_field", 'ASC');
                     } else {
                         $query->orderBy("t.$name_field", 'ASC');
