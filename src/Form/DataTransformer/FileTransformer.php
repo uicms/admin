@@ -26,11 +26,11 @@ class FileTransformer implements DataTransformerInterface
 
         if(isset($ui_config['upload_path'])) $this->upload_path = $ui_config['upload_path'];
         if(isset($ui_config['upload_folder'])) $this->upload_folder = $ui_config['upload_folder'];
-        if(isset($ui_config['max_width'])) $this->max_width = $ui_config['max_width'];
-        if(isset($ui_config['max_height'])) $this->max_height = $ui_config['max_height'];
-        if(isset($ui_config['preview_max_width'])) $this->preview_max_width = $ui_config['preview_max_width'];
-        if(isset($ui_config['preview_max_height'])) $this->preview_max_height = $ui_config['preview_max_height'];
-        if(isset($ui_config['preview_prefix'])) $this->preview_prefix = $ui_config['preview_prefix'];
+        if(isset($ui_config['image_max_width'])) $this->max_width = $ui_config['image_max_width'];
+        if(isset($ui_config['image_max_height'])) $this->max_height = $ui_config['image_max_height'];
+        if(isset($ui_config['image_preview_max_width'])) $this->preview_max_width = $ui_config['image_preview_max_width'];
+        if(isset($ui_config['image_preview_max_height'])) $this->preview_max_height = $ui_config['image_preview_max_height'];
+        if(isset($ui_config['image_preview_prefix'])) $this->preview_prefix = $ui_config['image_preview_prefix'];
         if(isset($ui_config['video_generate_thumbnail'])) $this->video_generate_thumbnail = $ui_config['video_generate_thumbnail'];
     }
     
