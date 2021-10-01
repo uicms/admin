@@ -51,7 +51,7 @@ class UIFormType extends AbstractType
                 $field_config['options']['query_builder'] = function($model) {
                     $query = $model->createQueryBuilder('t');
                     $name_field = $model->getConfig('name_field');
-                    if($model->isTranslatable()) {
+                    if($model->isTranslatable() && $model->isFieldTranslatable($name_field)) {
                         $query->join('t.translations', 'i');
                         $query->where("i.locale = '" . $this->params->get('locale') . "'");
                         $query->orderBy("i.$name_field", 'ASC');
