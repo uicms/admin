@@ -130,7 +130,7 @@ form.dropzone {
     white-space: nowrap;
 }
 
-/* pagination */
+/* Pagination */
 .cpnt_pagination {
 }
 .cpnt_pagination li {
@@ -308,3 +308,24 @@ form.dropzone {
 .cpnt_links .linked_entity .buttons > a:hover {
     opacity: 1;
 }
+
+
+/* Children */
+.cpnt_children .title {
+    margin-bottom: 20px;
+}
+.cpnt_children .child {
+    margin-bottom: 20px;
+}
+.cpnt_children .child_name {
+    margin-bottom: 10px;
+}
+.cpnt_children .child .buttons {
+    line-height: 40px;
+}
+
+
+
+
+
+

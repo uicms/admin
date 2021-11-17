@@ -113,9 +113,12 @@ class EditorController extends AbstractController
             }
         }
         
-        # Links
+        
         if($row->getId()) {
-            # Linkables entities
+            
+            #
+            # Links
+            #
             $linkables_entities = $model->getLinkablesEntities();
             $row->_total_linked = 0;
             foreach($linkables_entities as $i=>$entity) {
@@ -139,7 +142,24 @@ class EditorController extends AbstractController
                     $row->_total_linked++;
                 }
             }
+            
+            
+            #
+            # Children (FK link)
+            #
+            $children = $model->getForeignKeys();
+            foreach($children as $i=>$child) {
+                $page_slug = '';
+                foreach($ui_config['admin']['pages'] as $j=>$page_config) {
+                    if(isset($page_config['arguments']['entity_name']) && $page_config['arguments']['entity_name'] == $child['entity']->getName()) {
+                        $children[$i]['page_slug'] = $page_config['slug'];
+                    }
+                }
+                $children[$i]['rows'] = $child['entity']->getAll(array('findby'=>array($child['db_name'] => $row->getId())));
+            }
+            $row->_children = $children;
         }
+        
         
         # Render form
         return $this->render(
@@ -155,7 +175,7 @@ class EditorController extends AbstractController
             ]
         );
 	}
-
+    
     public function select($page, $entity_name, Params $params_service, Model $model, Request $request, Nav $nav)
     {
         $model = $model->get($entity_name)->mode('admin');

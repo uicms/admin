@@ -19,7 +19,7 @@
     <!-- Pager -->
     {% include "admin/tpl/components/pagination.html.twig" %}
     
-    <form id="form_results"  name="select" action="{{ path('admin_page_action', {slug:'action', action:params.select_action, entity_name:model.name, action_entity_name:current_tab.parent.route.params.entity_name, action_selection:[current_tab.parent.route.params.id]}) }}" method="post">
+    <form id="form_results"  name="select" action="{{ path('admin_page_action', {slug:'action', action:params.select_action, entity_name:model.name, action_entity_name:current_tab.parent.route.params.entity_name, action_selection:[current_tab.parent.route.params.id], action_field: params.select_field}) }}" method="post">
 
         <!-- Notice -->
         {% include "admin/tpl/components/select_notice.html.twig" %}

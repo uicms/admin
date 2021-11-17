@@ -45,6 +45,11 @@
                 
                 <input type="hidden" class="next_step" name="next_step" value="" />
         	{{ form_end(form) }}
+            
+            <!-- Children -->
+            {% if row._children is defined and row._children %}
+                {% include 'admin/tpl/components/children.html.twig' %}
+            {% endif %}
         </section>
         
         <aside>

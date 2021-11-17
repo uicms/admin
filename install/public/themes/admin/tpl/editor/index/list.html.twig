@@ -35,6 +35,7 @@
                  <!--<div class="col extra user">
                      {{ result.user.name }}
                  </div>-->
+
                 {% if ui['admin']['pages'][page_slug]['displayed_fields'] is defined %}
                 {% for field_name in ui['admin']['pages'][page_slug]['displayed_fields'] %}
                     <div class="cell extra">
@@ -45,6 +46,7 @@
                             {% else %}
                                 {% set current_entity_name = model.getName() %}
                             {% endif %}
+
                             {% set linked_entity_name = ui['entity'][current_entity_name]['form']['fields'][field_name]['options']['class'] %}
                             {% set name_field = ui['entity'][linked_entity_name]['name_field'] %}
                             {{ attribute(value, name_field) }}

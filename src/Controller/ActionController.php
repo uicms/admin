@@ -248,6 +248,20 @@ class ActionController extends AbstractController
 		return $this->redirectToRoute($redirect['route']['name'], $redirect['route']['params']);
 	}
     
+    public function linkchild($entity_name, $selection, $action_entity_name, $action_selection, $action_field, Model $model, Nav $nav)
+    {
+		try {
+			$model->get($entity_name)->mode('admin')->linkChildren($selection, $action_entity_name, $action_field, $action_selection);
+        } catch(\Throwable $throwable) {
+			$this->addFlash('error', $throwable->getMessage());
+		}
+        
+        $current_tab = $nav->getCurrentTab();
+        $nav->removeTab($current_tab['route']['id']);
+        $redirect = $nav->getTab($current_tab['parent']['route']['id']);
+		return $this->redirectToRoute($redirect['route']['name'], $redirect['route']['params']);
+	}
+    
     public function unlink($entity_name, $selection, $action_entity_name, $action_selection, Model $model, Nav $nav)
     {
 		try {
