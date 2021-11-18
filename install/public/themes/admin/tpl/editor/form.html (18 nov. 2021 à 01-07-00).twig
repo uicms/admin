@@ -2,7 +2,7 @@
 {% trans_default_domain 'admin' %}
 {% set page_slug = page.slug %}
 
-{% block title %}{% if row.id %}{{ row._name }}{% else %}Nouveau{% endif %} - Édition{% endblock %}
+{% block title %}{{ row._name }} - Édition{% endblock %}
 
 {% block body %}
 <section id="form" class="clearfix">
@@ -47,21 +47,21 @@
         	{{ form_end(form) }}
             
             <!-- Children -->
-            {% if row.id %}
+            {% if row._children is defined and row._children %}
                 {% include 'admin/tpl/components/children.html.twig' %}
             {% endif %}
         </section>
         
         <aside>
             <!-- Thumbnail -->
-            {% if row.id and row._thumbnail %}
+            {% if row._thumbnail %}
             <div class="thumbnail">
                 {% if row._file %}<a href="/uploads/{{ row._file }}" data-fancybox="gallery">{% endif %}<img src="/uploads/{{ row._thumbnail }}" />{% if row._file %}</a>{% endif %}
             </div>
             {% endif %}
         
             <!-- Links -->
-            {% if row.id and row._links is defined and row._links %}
+            {% if row._links is defined and row._links %}
             {% include 'admin/tpl/components/add_links.html.twig' %}
             {% include 'admin/tpl/components/links.html.twig' %}    
             {% endif %}

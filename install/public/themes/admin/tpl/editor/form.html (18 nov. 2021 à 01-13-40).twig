@@ -61,7 +61,7 @@
             {% endif %}
         
             <!-- Links -->
-            {% if row.id and row._links is defined and row._links %}
+            {% if row._links is defined and row._links %}
             {% include 'admin/tpl/components/add_links.html.twig' %}
             {% include 'admin/tpl/components/links.html.twig' %}    
             {% endif %}

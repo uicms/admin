@@ -76,9 +76,7 @@ class EditorController extends AbstractController
         # Tab & nav
         $params['path'] = $model->getPath($row->getParent() ? $row->getParent()->getId() : 0, true);
         $view_nav = $viewnav->get($entity_name, $row, array_merge($params, array('dir'=>$row->getParent() ? $row->getParent()->getId() : 0)));
-        if($row->getId()) {
-            $nav->setCurrentTabAttribute('title', $row->_name);
-        }
+        $nav->setCurrentTabAttribute('title', $row->_name);
         $current_tab = $nav->getCurrentTab();
         $parent = (int)$params['dir'] ? $model->getRowById($params['dir']) : null;
 
