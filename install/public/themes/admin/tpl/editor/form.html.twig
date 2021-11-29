@@ -47,7 +47,7 @@
         	{{ form_end(form) }}
             
             <!-- Children -->
-            {% if row.id %}
+            {% if row.id and row._children %}
                 {% include 'admin/tpl/components/children.html.twig' %}
             {% endif %}
         </section>

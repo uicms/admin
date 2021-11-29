@@ -10,8 +10,8 @@ use Uicms\App\Service\Uploader;
 
 class FileTransformer implements DataTransformerInterface
 {
-    protected $max_width = 1600;
-    protected $max_height = 1600;
+    protected $max_width = 2000;
+    protected $max_height = 2000;
     protected $preview_max_width = 1200;
     protected $preview_max_height = 1200;
     protected $preview_prefix = '_';
@@ -76,7 +76,7 @@ class FileTransformer implements DataTransformerInterface
         /* Limit image width */
         if(strpos($mime_type, 'image') === 0) {
             $img = Image::make($path_file);
-            $img->resize($this->max_width, null, function($constraint){
+            $img->resize($this->max_width, $this->max_height, function($constraint){
                 $constraint->aspectRatio();
                 $constraint->upsize();
             });
@@ -86,7 +86,7 @@ class FileTransformer implements DataTransformerInterface
         /* Make image thumbnail */
         if(strpos($mime_type, 'image') === 0) {
             $img = Image::make($path_file);
-            $img->resize($this->preview_max_width, null, function($constraint){
+            $img->resize($this->preview_max_width, $this->preview_max_height, function($constraint){
                 $constraint->aspectRatio();
                 $constraint->upsize();
             });
