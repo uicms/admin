@@ -74,7 +74,7 @@ class FileTransformer implements DataTransformerInterface
         $path_file = $this->upload_path . '/' . $file_name;
         
         /* Limit image width */
-        if(strpos($mime_type, 'image') === 0 && strpos($mime_type, 'svg') == -1) {
+        if(strpos($mime_type, 'image') === 0 && strpos($mime_type, 'svg') === false) {
             $img = Image::make($path_file);
             $img->resize($this->max_width, $this->max_height, function($constraint){
                 $constraint->aspectRatio();
@@ -84,7 +84,7 @@ class FileTransformer implements DataTransformerInterface
         }
         
         /* Make image thumbnail */
-        if(strpos($mime_type, 'image') === 0 && strpos($mime_type, 'svg') == -1) {
+        if(strpos($mime_type, 'image') === 0 && strpos($mime_type, 'svg') === false) {
             $img = Image::make($path_file);
             $img->resize($this->preview_max_width, $this->preview_max_height, function($constraint){
                 $constraint->aspectRatio();
