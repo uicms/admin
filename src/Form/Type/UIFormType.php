@@ -29,6 +29,9 @@ class UIFormType extends AbstractType
         $form_config = $options['form_config'];
         $data = $options['data'];
         $fields = $form_config['fields'];
+        if(isset($options['translator'])) {
+            $translator = $options['translator'];
+        }
         
         # Translations
         if(isset($form_config['translations']) && $form_config['translations']) {
@@ -37,6 +40,11 @@ class UIFormType extends AbstractType
             foreach($translations_fields as $field_name=>$field_config) {
                 $translations_fields[$field_name]['options']['field_type'] = $field_config['namespace'] . '\\' . $field_config['type'];
                 $options[$field_name] = $translations_fields[$field_name]['options'];
+                
+                # Translate label
+                if(isset($translator) && isset($options[$field_name]['label']) && $options[$field_name]['label']) {
+                    $options[$field_name]['label'] = $translator->trans($options[$field_name]['label'], [], 'admin');
+                }
             }
             
             $builder->add('translations', TranslationsType::class, array('fields'=>$options));
@@ -61,7 +69,12 @@ class UIFormType extends AbstractType
                     return $query;
                 };
             }
-
+            
+            # Translate label
+            if(isset($translator) && isset($field_config['options']['label']) && $field_config['options']['label']) {
+                $field_config['options']['label'] = $translator->trans($field_config['options']['label'], [], 'admin');
+            }
+            
             # Add field to form
             $builder->add($field_config['name'], $field_config['namespace'] . '\\' . $field_config['type'], $field_config['options']);
             
@@ -111,6 +124,7 @@ class UIFormType extends AbstractType
             'ui_config' => array(),
             'form_config' => array(),
             'parent' => null,
+            'translator'=>null,
         ]);
     }
 }

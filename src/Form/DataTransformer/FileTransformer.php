@@ -67,14 +67,14 @@ class FileTransformer implements DataTransformerInterface
     {
         if ($file === null) return '';
         $mime_type = $file->getMimeType();
-        
+
         # Upload
         $uploader = new Uploader($this->upload_path);
         $file_name = $uploader->upload($file);
         $path_file = $this->upload_path . '/' . $file_name;
         
         /* Limit image width */
-        if(strpos($mime_type, 'image') === 0) {
+        if(strpos($mime_type, 'image') === 0 && strpos($mime_type, 'svg') == -1) {
             $img = Image::make($path_file);
             $img->resize($this->max_width, $this->max_height, function($constraint){
                 $constraint->aspectRatio();
@@ -84,13 +84,15 @@ class FileTransformer implements DataTransformerInterface
         }
         
         /* Make image thumbnail */
-        if(strpos($mime_type, 'image') === 0) {
+        if(strpos($mime_type, 'image') === 0 && strpos($mime_type, 'svg') == -1) {
             $img = Image::make($path_file);
             $img->resize($this->preview_max_width, $this->preview_max_height, function($constraint){
                 $constraint->aspectRatio();
                 $constraint->upsize();
             });
             $img->save($this->upload_path . '/' . $this->preview_prefix . $file_name);
+        } else if(strpos($mime_type, 'svg')) {
+            copy($path_file, $this->upload_path . '/' . $this->preview_prefix . $file_name);
         }
         
         /* Make video thumbnail */

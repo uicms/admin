@@ -4,6 +4,7 @@ namespace Uicms\Admin\Controller;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Contracts\Translation\TranslatorInterface;
 
 use Uicms\Admin\Form\Type\UIFormType;
 use Uicms\App\Service\Model;
@@ -54,7 +55,7 @@ class EditorController extends AbstractController
             );
     }
 
-    public function form($page, $entity_name, $id=null, $next_step='', Params $params_service, Model $model, Request $request, Nav $nav, Viewnav $viewnav)
+    public function form($page, $entity_name, $id=null, $next_step='', Params $params_service, Model $model, Request $request, Nav $nav, Viewnav $viewnav, TranslatorInterface $translator)
     {
         # Init
         $params = $params_service->get($page['slug'], $request);
@@ -83,17 +84,17 @@ class EditorController extends AbstractController
         $parent = (int)$params['dir'] ? $model->getRowById($params['dir']) : null;
 
         # Create form
-        $form = $this->createForm(UIFormType::class, $row, array('ui_config'=>$ui_config, 'form_config'=>$form_config, 'parent'=>$parent));
+        $form = $this->createForm(UIFormType::class, $row, array('ui_config'=>$ui_config, 'form_config'=>$form_config, 'parent'=>$parent, 'translator'=>$translator));
         
         # Handle request data & redirect
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
+            
             try {
                 $id = $model->persist($form->getData(), $current);
             } catch (\Throwable $throwable) {
                 $this->addFlash('error', $throwable->getMessage());
             }
-            
             if(isset($current_tab['parent']) && $current_tab['parent']) {
                 $model->link(array($id), $current_tab['parent']['route']['params']['entity_name'], array($current_tab['parent']['route']['params']['id']));
                 $nav->removeTab($current_tab['route']['id']);

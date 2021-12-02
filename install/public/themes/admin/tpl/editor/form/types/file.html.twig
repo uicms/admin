@@ -11,12 +11,10 @@
 <div class="content">
     {% if field.vars.data.publicPath is defined %}
     <p class="infos">
-        {% if field.vars.data.width is defined %}{{ field.vars.data.width }} x {{ field.vars.data.height }}px, {% endif %}{{ field.vars.data.size|number_format(0, '.', ' ') }} octets<br/><a href="{{ field.vars.data.publicPath }}" class="external">Télécharger</a>
+        <a href="{{ field.vars.data.publicPath }}" class="external">{{ field.vars.data.publicPath }}</a>
+        <br/>{% if field.vars.data.width is defined %}{{ field.vars.data.width }} x {{ field.vars.data.height }}px, {% endif %}{{ field.vars.data.size|number_format(0, '.', ' ') }} octets
     </p>
     {% endif %}
     
     {{ form_widget(field) }}
 </div>
-
-
-
