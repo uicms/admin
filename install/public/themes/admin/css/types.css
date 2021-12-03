@@ -1,29 +1,29 @@
 /* File */
-.field.file {
+.field.type_file {
     
 }
-.field.file .body {
+.field.type_file .body {
     display: flex;
     column-gap: 15px;
     background: #f8f8f8;
     padding: 15px;
     border-radius: 5px;
 }
-.field.file .body .thumbnail {
+.field.type_file .body .thumbnail {
 }
-.field.file .body .thumbnail img {
+.field.type_file .body .thumbnail img {
     max-height: 100px;
     max-width: 100px;
     display: block;
 }
-.field.file .infos {
+.field.type_file .infos {
     line-height: 1.4em;
     margin-bottom: 5px;
 }
 
 
 /* Date */
-.field.date label {
+.field.type_date label {
     display: inline;
 }
 
