@@ -247,7 +247,7 @@ class ActionController extends AbstractController
             $array = [];
             foreach($model->get($entity_name)->getFields() as $field) {
                 if(!$field['is_meta']) {
-                    $method = 'get' . $field['name'];
+                    $method = 'get' . str_replace(' ', '', ucwords(str_replace('_', ' ', $field['name'])));
                     $array[$field['name']] = $line->$method();
                 }
             }
