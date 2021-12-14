@@ -1,6 +1,10 @@
 <div class="cpnt cpnt_db_buttons">
-    <a href="{{ path('admin_page_action', {slug: page.slug, action: 'form', target: 'blank'}) }}" class="button new_row">Nouveau</a>{% if model.config.is_tree is defined and model.config.is_tree %} | 
-    <a href="javascript:;" data-url="{{ path('admin_page_action', {slug: 'action', action: 'new_folder', target: 'blank'}) }}" class="button new_folder">Dossier</a>{% endif %} |     
+    <a href="{{ path('admin_page_action', {slug: page.slug, action: 'form', target: 'blank'}) }}" class="button new_row">Nouveau</a>{% if model.config.is_tree is defined and model.config.is_tree %}
+     | 
+    <a href="javascript:;" data-url="{{ path('admin_page_action', {slug: 'action', action: 'new_folder', target: 'blank'}) }}" class="button new_folder">Dossier</a>{% endif %}
+     | 
+    <a href="{{ path('admin_page_action', {slug: 'action', action: 'export', entity_name: model.name }) }}" class="button export">Exporter</a>
+     | 
     <div class="dropdown import">
         <button class="dropdown-toggle" type="button">
             Importer

@@ -234,6 +234,31 @@ class ActionController extends AbstractController
         return $this->redirectToRoute($redirect['route']['name'], $redirect['route']['params']);
     }
     
+    public function export($entity_name, Model $model, Request $request, Params $params_service)
+    {
+        header('Content-Type: text/csv; charset=utf-8');
+        header('Content-Disposition: attachment; filename="' . $entity_name . '_' . date('Ymd') . '.csv"');
+        header("Pragma: no-cache");
+        header("Expires: 0");
+        
+        $data = $model->get($entity_name)->mode('admin')->getAll();
+        $handle = fopen("php://output", 'w');
+        foreach($data as $i=>$line) {
+            $array = [];
+            foreach($model->get($entity_name)->getFields() as $field) {
+                if(!$field['is_meta']) {
+                    $method = 'get' . $field['name'];
+                    $array[$field['name']] = $line->$method();
+                }
+            }
+            if(!$i) { fputcsv($handle, array_keys($array)); }
+            fputcsv($handle, $array);
+        }
+        fclose($handle);
+        
+        exit();
+    }
+    
     public function link($entity_name, $selection, $action_entity_name, $action_selection, Model $model, Nav $nav)
     {
 		try {
