@@ -65,7 +65,14 @@
             		<ul id="pages">
             			{% for admin_page in ui.admin.pages %}
             			{% if (admin_page.display is defined and admin_page.display) or admin_page.display is not defined %}
-                        <li class="{% if admin_page.slug==page.slug %}active{% endif %}"><a href="{{ path('admin_page', {'slug': admin_page.slug, linked_to:''}) }}">{{ admin_page.slug|capitalize }}</a></li>
+                        
+                        {% set page_name = admin_page.slug %}
+                        {% set trans_key = 'tbl_' ~ admin_page.slug %}
+                        {% if trans_key|trans != trans_key %}
+                        {% set page_name = trans_key|trans %}
+                        {% endif %}
+                        
+                        <li class="{% if admin_page.slug==page.slug %}active{% endif %}"><a href="{{ path('admin_page', {'slug': admin_page.slug, linked_to:''}) }}">{{ page_name|capitalize }}</a></li>
                         {% endif %}
             			{% endfor %}
             		</ul>
