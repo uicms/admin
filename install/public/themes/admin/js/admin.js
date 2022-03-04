@@ -406,8 +406,8 @@ function initItems() {
     /* Private functions */
     function updatePositions(explorer) {
         $(explorer).find('.sortable .result').each(function(i) {
-        	$(this).find('.position_input').val(i + $('.explorer').data('offset'));
-            $(this).find('.position').html(i + $('.explorer').data('offset'));
+        	$(this).find('.position_input').val(i + $(explorer).data('offset'));
+            $(this).find('.position').html(i + $(explorer).data('offset'));
         });
     }
     
