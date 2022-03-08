@@ -55,18 +55,18 @@ class EditorController extends AbstractController
             );
     }
 
-    public function form($page, $entity_name, $id=null, $next_step='', Params $params_service, Model $model, Request $request, Nav $nav, Viewnav $viewnav, TranslatorInterface $translator)
+    public function form($page, $entity_name, $id=null, $next_step='', Params $params_service, Model $common_model, Request $request, Nav $nav, Viewnav $viewnav, TranslatorInterface $translator)
     {
         # Init
         $params = $params_service->get($page['slug'], $request);
         $ui_config = $this->getParameter('ui_config');
         $form_config = $ui_config['entity'][$entity_name]['form'];
         if(isset($params['linked_to']) && $params['linked_to']) {
-            $model_linked = $model->get($params['linked_to'])->mode('admin');
+            $model_linked = $common_model->get($params['linked_to'])->mode('admin');
             $params['linked_to_row'] = $model_linked->getRowById($params['linked_to_id']);
             $params['linked_to_slug'] = $model_linked->getSlug();
         }
-        $model = $model->get($entity_name)->mode('admin');
+        $model = $common_model->get($entity_name)->mode('admin');
         
         # Get current row from db or create new if no id provided
         if (!$id || (!$row = $model->getRowById($id))) {
@@ -84,8 +84,8 @@ class EditorController extends AbstractController
         $parent = (int)$params['dir'] ? $model->getRowById($params['dir']) : null;
 
         # Create form
-        $form = $this->createForm(UIFormType::class, $row, array('ui_config'=>$ui_config, 'form_config'=>$form_config, 'parent'=>$parent, 'translator'=>$translator));
-        
+        $form = $this->createForm(UIFormType::class, $row, array('ui_config'=>$ui_config, 'form_config'=>$form_config, 'parent'=>$parent, 'translator'=>$translator, 'model'=>$common_model));
+
         # Handle request data & redirect
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {

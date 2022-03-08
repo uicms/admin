@@ -18,6 +18,8 @@ use Uicms\Admin\Form\DataModifier\SlugModifier;
 
 class UIFormType extends AbstractType
 {
+    private $model = null;
+    
 	public function __construct(ParameterBagInterface $params)
     {
         $this->params = $params;
@@ -31,6 +33,9 @@ class UIFormType extends AbstractType
         $fields = $form_config['fields'];
         if(isset($options['translator'])) {
             $translator = $options['translator'];
+        }
+        if(isset($options['model'])) {
+            $this->model = $options['model'];
         }
         
         # Translations
@@ -92,12 +97,32 @@ class UIFormType extends AbstractType
             }
         }
          
-        # Pre-submit event
+        # Pre submit event
+        $builder->addEventListener(FormEvents::PRE_SUBMIT, function(FormEvent $event) {
+            $entity_name = $event->getForm()->getConfig()->getDataClass();
+            $options = $event->getForm()->getConfig()->getOptions();
+            $form_config = $options['form_config'];
+            
+            $current_data = $event->getForm()->getNormData();
+            $new_data = $event->getData();
+            
+            /* Hook on pre-submit */
+            if(isset($form_config['on_pre_submit'])) {
+                $service = new $form_config['on_pre_submit']($this->params, $this->model);
+                $service->execute($current_data, $new_data);
+                $data = $service->getData();
+            }
+        });
+        
+        # Submit event
         $builder->addEventListener(FormEvents::SUBMIT, function(FormEvent $event) {
+            
             $entity_name = $event->getForm()->getConfig()->getDataClass();
             $options = $event->getForm()->getConfig()->getOptions();
             $parent = $options['parent'];
             $form_config = $options['form_config'];
+
+            /* Treat each fields before sending data */
             $fields = $form_config['fields'];
             if(isset($form_config['translations']) && !empty($form_config['translations'])) {
                 $fields = array_merge($fields, $form_config['translations']);
@@ -121,6 +146,16 @@ class UIFormType extends AbstractType
                 }
             }
             
+            /* Hook on submit */
+            if(isset($form_config['on_submit'])) {
+                $current_data = $event->getForm()->getNormData();
+                $new_data = $event->getData();
+                
+                $service = new $form_config['on_submit']($this->params);
+                $service->execute($current_data, $new_data);
+                $data = $service->getData();
+            }
+            
             $event->setData($data);
         });
     }
@@ -132,6 +167,7 @@ class UIFormType extends AbstractType
             'form_config' => array(),
             'parent' => null,
             'translator'=>null,
+            'model'=>null,
         ]);
     }
 }
