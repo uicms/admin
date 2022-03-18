@@ -51,7 +51,23 @@
                             {% set name_field = ui['entity'][linked_entity_name]['name_field'] %}
                             {{ attribute(value, name_field) }}
                         {% else %}
-                            {{ value }}
+                            {% set current_entity_name = model.getName() %}
+                                
+                            {% if ui['entity'][current_entity_name]['form']['fields'][field_name] is defined %}
+                                {% set field_type = ui['entity'][current_entity_name]['form']['fields'][field_name]['type'] %}
+                            {% else %}
+                                {% set field_type = ui['entity'][current_entity_name]['form'][translations][field_name]['type'] %}
+                            {% endif %}
+                            
+                            {% if field_type == 'DateType' %}
+                                {{ value|date('d/m/Y') }}
+                            {% elseif field_type == 'TimeType' %}
+                                {{ value|date('h:m') }}
+                            {% elseif field_type == 'DateTimeType' %}
+                                {{ value|date('d/m/Y h:m') }}
+                            {% else %}
+                                {{ value }}
+                            {% endif %}
                         {% endif %}
                      </div>
                 {% endfor %}
