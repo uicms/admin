@@ -83,7 +83,8 @@ tinymce.init({
 	relative_urls : false,
 	convert_urls : false,
 	theme_advanced_resizing: true,
-	autoresize_max_height: 500
+	autoresize_max_height: 500,
+    extended_valid_elements : 'script[type|src],iframe[width|height|src]'
 });
 
 
