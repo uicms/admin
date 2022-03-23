@@ -36,50 +36,7 @@
                      {{ result.user.name }}
                  </div>-->
                 
-                {% if ui['admin']['pages'][page_slug]['displayed_fields'] is defined %}
-                {% for field_name in ui['admin']['pages'][page_slug]['displayed_fields'] %}
-                    <div class="cell extra">
-                        {% if ui['entity'][model.getName()]['form']['fields'][field_name] is defined %}
-                            {% set camelcase_field_name = ui['entity'][model.getName()]['form']['fields'][field_name]['name'] %}
-                        {% else %}
-                            {% set camelcase_field_name = ui['entity'][model.getName()]['form']['translations'][field_name]['name'] %}
-                        {% endif %}
-                        
-                        {% set value = attribute(result, camelcase_field_name) %}
-                        
-                        {% if value.id is defined %}
-                            {% if linked_table.name is defined %}
-                                {% set current_entity_name = linked_table.name %}
-                            {% else %}
-                                {% set current_entity_name = model.getName() %}
-                            {% endif %}
-
-                            {% set linked_entity_name = ui['entity'][current_entity_name]['form']['fields'][field_name]['options']['class'] %}
-                            {% set name_field = ui['entity'][linked_entity_name]['name_field'] %}
-                            {{ attribute(value, name_field) }}
-                        {% else %}
-                            {% set current_entity_name = model.getName() %}
-                                
-                            {% if ui['entity'][current_entity_name]['form']['fields'][field_name] is defined %}
-                                {% set field_type = ui['entity'][current_entity_name]['form']['fields'][field_name]['type'] %}
-                            {% else %}
-                                {% set field_type = ui['entity'][current_entity_name]['form']['translations'][field_name]['type'] %}
-                            {% endif %}
-                            
-                            {% if field_type == 'DateType' %}
-                                {{ value|date('d/m/Y') }}
-                            {% elseif field_type == 'TimeType' %}
-                                {{ value|date('h:m') }}
-                            {% elseif field_type == 'DateTimeType' %}
-                                {{ value|date('d/m/Y h:m') }}
-                            {% else %}
-                                {{ value }}
-                            {% endif %}
-                        {% endif %}
-                        
-                     </div>
-                {% endfor %}
-                {% endif %}
+                
                 
                 <!--<div class="cell extra position">{% if linked_table is defined and linked_table %}{{ result._linked_position }}{% else %}{{ result.position }}{% endif %}</div>-->
                 <div class="cell extra id">{{ result.id }}</div>
