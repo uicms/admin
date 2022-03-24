@@ -6,7 +6,9 @@
 
     {% if field.vars.name != '_token' and field.vars.name != 'translations' %}
     <header>
-        {% if field.vars.label is defined %}<h3>{{ form_label(field, field.vars.label) }}</h3>{% endif %}
+        {% set label = field.vars.label %}
+        {% if field.vars.required %}{% set label = label ~ " *" %}{% endif %}
+        {% if field.vars.label is defined %}<h3>{{ form_label(field, label) }}</h3>{% endif %}
         {% if field.vars.help is defined %}<div class="help"><em>{{ field.vars.help }}</em></div>{% endif %}
     </header>
     {% endif %}
