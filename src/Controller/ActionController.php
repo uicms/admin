@@ -236,19 +236,27 @@ class ActionController extends AbstractController
     
     public function export($entity_name, Model $model, Request $request, Params $params_service)
     {
+        $data = $model->get($entity_name)->mode('admin')->getAll();
+        
         header('Content-Type: text/csv; charset=utf-8');
         header('Content-Disposition: attachment; filename="' . $entity_name . '_' . date('Ymd') . '.csv"');
         header("Pragma: no-cache");
         header("Expires: 0");
         
-        $data = $model->get($entity_name)->mode('admin')->getAll();
         $handle = fopen("php://output", 'w');
         foreach($data as $i=>$line) {
             $array = [];
             foreach($model->get($entity_name)->getFields() as $field) {
                 if(!$field['is_meta']) {
                     $method = 'get' . str_replace(' ', '', ucwords(str_replace('_', ' ', $field['name'])));
-                    $array[$field['name']] = $line->$method();
+                    $value = $line->$method();
+                    if(is_array($value)) {
+                        $value = implode(';', $value);
+                    }
+                    if(is_object($value)) {
+                        $value = $value->getId();
+                    }
+                    $array[$field['name']] = $value;
                 }
             }
             if(!$i) { fputcsv($handle, array_keys($array)); }
