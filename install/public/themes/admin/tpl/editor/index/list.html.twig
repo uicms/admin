@@ -74,9 +74,9 @@
                             {% if field_type == 'DateType' %}
                                 {{ value|date('d/m/Y') }}
                             {% elseif field_type == 'TimeType' %}
-                                {{ value|date('h:m') }}
+                                {{ value|date('H:i') }}
                             {% elseif field_type == 'DateTimeType' %}
-                                {{ value|date('d/m/Y h:m') }}
+                                {{ value|date('d/m/Y H:i') }}
                             {% else %}
                                 {{ value }}
                             {% endif %}
