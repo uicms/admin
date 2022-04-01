@@ -237,6 +237,7 @@ class ActionController extends AbstractController
     public function export($entity_name, Model $model, Request $request, Params $params_service)
     {
         $data = $model->get($entity_name)->mode('admin')->getAll();
+        $ui_config = $this->getParameter('ui_config');
         
         header('Content-Type: text/csv; charset=utf-8');
         header('Content-Disposition: attachment; filename="' . $entity_name . '_' . date('Ymd') . '.csv"');
@@ -250,11 +251,29 @@ class ActionController extends AbstractController
                 if(!$field['is_meta']) {
                     $method = 'get' . str_replace(' ', '', ucwords(str_replace('_', ' ', $field['name'])));
                     $value = $line->$method();
+                    
                     if(is_array($value)) {
                         $value = implode(';', $value);
                     }
+                    
                     if(is_object($value)) {
-                        $value = $value->getId();
+                        $type = get_class($value);
+                        
+                        if($type == 'DateTime' && $field['form']['type'] == 'DateType') {
+                            $value = $value->format('Y-m-d');
+                        } else if($type == 'DateTime' && $field['form']['type'] == 'TimeType') {
+                            $value = $value->format('H:i:s');
+                        } else if($type == 'DateTime' && $field['form']['type'] == 'DateTimeType') {
+                            $value = $value->format('Y-m-d H:i:s');
+                        } else if (method_exists($value, 'getId')) {
+                            $tmp = explode ("\\", $type);
+                            $entity = end($tmp);
+                            $repo = $model->get($entity);
+                            $method = $repo->method($ui_config['entity'][$repo->getName()]['name_field']);
+                            $value = $value->$method();
+                        } else {
+                            $value = '';
+                        }
                     }
                     $array[$field['name']] = $value;
                 }
