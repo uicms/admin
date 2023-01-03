@@ -71,6 +71,9 @@ class EditorController extends AbstractController
         # Get current row from db or create new if no id provided
         if (!$id || (!$row = $model->getRowById($id))) {
             $row = $model->new($this->getUser());
+            $parent = (int)$params['dir'] ? $model->getRowById($params['dir']) : null;
+        } else {
+            $parent = $row->getParent();
         }
         $current = clone $row;
         
@@ -81,7 +84,6 @@ class EditorController extends AbstractController
             $nav->setCurrentTabAttribute('title', $row->_name);
         }
         $current_tab = $nav->getCurrentTab();
-        $parent = (int)$params['dir'] ? $model->getRowById($params['dir']) : null;
 
         # Create form
         $form = $this->createForm(UIFormType::class, $row, array('ui_config'=>$ui_config, 'form_config'=>$form_config, 'parent'=>$parent, 'translator'=>$translator, 'model'=>$common_model));
