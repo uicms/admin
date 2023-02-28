@@ -28,6 +28,7 @@ class UITypeExtension extends AbstractTypeExtension
         $resolver->setDefaults([
             'empty_data'=>'',
             'template'=>'default',
+            'template_path'=>'admin/tpl/editor/form/types',
             'transformer'=>'',
             'type'=>'',
             'namespace'=>'',
