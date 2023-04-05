@@ -9,10 +9,10 @@
         Action
       </button>
       <div class="dropdown-menu">
-        <a class="dropdown-item" href="{{ path('admin_page', {slug: 'action', action:'delete', entity_name: model.name, selection:[row.id]}) }}">Supprimer</a>
-        <a class="dropdown-item" href="{{ path('admin_page', {slug: 'action', action:'conceal', entity_name: model.name, selection:[row.id]}) }}">Masquer</a>
-        <a class="dropdown-item" href="{{ path('admin_page', {slug: 'action', action:'publish', entity_name: model.name, selection:[row.id]}) }}">Publier</a>
-        <a class="dropdown-item" href="{{ path('admin_page', {slug: 'action', action:'duplicate', entity_name: model.name, selection:[row.id]}) }}">Dupliquer</a>
+        <a class="dropdown-item delete confirm" data-message="Confirmez-vous la suppression ?" href="{{ path('admin_page', {slug: 'action', action:'delete', entity_name: model.name, selection:[row.id]}) }}">Supprimer</a>
+        <a class="dropdown-item conceal" href="{{ path('admin_page', {slug: 'action', action:'conceal', entity_name: model.name, selection:[row.id]}) }}">Masquer</a>
+        <a class="dropdown-item publish" href="{{ path('admin_page', {slug: 'action', action:'publish', entity_name: model.name, selection:[row.id]}) }}">Publier</a>
+        <a class="dropdown-item duplicate" href="{{ path('admin_page', {slug: 'action', action:'duplicate', entity_name: model.name, selection:[row.id]}) }}">Dupliquer</a>
       </div>
     </div>
     {% endif %}

@@ -9,8 +9,8 @@ if(document.querySelector('.cpnt_import')) {
         window.location = document.querySelector('.cpnt_import .start_import').getAttribute('data-url');
     }); 
     var myDropzone = new Dropzone(".dropzone.csv", {
-      	paramName: "file",
-      	maxFilesize: 1000,
+        paramName: "file",
+        maxFilesize: 1000,
         init: function () {
             this.on("complete", function (file) {
                 document.querySelector('.cpnt_import .start_import').removeAttribute('disabled');
@@ -18,8 +18,8 @@ if(document.querySelector('.cpnt_import')) {
         }
     });
     var myDropzone = new Dropzone(".dropzone.files-linked", {
-      	paramName: "file",
-      	maxFilesize: 1000,
+        paramName: "file",
+        maxFilesize: 1000,
         init: function () {
             this.on("complete", function (file) {
             
@@ -29,8 +29,8 @@ if(document.querySelector('.cpnt_import')) {
 }
 if(document.querySelector('.cpnt_upload')) {
     var myDropzone = new Dropzone(".dropzone.files", {
-      	paramName: "file",
-      	maxFilesize: 1000,
+        paramName: "file",
+        maxFilesize: 1000,
         init: function () {
             this.on("complete", function (file) {
                 if (this.getUploadingFiles().length === 0 && this.getQueuedFiles().length === 0) {
@@ -60,30 +60,30 @@ document.querySelectorAll('.dropdown.import a.data, .cpnt_import .close').forEac
 
 /* Tinymce */
 tinymce.init({
-	selector: '.tinymce',
+    selector: '.tinymce',
     content_css : "/themes/app/css/mce.css",
-	plugins: [
-		'colorpicker advlist autolink lists link image charmap anchor',
-		'searchreplace visualblocks code fullscreen',
-		'importcss insertdatetime media table contextmenu paste code save autoresize spellchecker textcolor nonbreaking'
-	],
-	setup: function(editor) {
-		editor.on('keydown', function(e) {
-  	    });
-    	editor.on('change', function(e) {
+    plugins: [
+        'colorpicker advlist autolink lists link image charmap anchor',
+        'searchreplace visualblocks code fullscreen',
+        'importcss insertdatetime media table contextmenu paste code save autoresize spellchecker textcolor nonbreaking'
+    ],
+    setup: function(editor) {
+        editor.on('keydown', function(e) {
+        });
+        editor.on('change', function(e) {
             $('.cpnt_form_buttons button').attr('disabled', false);
-    	});
-	},
-	paste_as_text: true,
-	paste_strip_class_attributes : true,
-	paste_remove_styles : true,
-	paste_auto_cleanup_on_paste : true,
-	forced_root_block : false,
-	toolbar: 'insertfile undo redo | styleselect | bold italic | forecolor backcolor | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link image | spellchecker',
-	relative_urls : false,
-	convert_urls : false,
-	theme_advanced_resizing: true,
-	autoresize_max_height: 500,
+        });
+    },
+    paste_as_text: true,
+    paste_strip_class_attributes : true,
+    paste_remove_styles : true,
+    paste_auto_cleanup_on_paste : true,
+    forced_root_block : false,
+    toolbar: 'insertfile undo redo | styleselect | bold italic | forecolor backcolor | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link image | spellchecker',
+    relative_urls : false,
+    convert_urls : false,
+    theme_advanced_resizing: true,
+    autoresize_max_height: 500,
     extended_valid_elements : 'script[type|src],iframe[width|height|src]'
 });
 
@@ -103,6 +103,17 @@ document.querySelector('body').addEventListener('click', function(e) {
 
 
 /* Misc */
+
+// Confirm window on a link (a:href)
+$('a.confirm').each(function() {
+    var url = $(this).attr('href');
+    $(this).attr('href', 'javascript:;');
+    $(this).click(function() {
+        if(confirm($(this).data('message'))) {
+            window.location = url;
+        }
+    });
+});
 
 // External links
 document.querySelectorAll('a.external').forEach(function(link) {
@@ -138,8 +149,15 @@ $('.cpnt_new_folder .close,.cpnt_new_folder .cancel').click(function() {
 
 /* Action functions */
 function action(form, action) {
-    $(form + ' input[name=action]').val(action);
-    $(form).submit();
+    var submit = true;
+
+    if(action == 'delete' && !confirm('Confirmez-vous la suppression ?')) {
+        submit = false;
+    }
+    if(submit) {
+        $(form + ' input[name=action]').val(action);
+        $(form).submit();
+    }
 }
 
 function initActionButton() {
@@ -321,7 +339,7 @@ function initItems() {
                 return false;
             };
             if($('#form_results').length && (event.which == 46 || event.which == 8)) {
-                if($('.selected').length) {
+                if($('.selected').length && confirm('Confirmez-vous la suppression ?')) {
                     event.preventDefault();
                     action('#form_results', 'delete');
                     return false;
@@ -366,14 +384,14 @@ function initItems() {
         /* Selecting by click */
         $('.selectable-item').on('click', function(e) {
             if (!$(this).hasClass('selected')) {
-		        checkItem(this);
+                checkItem(this);
             } else if (e.metaKey) {
-				uncheckItem(this);
-			}
+                uncheckItem(this);
+            }
             if (e.metaKey == false) {
-				uncheckAllItems(this);
-			}
-		});
+                uncheckAllItems(this);
+            }
+        });
         
         /* Select item on drag */
         $('.selectable-item').on('mousedown', function(e) {
@@ -388,7 +406,7 @@ function initItems() {
         /* Disable sorting if mousedown on the link (a) */
         $('.selectable-item a').on('mousedown', function(e) {
             e.stopPropagation(); 
-	    });
+        });
         
         /* Stop propagation of click on buttons and items */
         $('button, input, textarea, .dropdown, .button, .item').on('click', function(e) {
@@ -401,13 +419,13 @@ function initItems() {
                 uncheckAllItems();
             }
         });
-	}
+    }
     
     
     /* Private functions */
     function updatePositions(explorer) {
         $(explorer).find('.sortable .result').each(function(i) {
-        	$(this).find('.position_input').val(i + $(explorer).data('offset'));
+            $(this).find('.position_input').val(i + $(explorer).data('offset'));
             $(this).find('.position').html(i + $(explorer).data('offset'));
         });
     }
@@ -417,58 +435,58 @@ function initItems() {
         
         var params = '';
         $(explorer).find('.results .result').each(function(i) {
-        	params += '&selection[]=' + $(this).data('id') + '&position[]=' + $(this).find('.position_input').val();
+            params += '&selection[]=' + $(this).data('id') + '&position[]=' + $(this).find('.position_input').val();
         });
-    	$.ajax(
+        $.ajax(
             {
-    	        url: $(explorer).data('url') + params,
+                url: $(explorer).data('url') + params,
                 success: function() {
-            		$('#loading').remove();
-            	}
-    	    }
+                    $('#loading').remove();
+                }
+            }
         );
     }  
 }
 
 function collision($div1, $div2) {
-	var x1 = $div1.offset().left;
-	var y1 = $div1.offset().top;
-	var h1 = $div1.outerHeight(false);
-	var w1 = $div1.outerWidth(false);
-	var b1 = y1 + h1;
-	var r1 = x1 + w1;
-	var x2 = $div2.offset().left;
-	var y2 = $div2.offset().top;
-	var h2 = $div2.outerHeight(false);
-	var w2 = $div2.outerWidth(false);
-	var b2 = y2 + h2;
-	var r2 = x2 + w2;
+    var x1 = $div1.offset().left;
+    var y1 = $div1.offset().top;
+    var h1 = $div1.outerHeight(false);
+    var w1 = $div1.outerWidth(false);
+    var b1 = y1 + h1;
+    var r1 = x1 + w1;
+    var x2 = $div2.offset().left;
+    var y2 = $div2.offset().top;
+    var h2 = $div2.outerHeight(false);
+    var w2 = $div2.outerWidth(false);
+    var b2 = y2 + h2;
+    var r2 = x2 + w2;
     
-	if (b1 < y2 || y1 > b2 || r1 < x2 || x1 > r2) return false;
-	return true;
+    if (b1 < y2 || y1 > b2 || r1 < x2 || x1 > r2) return false;
+    return true;
 }
 
 function isOver(element, ev) {
-	var x1 = ev.pageX;
-	var y1 = ev.pageY;
-	var h1 = 1;
-	var w1 = 1;
-	var b1 = y1 + h1;
-	var r1 = x1 + w1;
-	var x2 = $(element).offset().left;
-	var y2 = $(element).offset().top;
-	var h2 = $(element).outerHeight(false);
-	var w2 = $(element).outerWidth(false);
-	var b2 = y2 + h2;
-	var r2 = x2 + w2;
+    var x1 = ev.pageX;
+    var y1 = ev.pageY;
+    var h1 = 1;
+    var w1 = 1;
+    var b1 = y1 + h1;
+    var r1 = x1 + w1;
+    var x2 = $(element).offset().left;
+    var y2 = $(element).offset().top;
+    var h2 = $(element).outerHeight(false);
+    var w2 = $(element).outerWidth(false);
+    var b2 = y2 + h2;
+    var r2 = x2 + w2;
 
-	if (b1 < y2 || y1 > b2 || r1 < x2 || x1 > r2) return false;
-	return true;
+    if (b1 < y2 || y1 > b2 || r1 < x2 || x1 > r2) return false;
+    return true;
 }
 
 function uncheckItem(element) {
     if($(element).length) {
-	    $(element).removeClass("selected").find('input[type=checkbox]').prop('checked', false);
+        $(element).removeClass("selected").find('input[type=checkbox]').prop('checked', false);
         if(!$('.selectable-item.selected').length) {
             $(window).trigger('unselect');
         }
@@ -483,12 +501,12 @@ function checkItem(element) {
 }
 
 function checkAllItems() {
-	$('.selectable-item').addClass('selected').find('input[type=checkbox]').prop('checked', true);
+    $('.selectable-item').addClass('selected').find('input[type=checkbox]').prop('checked', true);
     $(window).trigger('select');
 }
 
 function uncheckAllItems(excepted_element) {
-	$('.selectable-item').not('#'+$(excepted_element).attr('id')).removeClass('selected').find('input[type=checkbox]').prop('checked', false);
+    $('.selectable-item').not('#'+$(excepted_element).attr('id')).removeClass('selected').find('input[type=checkbox]').prop('checked', false);
     if(!excepted_element) $(window).trigger('unselect');
 }
 
