@@ -154,6 +154,7 @@ function action(form, action) {
     if(action == 'delete' && !confirm('Confirmez-vous la suppression ?')) {
         submit = false;
     }
+
     if(submit) {
         $(form + ' input[name=action]').val(action);
         $(form).submit();
@@ -317,7 +318,8 @@ function initItems() {
                     $('.selected').hide();
                     if(confirm('Confirmez-vous le déplacement ?')) {
                         $('#form_results input[name=target]').val($('.ui-droppable-hover').data('id'));
-                        action('#form_results', 'move');
+                        $('#form_results input[name=action]').val('move');
+                        $('#form_results').submit();
                     } else {
                         $('.ui-droppable-hover').removeClass('ui-droppable-hover');
                         $('.selected').show();
@@ -339,7 +341,7 @@ function initItems() {
                 return false;
             };
             if($('#form_results').length && (event.which == 46 || event.which == 8)) {
-                if($('.selected').length && confirm('Confirmez-vous la suppression ?')) {
+                if($('.selected').length) {
                     event.preventDefault();
                     action('#form_results', 'delete');
                     return false;
