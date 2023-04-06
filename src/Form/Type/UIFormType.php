@@ -20,7 +20,7 @@ class UIFormType extends AbstractType
 {
     private $model = null;
     
-	public function __construct(ParameterBagInterface $params)
+    public function __construct(ParameterBagInterface $params)
     {
         $this->params = $params;
     }
@@ -53,7 +53,7 @@ class UIFormType extends AbstractType
 
                     # Translate label
                     if(isset($translator) && isset($displayed_fields[$field_name]['label']) && $displayed_fields[$field_name]['label']) {
-                        $options[$field_name]['label'] = $translator->trans($displayed_fields[$field_name]['label'], [], 'admin');
+                        $displayed_fields[$field_name]['label'] = $translator->trans($displayed_fields[$field_name]['label'], [], 'admin');
                     }
                 }
             }
