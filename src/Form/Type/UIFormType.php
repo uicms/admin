@@ -110,7 +110,7 @@ class UIFormType extends AbstractType
             if(isset($form_config['on_pre_submit'])) {
                 $service = new $form_config['on_pre_submit']($this->params, $this->model);
                 $service->execute($current_data, $new_data);
-                $data = $service->getData();
+                $event->setData($service->getData());
             }
         });
         
