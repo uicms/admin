@@ -55,6 +55,11 @@ class UIFormType extends AbstractType
                     if(isset($translator) && isset($displayed_fields[$field_name]['label']) && $displayed_fields[$field_name]['label']) {
                         $displayed_fields[$field_name]['label'] = $translator->trans($displayed_fields[$field_name]['label'], [], 'admin');
                     }
+
+                    # Translate help
+                    if(isset($translator) && isset($displayed_fields[$field_name]['help']) && $displayed_fields[$field_name]['help']) {
+                        $displayed_fields[$field_name]['help'] = $translator->trans($displayed_fields[$field_name]['help'], [], 'admin');
+                    }
                 }
             }
             
@@ -84,6 +89,11 @@ class UIFormType extends AbstractType
                 # Translate label
                 if(isset($translator) && isset($field_config['options']['label']) && $field_config['options']['label']) {
                     $field_config['options']['label'] = $translator->trans($field_config['options']['label'], [], 'admin');
+                }
+
+                # Translate help
+                if(isset($translator) && isset($field_config['options']['help']) && $field_config['options']['help']) {
+                    $field_config['options']['help'] = $translator->trans($field_config['options']['help'], [], 'admin');
                 }
             
                 # Add field to form
@@ -116,7 +126,6 @@ class UIFormType extends AbstractType
         
         # Submit event
         $builder->addEventListener(FormEvents::SUBMIT, function(FormEvent $event) {
-            
             $entity_name = $event->getForm()->getConfig()->getDataClass();
             $options = $event->getForm()->getConfig()->getOptions();
             $parent = $options['parent'];
