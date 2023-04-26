@@ -14,13 +14,12 @@
 
     {% if field.vars.name != '_token' and field.vars.name != 'translations' %}
     <header>
+        {% set label = '' %}
         {% if field.vars.label %}
             {% set label = field.vars.label %}
-        {% else %}
-            {% set label = field.vars.name %}
         {% endif %}
         {% if field.vars.required is defined and field.vars.required %}{% set label = label ~ " *" %}{% endif %}
-        {% if field.vars.label is defined %}<h3>{{ form_label(field, label) }}</h3>{% endif %}
+        {% if label %}<h3>{{ form_label(field, label) }}</h3>{% endif %}
         {% if field.vars.help is defined %}<div class="help"><em>{{ field.vars.help }}</em></div>{% endif %}
     </header>
     {% endif %}
