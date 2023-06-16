@@ -22,7 +22,6 @@
             {% set label = field.vars.label %}
         {% endif %}
 
-        {% if field.vars.required is defined and field.vars.required %}{% set label = label ~ " *" %}{% endif %}
         {% if label %}<h3>{{ form_label(field, label) }}</h3>{% endif %}
         {% if field.vars.help is defined %}<div class="help"><em>{{ field.vars.help|raw }}</em></div>{% endif %}
     </header>
