@@ -70,6 +70,7 @@ class UIFormType extends AbstractType
         # Fields
         foreach($form_config['fields'] as $field_config) {
             if(!isset($field_config['excluded']) || !$field_config['excluded']) {
+                
                 # Entity Type : order by main field asc
                 if($field_config['type'] == 'EntityType') {
                     $field_config['options']['query_builder'] = function($model) {
@@ -78,9 +79,9 @@ class UIFormType extends AbstractType
                         if($model->isTranslatable() && $model->isFieldTranslatable($name_field)) {
                             $query->join('t.translations', 'i');
                             $query->where("i.locale = '" . $this->params->get('locale') . "'");
-                            $query->orderBy("i.$name_field", 'ASC');
+                            $query->orderBy('t.position', 'ASC')->addOrderBy("i.$name_field", 'ASC');
                         } else {
-                            $query->orderBy("t.$name_field", 'ASC');
+                            $query->orderBy('t.position', 'ASC')->addOrderBy("t.$name_field", 'ASC');
                         }
                         return $query;
                     };
