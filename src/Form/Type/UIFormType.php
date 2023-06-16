@@ -95,6 +95,14 @@ class UIFormType extends AbstractType
                 if(isset($translator) && isset($field_config['options']['help']) && $field_config['options']['help']) {
                     $field_config['options']['help'] = $translator->trans($field_config['options']['help'], [], 'admin');
                 }
+
+                # Translate choices
+                if($field_config['type'] == 'ChoiceType' && isset($translator)) {
+                    foreach($field_config['options']['choices'] as $label=>$key) {
+                        unset($field_config['options']['choices'][$label]);
+                        $field_config['options']['choices'][$translator->trans($label, [], 'admin')] = $key;
+                    }
+                }
             
                 # Add field to form
                 $builder->add($field_config['name'], $field_config['namespace'] . '\\' . $field_config['type'], $field_config['options']);
