@@ -18,7 +18,7 @@ class FileTransformer implements DataTransformerInterface
     protected $preview_max_height = 1200;
     protected $preview_prefix = '_';
     protected $upload_folder = 'uploads';
-    protected $upload_path = 'public/uploads';
+    protected $upload_path = 'uploads';
     protected $video_generate_thumbnail = true;
     
     function __construct($field_config, $ui_config)
