@@ -112,7 +112,12 @@ class EditorController extends AbstractController
                         break;
                     
                     case 'next':
-                        return $this->redirectToRoute('admin_page_action_id', array('slug'=>$request->get('slug'), 'action'=>'form', 'id'=>$view_nav['next']->getId()));
+                        if($view_nav['next'] && $view_nav['next']->getId()) {
+                            return $this->redirectToRoute('admin_page_action_id', array('slug'=>$request->get('slug'), 'action'=>'form', 'id'=>$view_nav['next']->getId()));
+                        } else {
+                            return $this->redirectToRoute('admin_page_action', array('slug'=>$request->get('slug'), 'action'=>'index'));
+                        }
+                        
                         break;
                     
                     default:
