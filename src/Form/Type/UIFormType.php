@@ -27,45 +27,40 @@ class UIFormType extends AbstractType
     
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
+        # Options
         $ui_config = $options['ui_config'];
         $form_config = $options['form_config'];
-        $data = $options['data'];
-        $fields = $form_config['fields'];
         if(isset($options['translator'])) {
             $translator = $options['translator'];
         }
         if(isset($options['model'])) {
             $this->model = $options['model'];
         }
-        
+
         # Translations
         if(isset($form_config['translations']) && $form_config['translations']) {
             $translations_fields = $form_config['translations'];
             $displayed_fields = [];
-            $excluded_fields = [];
-            
+                    
             foreach($translations_fields as $field_name=>$field_config) {
-                if(isset($field_config['excluded']) && $field_config['excluded']) {
-                    $excluded_fields[] = $field_name;
-                } else {
-                    $translations_fields[$field_name]['options']['field_type'] = $field_config['namespace'] . '\\' . $field_config['type'];
-                    $displayed_fields[$field_name] = $translations_fields[$field_name]['options'];
+                $translations_fields[$field_name]['options']['field_type'] = $field_config['namespace'] . '\\' . $field_config['type'];
+                $displayed_fields[$field_name] = $translations_fields[$field_name]['options'];
 
-                    # Translate label
-                    if(isset($translator) && isset($displayed_fields[$field_name]['label']) && $displayed_fields[$field_name]['label']) {
-                        $displayed_fields[$field_name]['label'] = $translator->trans($displayed_fields[$field_name]['label'], [], 'admin');
-                    }
+                # Translate label
+                if(isset($translator) && isset($displayed_fields[$field_name]['label']) && $displayed_fields[$field_name]['label']) {
+                    $displayed_fields[$field_name]['label'] = $translator->trans($displayed_fields[$field_name]['label'], [], 'admin');
+                }
 
-                    # Translate help
-                    if(isset($translator) && isset($displayed_fields[$field_name]['help']) && $displayed_fields[$field_name]['help']) {
-                        $displayed_fields[$field_name]['help'] = $translator->trans($displayed_fields[$field_name]['help'], [], 'admin');
-                    }
+                # Translate help
+                if(isset($translator) && isset($displayed_fields[$field_name]['help']) && $displayed_fields[$field_name]['help']) {
+                    $displayed_fields[$field_name]['help'] = $translator->trans($displayed_fields[$field_name]['help'], [], 'admin');
                 }
             }
             
-            $builder->add('translations', TranslationsType::class, array('excluded_fields'=>$excluded_fields, 'fields'=>$displayed_fields));
+            $builder->add('translations', TranslationsType::class, ['fields'=>$displayed_fields]);
             $builder->get('translations')->addModelTransformer(new TranslationsTransformer($form_config, $ui_config));
         }
+
         
         # Fields
         foreach($form_config['fields'] as $field_config) {
@@ -105,8 +100,12 @@ class UIFormType extends AbstractType
                     }
                 }
             
+
+                #
                 # Add field to form
+                #
                 $builder->add($field_config['name'], $field_config['namespace'] . '\\' . $field_config['type'], $field_config['options']);
+            
             
                 # Add transformer to field
                 if(isset($field_config['transformer']) && $field_config['transformer']) {
@@ -115,7 +114,7 @@ class UIFormType extends AbstractType
                 }
             }
         }
-         
+
         # Pre submit event
         $builder->addEventListener(FormEvents::PRE_SUBMIT, function(FormEvent $event) {
             $entity_name = $event->getForm()->getConfig()->getDataClass();
@@ -125,7 +124,7 @@ class UIFormType extends AbstractType
             $current_data = $event->getForm()->getNormData();
             $new_data = $event->getData();
             
-            /* Hook on pre-submit */
+            # Hook on pre-submit
             if(isset($form_config['on_pre_submit'])) {
                 $service = new $form_config['on_pre_submit']($this->params, $this->model);
                 $service->execute($current_data, $new_data);
@@ -140,7 +139,7 @@ class UIFormType extends AbstractType
             $parent = $options['parent'];
             $form_config = $options['form_config'];
 
-            /* Treat each fields before sending data */
+            # Treat each fields before sending data
             $fields = $form_config['fields'];
             if(isset($form_config['translations']) && !empty($form_config['translations'])) {
                 $fields = array_merge($fields, $form_config['translations']);
@@ -164,7 +163,7 @@ class UIFormType extends AbstractType
                 }
             }
             
-            /* Hook on submit */
+            # Hook on submit
             if(isset($form_config['on_submit'])) {
                 $current_data = $event->getForm()->getNormData();
                 $new_data = $event->getData();
@@ -186,6 +185,10 @@ class UIFormType extends AbstractType
             'parent' => null,
             'translator'=>null,
             'model'=>null,
+            'template'=>'',
+            'template_path'=>'',
+            'widget'=>'',
+            'prototype_html'=>'',
         ]);
     }
 }

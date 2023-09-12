@@ -14,7 +14,7 @@
     box-sizing: border-box;
 }
 #form .content aside > *,
-#form .content .form > form .field,
+#form .content .form > form .form_field,
 #form .content .form > form > *,
 #form > header > * {
     margin-bottom: var(--default-spacing);
@@ -35,4 +35,10 @@
 #form .items_header .cell.extra,
 #form .items .cell.extra {
     display: none;
+}
+.form-check {
+    display: flex;
+}
+.form-check label {
+    padding-left: calc(var(--default-spacing) / 3);
 }

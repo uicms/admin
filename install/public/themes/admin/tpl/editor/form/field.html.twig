@@ -1,33 +1,37 @@
-<div id="field_{{ field.vars.name }}" class="field type_{{ field.vars.block_prefixes.1 }}">
-    {% trans_default_domain 'admin' %}
-    {% set template = "default" %}
-    {% set template_path = "admin/tpl/editor/form/types" %}
-    
-    {% if field.vars.options.template is defined %}
-        {% set template = field.vars.options.template %}
-        {% if field.vars.options.template_path is defined and field.vars.options.template_path %}
-            {% set template_path = field.vars.options.template_path %}
-        {% endif %}
+{% trans_default_domain 'admin' %}
+{% set template = "default" %}
+{% set template_path = "admin/tpl/editor/form/types" %}
+
+{% if field.vars.options.template is defined %}
+    {% set template = field.vars.options.template %}
+    {% if field.vars.options.template_path is defined and field.vars.options.template_path %}
+        {% set template_path = field.vars.options.template_path %}
     {% endif %}
+{% endif %}
 
-    {% set template = template_path ~ '/' ~ template ~ ".html.twig" %}
+{% if field.vars.block_prefixes.1 == "collection" %}
+    {% set template = 'collection' %}
+{% endif %}
 
+{% set template = template_path ~ '/' ~ template ~ ".html.twig" %}
+{% set label = field.vars.name %}    
+{% if field.vars.label is same as(false) %}
+    {% set label = '' %}
+{% elseif field.vars.label %}
+    {% set label = field.vars.label %}
+{% endif %}
+
+
+<div id="form_field_{% if field.parent is defined and field.parent != null %}{{ field.parent.vars.name }}_{% endif %}{{ field.vars.name }}" class="form_field form_type_{{ field.vars.block_prefixes.1 }}"{% if field.vars.attr.prototype is defined %} data-prototype="{{ field.vars.attr.prototype }}"{% endif %}>
+    
     {% if field.vars.name != '_token' and field.vars.name != 'translations' %}
-    <header>
-        {% set label = field.vars.name %}
-        
-        {% if field.vars.label is same as(false) %}
-            {% set label = '' %}
-        {% elseif field.vars.label %}
-            {% set label = field.vars.label %}
-        {% endif %}
-
-        {% if label %}<h3>{{ form_label(field, label) }}</h3>{% endif %}
-        {% if field.vars.help is defined %}<div class="help"><em>{{ field.vars.help|raw }}</em></div>{% endif %}
+    <header class="form_field_header">
+        {% if label %}<h3 class="form_field_label">{{ form_label(field, label) }}</h3>{% endif %}
+        {% if field.vars.help is defined %}<div class="form_field_help"><em>{{ field.vars.help|raw }}</em></div>{% endif %}
     </header>
     {% endif %}
     
-    <div class="body">
+    <div class="form_field_body">
     {% include template %}
     </div>
 </div>

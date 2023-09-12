@@ -1,0 +1,36 @@
+{% for entry in field %}
+<div class="collection_entry">
+{% for entry_field in entry %}
+	{% set template = "entry_default" %}
+	{% if entry_field.vars.options.template is defined %}
+        {% set template = 'entry_' ~ entry_field.vars.options.template  %}
+        {% if entry_field.vars.options.template_path is defined and entry_field.vars.options.template_path %}
+            {% set template_path = entry_field.vars.options.template_path %}
+        {% endif %}
+    {% endif %}
+	{% set template = template_path ~ '/' ~ template ~ ".html.twig" %}
+	{% set label = entry_field.vars.name %}   
+    {% if entry_field.vars.label is same as(false) %}
+        {% set label = '' %}
+    {% elseif entry_field.vars.label %}
+        {% set label = entry_field.vars.label %}
+    {% endif %}
+
+	<div id="form_field_{% if entry_field.parent is defined and entry_field.parent != null %}{{ entry_field.parent.vars.name }}_{% endif %}{{ entry_field.vars.name }}" class="form_field collection_entry_field form_type_{{ entry_field.vars.block_prefixes.1 }}">
+
+		{% if entry_field.vars.name != '_token' and entry_field.vars.name != 'translations' %}
+		<header class="form_field_header">
+	        {% if label %}<h3>{{ form_label(entry_field, label) }}</h3>{% endif %}
+	        {% if entry_field.vars.help is defined %}<div class="form_help"><em>{{ entry_field.vars.help|raw }}</em></div>{% endif %}
+	    </header>
+		{% endif %}
+
+	    <div class="form_field_body">
+			{% include template %}
+		</div>
+	</div>
+	{% endfor %}
+</div>
+{% else %}
+    {% do field.setRendered %}
+{% endfor %}

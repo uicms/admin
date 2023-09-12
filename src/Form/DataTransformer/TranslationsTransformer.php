@@ -19,26 +19,31 @@ class TranslationsTransformer implements DataTransformerInterface
     
     public function transform($translations)
     {
-        $iterator = $translations->getIterator();
-        foreach($iterator as $entity) {
-            foreach($this->form_config['translations'] as $field_config) {
-                if(isset($field_config['transformer']) && $field_config['transformer']) {
-                    eval("\$transformer = new " . $field_config['transformer'] . "(\$field_config, \$this->ui_config);");
-                    eval("\$entity->set" . $field_config['name'] . "(\$transformer->transform(\$entity->get" . $field_config['name'] . "()));");
+        if(null !== $translations) {
+            $iterator = $translations->getIterator();
+            foreach($iterator as $entity) {
+                foreach($this->form_config['translations'] as $field_config) {
+                    if(isset($field_config['transformer']) && $field_config['transformer']) {
+                        eval("\$transformer = new " . $field_config['transformer'] . "(\$field_config, \$this->ui_config);");
+                        eval("\$entity->set" . $field_config['name'] . "(\$transformer->transform(\$entity->get" . $field_config['name'] . "()));");
+                    }
                 }
             }
         }
+        
         return $translations;
     }
 
     public function reverseTransform($translations)
     {
-        $iterator = $translations->getIterator();
-        foreach($iterator as $entity) {
-            foreach($this->form_config['translations'] as $field_config) {
-                if(isset($field_config['transformer']) && $field_config['transformer']) {
-                    eval("\$transformer = new " . $field_config['transformer'] . "(\$field_config, \$this->ui_config);");
-                    eval("\$entity->set" . $field_config['name'] . "(\$transformer->reverseTransform(\$entity->get" . $field_config['name'] . "()));");
+        if(null !== $translations) {
+            $iterator = $translations->getIterator();
+            foreach($iterator as $entity) {
+                foreach($this->form_config['translations'] as $field_config) {
+                    if(isset($field_config['transformer']) && $field_config['transformer']) {
+                        eval("\$transformer = new " . $field_config['transformer'] . "(\$field_config, \$this->ui_config);");
+                        eval("\$entity->set" . $field_config['name'] . "(\$transformer->reverseTransform(\$entity->get" . $field_config['name'] . "()));");
+                    }
                 }
             }
         }

@@ -1,0 +1,20 @@
+{% trans_default_domain 'admin' %}
+{% if entry_field.vars.data.publicPath is defined and entry_field.vars.data.thumbnailPath %}
+<div class="form_field_thumbnail">
+    <a href="{{ entry_field.vars.data.publicPath }}" data-fancybox="gallery">
+        <img src="{{ entry_field.vars.data.thumbnailPath }}" />
+    </a>
+</div>
+{% endif %}
+
+<div class="form_field_content">
+    {% if entry_field.vars.data.publicPath is defined %}
+    <div class="form_field_infos">
+        <a href="{{ entry_field.vars.data.publicPath }}" class="external">{{ entry_field.vars.data.publicPath }}</a>
+        <br/>{% if entry_field.vars.data.width is defined %}{{ entry_field.vars.data.width }} x {{ entry_field.vars.data.height }}px, {% endif %}{{ entry_field.vars.data.size|number_format(0, '.', ' ') }} octets
+    </div>
+    {% endif %}
+    {% set file_required = entry_field.vars.required %}
+    {% if file_required and entry_field.vars.data.publicPath is defined %}{% set file_required = false %}{% endif %}
+    {{ form_widget(entry_field, {'required': file_required }) }}
+</div>

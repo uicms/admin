@@ -117,7 +117,6 @@ class EditorController extends AbstractController
                         } else {
                             return $this->redirectToRoute('admin_page_action', array('slug'=>$request->get('slug'), 'action'=>'index'));
                         }
-                        
                         break;
                     
                     default:

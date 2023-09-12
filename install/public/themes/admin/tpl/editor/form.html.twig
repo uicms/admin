@@ -33,7 +33,7 @@
         	{{ form_start(form) }}
                 {% include "admin/tpl/components/form_buttons.html.twig" %}
             
-        		<div class="form-group">
+                <div class="form_fields">
                 {% for field in form %}
                    {% include "admin/tpl/editor/form/field.html.twig" %}
                 {% endfor %}
@@ -44,6 +44,7 @@
                 {% endif %}
                 
                 <input type="hidden" class="next_step" name="next_step" value="" />
+
         	{{ form_end(form) }}
             
             <!-- Children -->
