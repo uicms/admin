@@ -1,29 +1,29 @@
 /* File */
-.field.type_file {
+.form_type_file {
     
 }
-.field.type_file .body {
+.form_type_file .form_field_body {
     display: flex;
     column-gap: 15px;
     background: #f8f8f8;
     padding: 15px;
     border-radius: 5px;
 }
-.field.type_file .body .thumbnail {
+.form_type_file .form_field_body .form_field_thumbnail {
 }
-.field.type_file .body .thumbnail img {
+.form_type_file .form_field_body .form_field_thumbnail img {
     max-height: 100px;
     max-width: 100px;
     display: block;
 }
-.field.type_file .infos {
+.form_type_file .form_field_body .form_field_infos {
     line-height: 1.4em;
     margin-bottom: 5px;
 }
 
 
 /* Date */
-.field.type_date label {
+.form_type_date label {
     display: inline;
 }
 

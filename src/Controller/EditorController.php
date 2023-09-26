@@ -138,21 +138,24 @@ class EditorController extends AbstractController
                 # Slug of the CMS page of the linked Entity
                 $page_slug = '';
                 foreach($ui_config['admin']['pages'] as $j=>$page_config) {
-                    if(isset($page_config['arguments']['entity_name']) && $page_config['arguments']['entity_name'] == $entity->getName()) {
+                    if(isset($page_config['arguments']['entity_name']) && $page_config['arguments']['entity_name'] == $entity->getName() && (!isset($page_config['display']) or $page_config['display'])) {
                         $page_slug = $page_config['slug'];
                     }
                 }
-                # Add link to row
-                $link_entity = $model->getLinkEntity(array($entity->getName(), $entity_name));
-                $linked_rows = $entity->getAll(array('linked_to'=>$entity_name, 'linked_to_id'=>$row->getId()));
-                $row->_links[$entity->getName()] = array(
-                                        'name'=>$entity->getName(),
-                                        'link_table_name'=>$link_entity->getName(),
-                                        'page_slug'=>$page_slug,
-                                        'rows'=>$linked_rows,
-                                    );
-                if($linked_rows) {
-                    $row->_total_linked++;
+                
+                if($page_slug) {
+                    # Add link to row
+                    $link_entity = $model->getLinkEntity(array($entity->getName(), $entity_name));
+                    $linked_rows = $entity->getAll(array('linked_to'=>$entity_name, 'linked_to_id'=>$row->getId()));
+                    $row->_links[$entity->getName()] = array(
+                                            'name'=>$entity->getName(),
+                                            'link_table_name'=>$link_entity->getName(),
+                                            'page_slug'=>$page_slug,
+                                            'rows'=>$linked_rows,
+                                        );
+                    if($linked_rows) {
+                        $row->_total_linked++;
+                    }
                 }
             }
             
