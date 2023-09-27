@@ -29,10 +29,16 @@ class IndexController extends AbstractController
 		$request->setLocale($this->getParameter('locale'));
         
 		# Slug
-		if(!$slug && ($keys = array_keys($ui_config['admin']['pages']))) {
-			$slug = $keys[0];
-		} else if(!$slug) {
-			throw $this->createNotFoundException('No slug!');
+		if(!$slug && $ui_config['admin']['pages']) {
+            foreach($ui_config['admin']['pages'] as $page) {
+                if(!isset($page['display']) || $page['display']) {
+                    $slug = $page["slug"];
+                    break;
+                }
+            }
+		}
+        if(!$slug) {
+			throw $this->createNotFoundException('No page slug!');
 		}
 
 		# Get page related to slug

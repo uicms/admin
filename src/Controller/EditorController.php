@@ -163,17 +163,25 @@ class EditorController extends AbstractController
             #
             # Children (FK link)
             #
-            $children = $model->getForeignKeys();
-            foreach($children as $i=>$child) {
-                $page_slug = '';
+            $foreign_keys = $model->getForeignKeys();
+            $result = [];
+            foreach($foreign_keys as $i=>$foreign_key) {
+                
+                # Page slug
                 foreach($ui_config['admin']['pages'] as $j=>$page_config) {
-                    if(isset($page_config['arguments']['entity_name']) && $page_config['arguments']['entity_name'] == $child['entity']->getName()) {
-                        $children[$i]['page_slug'] = $page_config['slug'];
+                    if(isset($page_config['arguments']['entity_name']) && $page_config['arguments']['entity_name'] == $child['entity']->getName() && (!isset($page_config['display']) or $page_config['display'])) {
+                        $foreign_key['page_slug'] = $page_config['slug'];
                     }
                 }
-                $children[$i]['rows'] = $child['entity']->getAll(array('findby'=>array($child['db_name'] => $row->getId())));
+                
+                # Add to results
+                if(isset($foreign_key['page_slug']) && $foreign_key['page_slug']) {
+                    $foreign_key['rows'] = $child['entity']->getAll(array('findby'=>array($child['db_name'] => $row->getId())));
+                }
+                
+                $result[] = $foreign_key;
             }
-            $row->_children = $children;
+            $row->_children = $result;
         }
         
         
