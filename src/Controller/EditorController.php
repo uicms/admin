@@ -165,21 +165,21 @@ class EditorController extends AbstractController
             #
             $foreign_keys = $model->getForeignKeys();
             $result = [];
+
             foreach($foreign_keys as $i=>$foreign_key) {
                 
                 # Page slug
                 foreach($ui_config['admin']['pages'] as $j=>$page_config) {
-                    if(isset($page_config['arguments']['entity_name']) && $page_config['arguments']['entity_name'] == $child['entity']->getName() && (!isset($page_config['display']) or $page_config['display'])) {
+                    if(isset($page_config['arguments']['entity_name']) && $page_config['arguments']['entity_name'] == $foreign_key['entity']->getName() && (!isset($page_config['display']) or $page_config['display'])) {
                         $foreign_key['page_slug'] = $page_config['slug'];
                     }
                 }
                 
                 # Add to results
                 if(isset($foreign_key['page_slug']) && $foreign_key['page_slug']) {
-                    $foreign_key['rows'] = $child['entity']->getAll(array('findby'=>array($child['db_name'] => $row->getId())));
+                    $foreign_key['rows'] = $foreign_key['entity']->getAll(array('findby'=>array($foreign_key['db_name'] => $row->getId())));
+                    $result[] = $foreign_key;
                 }
-                
-                $result[] = $foreign_key;
             }
             $row->_children = $result;
         }

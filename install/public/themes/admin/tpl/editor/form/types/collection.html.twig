@@ -1,5 +1,5 @@
 {% for entry in field %}
-<div class="collection_entry">
+<div class="form_collection_entry">
 {% for entry_field in entry %}
 	{% set template = "entry_default" %}
 	{% if entry_field.vars.options.template is defined %}
@@ -16,7 +16,7 @@
         {% set label = entry_field.vars.label %}
     {% endif %}
 
-	<div id="form_field_{% if entry_field.parent is defined and entry_field.parent != null %}{{ entry_field.parent.vars.name }}_{% endif %}{{ entry_field.vars.name }}" class="form_field collection_entry_field form_type_{{ entry_field.vars.block_prefixes.1 }}">
+	<div id="form_field_{% if entry_field.parent is defined and entry_field.parent != null %}{{ entry_field.parent.vars.name }}_{% endif %}{{ entry_field.vars.name }}" class="form_field form_collection_entry_field form_type_{{ entry_field.vars.block_prefixes.1 }}">
 
 		{% if entry_field.vars.name != '_token' and entry_field.vars.name != 'translations' %}
 		<header class="form_field_header">
