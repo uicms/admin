@@ -85,3 +85,6 @@ textarea {
 label {
     padding: 5px 0;
 }
+select {
+    width: 100%;
+}
