@@ -1,5 +1,5 @@
 {% for entry in field %}
-<div class="form_collection_entry">
+<div class="form_collection_entry form_group">
 {% for entry_field in entry %}
 	{% set template = "entry_default" %}
 	{% if entry_field.vars.options.template is defined %}
