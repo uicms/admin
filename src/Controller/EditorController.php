@@ -146,7 +146,7 @@ class EditorController extends AbstractController
                 if($page_slug) {
                     # Add link to row
                     $link_entity = $model->getLinkEntity(array($entity->getName(), $entity_name));
-                    $linked_rows = $entity->getAll(array('linked_to'=>$entity_name, 'linked_to_id'=>$row->getId()));
+                    $linked_rows = $entity->mode('admin')->getAll(array('linked_to'=>$entity_name, 'linked_to_id'=>$row->getId()));
                     $row->_links[$entity->getName()] = array(
                                             'name'=>$entity->getName(),
                                             'link_table_name'=>$link_entity->getName(),
@@ -177,7 +177,7 @@ class EditorController extends AbstractController
                 
                 # Add to results
                 if(isset($foreign_key['page_slug']) && $foreign_key['page_slug']) {
-                    $foreign_key['rows'] = $foreign_key['entity']->getAll(array('findby'=>array($foreign_key['db_name'] => $row->getId())));
+                    $foreign_key['rows'] = $foreign_key['entity']->mode('admin')->getAll(array('findby'=>array($foreign_key['db_name'] => $row->getId())));
                     $result[] = $foreign_key;
                 }
             }
@@ -198,7 +198,7 @@ class EditorController extends AbstractController
                 'view_nav'=>$view_nav,
             ]
         );
-	}
+    }
     
     public function select($page, $entity_name, Params $params_service, Model $model, Request $request, Nav $nav)
     {
