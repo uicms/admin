@@ -96,7 +96,8 @@ class FileTransformer implements DataTransformerInterface
 
         /* Final path */
         $file_dest = $this->upload_path . '/' . $file_name . '.' . $extension;
-        rename($file_source, $file_dest);
+        #rename($file_source, $file_dest);
+        copy($file_source, $file_dest);
         chmod($file_dest, 0755);
         
         /* Limit image width */

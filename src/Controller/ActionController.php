@@ -29,26 +29,26 @@ class ActionController extends AbstractController
        } else {
            return $this->redirectToRoute($redirect['route']['name'], $redirect['route']['params']);
        }
-	}
+    }
     
     public function move($entity_name, $selection, $target, Model $model, Nav $nav)
     {
         try {
-			$model->get($entity_name)->mode('admin')->move($selection, $target);
+            $model->get($entity_name)->mode('admin')->move($selection, $target);
         } catch(\Throwable $throwable) {
-			$this->addFlash('error', $throwable->getMessage());
-		}
+            $this->addFlash('error', $throwable->getMessage());
+        }
         
         $redirect = $nav->getCurrentTab();
-		return $this->redirectToRoute($redirect['route']['name'], $redirect['route']['params']);
-	}
+        return $this->redirectToRoute($redirect['route']['name'], $redirect['route']['params']);
+    }
     
     public function newfolder($entity_name, $new_folder_name, Model $model, Nav $nav, Request $request, Params $params_service)
     {
         try {
             $model = $model->get($entity_name);
             $params = $params_service->get($model->getSlug(), $request);
-			$row = $model->new($this->getUser());
+            $row = $model->new($this->getUser());
             $method = $model->method($model->getConfig('name_field'), 'set');
             $row->setIsDir(1);
             $row->$method($new_folder_name);
@@ -59,12 +59,12 @@ class ActionController extends AbstractController
             $model->persist($row);
 
         } catch(\Throwable $throwable) {
-			$this->addFlash('error', $throwable->getMessage());
+            $this->addFlash('error', $throwable->getMessage());
         }
         
         $redirect = $nav->getCurrentTab();
-		return $this->redirectToRoute($redirect['route']['name'], $redirect['route']['params']);
-	}
+        return $this->redirectToRoute($redirect['route']['name'], $redirect['route']['params']);
+    }
     
     public function publish($entity_name, $selection, Model $model, Nav $nav)
     {
@@ -80,11 +80,11 @@ class ActionController extends AbstractController
     
     public function conceal($entity_name, $selection, Model $model, Nav $nav)
     {
-		try {
-			$model->get($entity_name)->mode('admin')->conceal($selection);
+        try {
+            $model->get($entity_name)->mode('admin')->conceal($selection);
         } catch(\Throwable $throwable) {
-			$this->addFlash('error', $throwable->getMessage());
-		}
+            $this->addFlash('error', $throwable->getMessage());
+        }
         
        $redirect = $nav->getCurrentTab();
        return $this->redirectToRoute($redirect['route']['name'], $redirect['route']['params']);
@@ -136,7 +136,7 @@ class ActionController extends AbstractController
         
         try {
             if ($file = $request->files->get('file')) {
-                $file_field_config = $model->getField(array('type'=>'UIFileType'));
+                $file_field_config = $model->getField(['form'=>['type'=>'UIFileType']]);
                 $file_set_method = 'set' . $file_field_config['name'];
                 $file_transformer = new FileTransformer($file_field_config, $ui_config);
                 $file_path = $file_transformer->reverseTransform($file);
@@ -288,56 +288,56 @@ class ActionController extends AbstractController
     
     public function link($entity_name, $selection, $action_entity_name, $action_selection, Model $model, Nav $nav)
     {
-		try {
-			$model->get($entity_name)->mode('admin')->link($selection, $action_entity_name, $action_selection);
+        try {
+            $model->get($entity_name)->mode('admin')->link($selection, $action_entity_name, $action_selection);
         } catch(\Throwable $throwable) {
-			$this->addFlash('error', $throwable->getMessage());
-		}
+            $this->addFlash('error', $throwable->getMessage());
+        }
         
         $current_tab = $nav->getCurrentTab();
         $nav->removeTab($current_tab['route']['id']);
         $redirect = $nav->getTab($current_tab['parent']['route']['id']);
-		return $this->redirectToRoute($redirect['route']['name'], $redirect['route']['params']);
-	}
+        return $this->redirectToRoute($redirect['route']['name'], $redirect['route']['params']);
+    }
     
     public function linkchild($entity_name, $selection, $action_entity_name, $action_selection, $action_field, Model $model, Nav $nav)
     {
-		try {
-			$model->get($entity_name)->mode('admin')->linkChildren($selection, $action_entity_name, $action_field, $action_selection);
+        try {
+            $model->get($entity_name)->mode('admin')->linkChildren($selection, $action_entity_name, $action_field, $action_selection);
         } catch(\Throwable $throwable) {
-			$this->addFlash('error', $throwable->getMessage());
-		}
+            $this->addFlash('error', $throwable->getMessage());
+        }
         
         $current_tab = $nav->getCurrentTab();
         $nav->removeTab($current_tab['route']['id']);
         $redirect = $nav->getTab($current_tab['parent']['route']['id']);
-		return $this->redirectToRoute($redirect['route']['name'], $redirect['route']['params']);
-	}
+        return $this->redirectToRoute($redirect['route']['name'], $redirect['route']['params']);
+    }
     
     public function unlink($entity_name, $selection, $action_entity_name, $action_selection, Model $model, Nav $nav)
     {
-		try {
-			$model->get($entity_name)->unlink($selection, $action_entity_name, $action_selection);
+        try {
+            $model->get($entity_name)->unlink($selection, $action_entity_name, $action_selection);
         } catch(\Throwable $throwable) {
-			$this->addFlash('error', $throwable->getMessage());
-		}
+            $this->addFlash('error', $throwable->getMessage());
+        }
         
         $redirect = $nav->getCurrentTab();    
-		return $this->redirectToRoute($redirect['route']['name'], $redirect['route']['params']);
-	}
+        return $this->redirectToRoute($redirect['route']['name'], $redirect['route']['params']);
+    }
     
     public function removetab($route_id, Model $model, Nav $nav)
     {
-		try {
+        try {
             $tab = $nav->getTab($route_id);
-			$nav->removeTab($route_id);
+            $nav->removeTab($route_id);
         } catch(\Throwable $throwable) {
-			$this->addFlash('error', $throwable->getMessage());
-		}
+            $this->addFlash('error', $throwable->getMessage());
+        }
         
         if($tab && isset($tab['route'])) {
             $redirect = $nav->getLastTab($tab['route']['slug']);      
-    		return $this->redirectToRoute($redirect['route']['name'], $redirect['route']['params']);
+            return $this->redirectToRoute($redirect['route']['name'], $redirect['route']['params']);
         } else {
             return $this->redirectToRoute('admin');
         }
@@ -346,14 +346,14 @@ class ActionController extends AbstractController
     
     public function canceltab($route_id, Model $model, Nav $nav)
     {
-		try {
+        try {
             $tab = $nav->getTab($route_id);
-			$nav->removeTab($route_id);
+            $nav->removeTab($route_id);
         } catch(\Throwable $throwable) {
-			$this->addFlash('error', $throwable->getMessage());
-		}
+            $this->addFlash('error', $throwable->getMessage());
+        }
 
         $redirect = $nav->getTab($tab['parent']['route']['id']);      
-		return $this->redirectToRoute($redirect['route']['name'], $redirect['route']['params']);
+        return $this->redirectToRoute($redirect['route']['name'], $redirect['route']['params']);
     }
 }
