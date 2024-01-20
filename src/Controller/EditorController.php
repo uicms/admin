@@ -6,6 +6,9 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Contracts\Translation\TranslatorInterface;
 
+use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
+
 use Uicms\Admin\Form\Type\UIFormType;
 use Uicms\App\Service\Model;
 use Uicms\App\Service\Nav;
@@ -61,6 +64,7 @@ class EditorController extends AbstractController
 
     public function form($page, $entity_name, $id=null, $next_step='', Params $params_service, Model $common_model, Request $request, Nav $nav, Viewnav $viewnav, TranslatorInterface $translator)
     {
+
         # Init
         $params = $params_service->get($page['slug'], $request);
         $ui_config = $this->getParameter('ui_config');
@@ -129,6 +133,28 @@ class EditorController extends AbstractController
         
         if($row->getId()) {
             
+            # Preview
+            if(isset($page['public_route']) && $page['public_route'] && isset($ui_config['preview_key']) && $ui_config['preview_key']) {
+                $page['public_route'] .= '?preview_key=' . $ui_config['preview_key'];
+            }
+            
+            /*if(isset($ui_config['entity'][$entity_name]['preview_route']) && ($preview_route = $ui_config['entity'][$entity_name]['preview_route'])) {
+                $route_vars = [];
+                $pattern = '/^\{([A-Za-z_]+)\.([A-Za-z_]+)\}$/';
+
+                foreach($ui_config['entity'][$entity_name]['preview_vars'] as $route_var=>$var) {
+                    if(preg_match($pattern, $var, $preg)) {
+                        $method_name = lcfirst(str_replace('_', '', ucwords($preg[2], '_')));
+                        $eval_expression = sprintf('$%s->get%s()', $preg[1], $method_name);
+                        eval("\$route_vars[\$route_var] = $eval_expression;");
+                    } else {
+                        $route_vars[$route_var] = $var;
+                    }
+                }
+
+                $preview_url = $this->generateUrl($preview_route, $route_vars, UrlGeneratorInterface::ABSOLUTE_URL) . "?preview_key=" . $ui_config['preview_key'];
+            }*/
+            
             #
             # Links
             #
@@ -179,7 +205,7 @@ class EditorController extends AbstractController
                 
                 # Add to results
                 if(isset($foreign_key['page_slug']) && $foreign_key['page_slug']) {
-                    $foreign_key['rows'] = $foreign_key['entity']->mode('admin')->getAll(array('findby'=>array($foreign_key['db_name'] => $row->getId())));
+                    $foreign_key['rows'] = $foreign_key['entity']->mode('admin')->getAll(['limit'=>10, 'findby'=>array($foreign_key['db_name'] => $row->getId())]);
                     $result[] = $foreign_key;
                 }
             }
@@ -198,6 +224,7 @@ class EditorController extends AbstractController
                 'model'=>$model, 
                 'row'=>$row,
                 'view_nav'=>$view_nav,
+                'preview_url'=>isset($preview_url) ? $preview_url : '',
             ]
         );
     }

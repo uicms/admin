@@ -15,13 +15,15 @@ use Uicms\Admin\Form\DataTransformer\DefaultTransformer;
 use Uicms\Admin\Form\DataTransformer\StringToFileTransformer;
 use Uicms\Admin\Form\DataTransformer\TranslationsTransformer;
 use Uicms\Admin\Form\DataModifier\SlugModifier;
+use Uicms\App\Service\Model;
 
 class UIFormType extends AbstractType
 {
     private $model = null;
     
-    public function __construct(ParameterBagInterface $params)
+    public function __construct(ParameterBagInterface $params/*, Model $model*/)
     {
+        #$this->model = $model;
         $this->params = $params;
     }
     
@@ -36,12 +38,13 @@ class UIFormType extends AbstractType
         if(isset($options['model'])) {
             $this->model = $options['model'];
         }
+        $excluded_fields = isset($options['excluded_fields']) && is_array($options['excluded_fields']) ? $options['excluded_fields'] : [];
 
         # Translations
         if(isset($form_config['translations']) && $form_config['translations']) {
             $translations_fields = $form_config['translations'];
+
             $displayed_fields = [];
-                    
             foreach($translations_fields as $field_name=>$field_config) {
                 $translations_fields[$field_name]['options']['field_type'] = $field_config['namespace'] . '\\' . $field_config['type'];
                 $displayed_fields[$field_name] = $translations_fields[$field_name]['options'];
@@ -56,11 +59,9 @@ class UIFormType extends AbstractType
                     $displayed_fields[$field_name]['help'] = $translator->trans($displayed_fields[$field_name]['help'], [], 'admin');
                 }
             }
-            
-            $builder->add('translations', TranslationsType::class, ['fields'=>$displayed_fields]);
+            $builder->add('translations', TranslationsType::class, ['fields'=>$displayed_fields, 'excluded_fields' => $excluded_fields]);
             $builder->get('translations')->addModelTransformer(new TranslationsTransformer($form_config, $ui_config));
         }
-
         
         # Fields
         foreach($form_config['fields'] as $field_config) {
@@ -124,12 +125,18 @@ class UIFormType extends AbstractType
             $current_data = $event->getForm()->getNormData();
             $new_data = $event->getData();
             
-            # Hook on pre-submit
+            # Hook with a service
             if(isset($form_config['on_pre_submit'])) {
                 $service = new $form_config['on_pre_submit']($this->params, $this->model);
                 $service->execute($current_data, $new_data);
                 $event->setData($service->getData());
             }
+
+            # Hook with a onUpdate function in the repository
+            #$model = $this->model->get($entity_name);
+            #if(method_exists($model, 'beforePersist')) {
+            #    $event->setData($model->beforePersist($current_data, $new_data));
+            #}
         });
         
         # Submit event
@@ -175,6 +182,16 @@ class UIFormType extends AbstractType
             
             $event->setData($data);
         });
+
+        # Post submit event
+        $builder->addEventListener(FormEvents::POST_SUBMIT, function(FormEvent $event) {
+            $entity_name = $event->getForm()->getConfig()->getDataClass();
+            $data = $event->getData();
+            $model = $this->model->get($entity_name);
+            if(method_exists($model, 'onPersist')) {
+                $model->onPersist($data);
+            }
+        });
     }
     
     public function configureOptions(OptionsResolver $resolver)
@@ -189,6 +206,7 @@ class UIFormType extends AbstractType
             'template_path'=>'',
             'widget'=>'',
             'prototype_html'=>'',
+            'excluded_fields'=>[],
         ]);
     }
 }

@@ -42,3 +42,9 @@
 .form-check label {
     padding-left: calc(var(--default-spacing) / 3);
 }
+
+/* Required */
+legend.required::after,
+label.required::after {
+    content: ' *';
+}
