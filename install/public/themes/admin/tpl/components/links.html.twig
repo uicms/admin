@@ -11,13 +11,10 @@
 
         <div class="buttons">
             <div class="dropdown action">
-              <button class="dropdown-toggle" type="button">Action</button>
-              <div class="dropdown-menu">
-                <a class="dropdown-item" href="javascript:action('#form_linked_results_{{ page_slug }}', 'unlink');">Retirer</a>
-                <!--<a class="dropdown-item" href="javascript:action('#form_linked_results_{{ page_slug }}', 'delete');">Supprimer</a>
-                <a class="dropdown-item" href="javascript:action('#form_linked_results_{{ page_slug }}', 'conceal');">Masquer</a>
-                <a class="dropdown-item" href="javascript:action('#form_linked_results_{{ page_slug }}', 'publish');">Publier</a>-->
-              </div>
+                <button class="dropdown-toggle" type="button">Action</button>
+                <div class="dropdown-menu">
+                    <a class="dropdown-item" href="javascript:action('#linked_results_{{ page_slug }}', 'unlink');">Retirer</a>
+                </div>
             </div>
     
             <a class="button link" href="{{ path('admin_page_action', {slug: linked_table.page_slug, action: 'select', select_action: 'link', parent: current_tab.route.id}) }}" >Sélect.</a>
@@ -26,15 +23,9 @@
         </div>
 
         {% if results %}
-        <div class="results">
+        <div id="linked_results_{{ page_slug }}" class="results" data-action="{{ path('admin_page', {slug:'action', entity_name:linked_table.name, action_entity_name: model.getName(), action_selection:[row.id], parent: current_tab.route.id}) }}">
             <div class="results_infos"></div>
-            <form id="form_linked_results_{{ page_slug }}" name="rows" action="{{ path('admin_page', {slug:'action', entity_name:linked_table.name, action_entity_name: model.getName(), action_selection:[row.id], parent: current_tab.route.id}) }}" method="post">
-        
-                {% include "admin/tpl/editor/index/list.html.twig" %}
-        
-                <input type="hidden" name="action" value="" />
-            </form>
-    
+            {% include "admin/tpl/editor/index/list.html.twig" %}    
         </div>
         {% endif %}
     </div>

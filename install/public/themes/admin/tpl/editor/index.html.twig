@@ -41,14 +41,9 @@
     {% include "admin/tpl/components/pagination.html.twig" %}
     
     <!-- Results -->
-    <div id="results" class="results">
-        <form id="form_results" name="index" action="{{ path('admin_page', {slug:'action', entity_name:model.name, linked_to:params.linked_to, linked_to_id:params.linked_to_id}) }}" method="post">
-            
+    <div id="explorer_results" class="results" data-action="{{ path('admin_page', {slug:'action', entity_name:model.name, linked_to:params.linked_to, linked_to_id:params.linked_to_id}) }}">
             {% include "admin/tpl/editor/index/" ~ params.display ~ ".html.twig" %}
-        
-            <input type="hidden" name="action" value="" />
-            <input type="hidden" name="target" value="" />
-        </form>
+        </div>
     </div>
     
     <!-- Pager -->

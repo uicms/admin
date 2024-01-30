@@ -1,5 +1,6 @@
 /* Common */
 .item {
+    position: relative;
 }
 .item.concealed {
     opacity: 0.5;
@@ -62,8 +63,10 @@ span.ui-droppable-hover,
     display: flex;
 }
 .items.list .item {
-    display: flex;
     border-bottom: 1px solid #eee;
+}
+.items.list .item > .wrapper {
+    display: flex;
     overflow: hidden;
 }
 .items.list .placeholder {
@@ -243,9 +246,29 @@ span.ui-droppable-hover,
 }
 
 
-
-
-
+/* Item form */
+.items .item_form {
+    display: none;
+    padding: 0 var(--default-spacing) var(--default-spacing) var(--default-spacing) ;
+}
+.items.list .item .expand_item_form {
+    width: 32px;
+    height: 32px;
+    position: absolute;
+    right: 0;
+    top: 0;
+    background: url('../img/dropdown.svg') no-repeat center center;
+    background-size: 8px;
+    cursor: pointer;
+    z-index: 10;
+}
+.items.list .item.item_form_expanded .item_form {
+    display: block;
+}
+.items.list .item.item_form_expanded .expand_item_form {
+    background: url('../img/dropdown_rotate.svg') no-repeat center center;
+    background-size: 8px;
+}
 
 
 

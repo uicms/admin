@@ -148,19 +148,6 @@ $('.cpnt_new_folder .close,.cpnt_new_folder .cancel').click(function() {
 
 
 /* Action functions */
-function action(form, action) {
-    var submit = true;
-
-    if(action == 'delete' && !confirm('Confirmez-vous la suppression ?')) {
-        submit = false;
-    }
-
-    if(submit) {
-        $(form + ' input[name=action]').val(action);
-        $(form).submit();
-    }
-}
-
 function initActionButton() {
     if(!$('section#select').length) {
         $(window).on('select', function(e) {
@@ -174,6 +161,23 @@ function initActionButton() {
     }
 }
 
+function action(container, action) {
+    var submit = true;
+
+    if(action == 'delete' && !confirm('Confirmez-vous la suppression ?')) {
+        submit = false;
+    }
+
+    if(submit) {
+        var url = $(container).data('action')  + '&action=' + action + '&';
+        $(container + " :checkbox:checked").each(function () {
+            url += "selection[]=" + $(this).val() + "&";
+        });
+        url = url.slice(0, -1);
+        
+        window.location = url;
+    }
+}
 
 /* Items functions */
 $(window).on('select', function() {
@@ -198,7 +202,7 @@ function initItems() {
             e.stopPropagation();
         });
     });
-    
+
     /* if template == select */
     if($('section#select').length) {
         $('.item').not('.folder').each(function() {
@@ -329,6 +333,9 @@ function initItems() {
         });
     }
     
+
+
+
     /* Selecting */
     if($('.selectable-item').length) {
         var selecting = false;
@@ -423,7 +430,24 @@ function initItems() {
         });
     }
     
-    
+    /* Item form */
+    $('.item.has_form .expand_item_form').click(function(e) {
+        e.stopPropagation();
+        $(this).parent().toggleClass('item_form_expanded');
+    });
+    $('.item.has_form .expand_item_form').on('mousedown', function(e) {
+        e.stopPropagation(); 
+    });
+    $('.item.has_form .item_form').on('mousedown', function(e) {
+        e.stopPropagation();
+    });
+    $('.item.has_form .item_form').on('click', function(e) {
+        e.stopPropagation();
+    });
+    $('.item.has_form .item_form').dblclick(function(e) {
+        e.stopPropagation();
+    });
+
     /* Private functions */
     function updatePositions(explorer) {
         $(explorer).find('.sortable .result').each(function(i) {
@@ -518,7 +542,7 @@ function uncheckAllItems(excepted_element) {
 */
 // Enable submit buttons
 $("form select, form input, form textarea").on('input', function(){
-    $('.cpnt_form_buttons button').attr('disabled', false);
+   $(this).parentsUntil('form').parent().find('.cpnt_form_buttons button').attr('disabled', false);
 });
 
 // Save+action

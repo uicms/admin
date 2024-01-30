@@ -19,79 +19,98 @@
             {% set result_url_dir = path('admin_page_action', {slug: page_slug, action: current_tab.route.action, dir: result.id, offset: 0}) %}
             {% set result_url = path('admin_page_action_id', {slug: page_slug, action: 'form', id: result.id, target: 'blank'}) %}
         
-            <div class="item result selectable-item ui-sortable-handle{% if result.isdir %} droppable folder{% endif %}{% if result.isConcealed %} concealed{% endif %}" id="item-{% if current_entity is defined %}{{ current_entity|slugger }}{% endif %}-{{ result.id }}" data-id="{{ result.id }}">
+            <div class="item result selectable-item ui-sortable-handle{% if result.isdir %} droppable folder{% endif %}{% if result.isConcealed %} concealed{% endif %}{% if result._form is defined and result._form %} has_form{% endif %}" id="item-{% if current_entity is defined %}{{ current_entity|slugger }}{% endif %}-{{ result.id }}" data-id="{{ result.id }}">
                  
-                 <div class="cell name">
-                     <div class="wrapper">
-                         {% if result._thumbnail %}<span class="thumbnail"><img src="/uploads/{{ result._thumbnail }}" /></span>{% endif %}
-                     
-                         <a href="{% if result.isdir %}{{ result_url_dir }}{% else %}{{ result_url}}{% endif %}" class="name{% if result._thumbnail==false %} icon{% endif %}{% if result.isdir %} folder{% else %} doc{% endif %}">
-                             {{ result._name }}
-                         </a> 
-                         {% if result._text %}<span class="description">{{ result._text|html_decode|slice(0, 300)|replace({'<br />': ' '}) }}</span>{% endif %}
-                         {% if result.isdir %}<a href="{{ result_url }}" class="edit">Éditer</a> {% endif %}
-                    </div>
-                 </div>
-                 <!--<div class="col extra user">
-                     {{ result.user.name }}
-                 </div>-->
-                
-                {% if ui['admin']['pages'][page_slug]['displayed_fields'] is defined %}
-                {% for field_name in ui['admin']['pages'][page_slug]['displayed_fields'] %}
-                    
-                    {% if linked_table is defined %}
-                        {% set current_entity = linked_table['name'] %}
-                    {% else %}
-                        {% set current_entity = model.getName() %}
-                    {% endif %}
-                                    
-                    <div class="cell extra">
-                        {% if ui['entity'][current_entity]['form']['fields'][field_name] is defined %}
-                            {% set camelcase_field_name = ui['entity'][current_entity]['form']['fields'][field_name]['name'] %}
-                        {% else %}
-                            {% set camelcase_field_name = ui['entity'][current_entity]['form']['translations'][field_name]['name'] %}
-                        {% endif %}
-                        
-                        {% set value = attribute(result, camelcase_field_name) %}
-                        
-                        {% if value.id is defined %}
-                            {% if linked_table.name is defined %}
-                                {% set current_entity_name = linked_table.name %}
-                            {% else %}
-                                {% set current_entity_name = current_entity %}
-                            {% endif %}
+                {% if result._form is defined and result._form %}<div class="expand_item_form"></div>{% endif %}
 
-                            {% set linked_entity_name = ui['entity'][current_entity_name]['form']['fields'][field_name]['options']['class'] %}
-                            {% set name_field = ui['entity'][linked_entity_name]['name_field'] %}
-                            {{ attribute(value, name_field) }}
+                <div class="wrapper">
+                    <div class="cell name">
+                        <div class="wrapper">
+                            {% if result._thumbnail %}<span class="thumbnail"><img src="/uploads/{{ result._thumbnail }}" /></span>{% endif %}
+                         
+                            <a href="{% if result.isdir %}{{ result_url_dir }}{% else %}{{ result_url}}{% endif %}" class="name{% if result._thumbnail==false %} icon{% endif %}{% if result.isdir %} folder{% else %} doc{% endif %}">
+                                {{ result._name }}
+                            </a> 
+                            {% if result._text %}<span class="description">{{ result._text|html_decode|slice(0, 300)|replace({'<br />': ' '}) }}</span>{% endif %}
+                            {% if result.isdir %}<a href="{{ result_url }}" class="edit">Éditer</a> {% endif %}
+                        </div>
+                    </div>
+                    <!--<div class="col extra user">
+                         {{ result.user.name }}
+                    </div>-->
+                    
+                    {% if ui['admin']['pages'][page_slug]['displayed_fields'] is defined %}
+                    {% for field_name in ui['admin']['pages'][page_slug]['displayed_fields'] %}
+                        
+                        {% if linked_table is defined %}
+                            {% set current_entity = linked_table['name'] %}
                         {% else %}
+                            {% set current_entity = model.getName() %}
+                        {% endif %}
+                                        
+                        <div class="cell extra">
                             {% if ui['entity'][current_entity]['form']['fields'][field_name] is defined %}
-                                {% set field_type = ui['entity'][current_entity]['form']['fields'][field_name]['type'] %}
+                                {% set camelcase_field_name = ui['entity'][current_entity]['form']['fields'][field_name]['name'] %}
                             {% else %}
-                                {% set field_type = ui['entity'][current_entity]['form']['translations'][field_name]['type'] %}
+                                {% set camelcase_field_name = ui['entity'][current_entity]['form']['translations'][field_name]['name'] %}
                             {% endif %}
                             
-                            {% if field_type == 'DateType' %}
-                                {{ value|date('d/m/Y') }}
-                            {% elseif field_type == 'TimeType' %}
-                                {{ value|date('H:i') }}
-                            {% elseif field_type == 'DateTimeType' %}
-                                {{ value|date('d/m/Y H:i') }}
+                            {% set value = attribute(result, camelcase_field_name) %}
+                            
+                            {% if value.id is defined %}
+                                {% if linked_table.name is defined %}
+                                    {% set current_entity_name = linked_table.name %}
+                                {% else %}
+                                    {% set current_entity_name = current_entity %}
+                                {% endif %}
+
+                                {% set linked_entity_name = ui['entity'][current_entity_name]['form']['fields'][field_name]['options']['class'] %}
+                                {% set name_field = ui['entity'][linked_entity_name]['name_field'] %}
+                                {{ attribute(value, name_field) }}
                             {% else %}
-                                {{ value }}
+                                {% if ui['entity'][current_entity]['form']['fields'][field_name] is defined %}
+                                    {% set field_type = ui['entity'][current_entity]['form']['fields'][field_name]['type'] %}
+                                {% else %}
+                                    {% set field_type = ui['entity'][current_entity]['form']['translations'][field_name]['type'] %}
+                                {% endif %}
+                                
+                                {% if field_type == 'DateType' %}
+                                    {{ value|date('d/m/Y') }}
+                                {% elseif field_type == 'TimeType' %}
+                                    {{ value|date('H:i') }}
+                                {% elseif field_type == 'DateTimeType' %}
+                                    {{ value|date('d/m/Y H:i') }}
+                                {% else %}
+                                    {{ value }}
+                                {% endif %}
                             {% endif %}
-                        {% endif %}
-                        
-                     </div>
-                {% endfor %}
-                {% endif %}
+                            
+                         </div>
+                    {% endfor %}
+                    {% endif %}
+                    
+                    <!--<div class="cell extra position">{% if linked_table is defined and linked_table %}{{ result._linked_position }}{% else %}{{ result.position }}{% endif %}</div>-->
+                    <div class="cell extra id">{{ result.id }}</div>
+                     
+                    <input type="hidden" name="position[]" class="position_input" value="{% if linked_table is defined and linked_table %}{{ result._linked_position }}{% else %}{{ result.position }}{% endif %}" />
+                    <input type="checkbox" class="check_item" name="selection[]" value="{{ result.id }}" />
+                </div>
                 
-                <!--<div class="cell extra position">{% if linked_table is defined and linked_table %}{{ result._linked_position }}{% else %}{{ result.position }}{% endif %}</div>-->
-                <div class="cell extra id">{{ result.id }}</div>
-                 
-                <input type="hidden" name="position[]" class="position_input" value="{% if linked_table is defined and linked_table %}{{ result._linked_position }}{% else %}{{ result.position }}{% endif %}" />
-                <input type="checkbox" class="check_item" name="selection[]" value="{{ result.id }}" />
+                {% if result._form is defined and result._form %}
+                <div class="item_form">
+                    {{ form_start(result._form) }}
+                    {% for field in result._form %}
+                        {% include "admin/tpl/editor/form/field.html.twig" %}
+                    {% endfor %}
+                    <div class="cpnt cpnt_form_buttons">
+                        <button type="submit" class="btn" disabled="disabled">Sauvegarder</button> 
+                    </div>
+                    {{ form_end(result._form) }}
+                </div>
+                {% endif %}
             </div>
+
+            
         {% endfor %}
          
         </div>
