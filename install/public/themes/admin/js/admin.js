@@ -512,7 +512,7 @@ function isOver(element, ev) {
 
 function uncheckItem(element) {
     if($(element).length) {
-        $(element).removeClass("selected").find('input[type=checkbox]').prop('checked', false);
+        $(element).removeClass("selected").find('input[type=checkbox].check_item').prop('checked', false);
         if(!$('.selectable-item.selected').length) {
             $(window).trigger('unselect');
         }
@@ -521,18 +521,18 @@ function uncheckItem(element) {
 
 function checkItem(element) {
     if($(element).length) {
-        $(element).removeClass('selecting').addClass('selected').find('input[type=checkbox]').prop('checked', true);
+        $(element).removeClass('selecting').addClass('selected').find('input[type=checkbox].check_item').prop('checked', true);
         $(window).trigger('select');
     }
 }
 
 function checkAllItems() {
-    $('.selectable-item').addClass('selected').find('input[type=checkbox]').prop('checked', true);
+    $('.selectable-item').addClass('selected').find('input[type=checkbox].check_item').prop('checked', true);
     $(window).trigger('select');
 }
 
 function uncheckAllItems(excepted_element) {
-    $('.selectable-item').not('#'+$(excepted_element).attr('id')).removeClass('selected').find('input[type=checkbox]').prop('checked', false);
+    $('.selectable-item').not('#'+$(excepted_element).attr('id')).removeClass('selected').find('input[type=checkbox].check_item').prop('checked', false);
     if(!excepted_element) $(window).trigger('unselect');
 }
 
