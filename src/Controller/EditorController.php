@@ -6,6 +6,9 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Contracts\Translation\TranslatorInterface;
 
+use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
+
 use Uicms\Admin\Form\Type\UIFormType;
 use Uicms\App\Service\Model;
 use Uicms\App\Service\Nav;
@@ -106,6 +109,29 @@ class EditorController extends AbstractController
             $links = [];
             $children = [];
             $links_forms = [];
+
+            # Preview
+            if(isset($page['public_route']) && $page['public_route'] && isset($ui_config['preview_key']) && $ui_config['preview_key']) {
+                $page['public_route'] .= '?preview_key=' . $ui_config['preview_key'];
+            }
+            
+            /*if(isset($ui_config['entity'][$entity_name]['preview_route']) && ($preview_route = $ui_config['entity'][$entity_name]['preview_route'])) {
+                $route_vars = [];
+                $pattern = '/^\{([A-Za-z_]+)\.([A-Za-z_]+)\}$/';
+
+                foreach($ui_config['entity'][$entity_name]['preview_vars'] as $route_var=>$var) {
+                    if(preg_match($pattern, $var, $preg)) {
+                        $method_name = lcfirst(str_replace('_', '', ucwords($preg[2], '_')));
+                        $eval_expression = sprintf('$%s->get%s()', $preg[1], $method_name);
+                        eval("\$route_vars[\$route_var] = $eval_expression;");
+                    } else {
+                        $route_vars[$route_var] = $var;
+                    }
+                }
+
+                $preview_url = $this->generateUrl($preview_route, $route_vars, UrlGeneratorInterface::ABSOLUTE_URL) . "?preview_key=" . $ui_config['preview_key'];
+            }*/
+
 
             #
             # N->N Links
@@ -230,6 +256,7 @@ class EditorController extends AbstractController
                 'model'=>$model, 
                 'row'=>$row,
                 'view_nav'=>$view_nav,
+                'preview_url'=>isset($preview_url) ? $preview_url : '',
             ]
         );
     }

@@ -12,7 +12,7 @@
         {% include "admin/tpl/components/linked_row.html.twig" %}
 
         <!-- Nav -->
- 
+        {% include "admin/tpl/components/view_pagination.html.twig" %}
 
         <!-- Path -->
         {% include "admin/tpl/components/path.html.twig" %}
@@ -21,7 +21,8 @@
         {% if row.id %}
         <div class="infos">
             <strong>ID : </strong> {{ row.id }} | <strong>Propriétaire :</strong> {{ row.user.name }} | <strong>Créé :</strong> {{ row.created|date("m/d/Y H:i:s") }} | <strong>Modifié :</strong> {{ row.modified|date("m/d/Y  H:i:s") }} | <strong>État : </strong>{% if row.isconcealed==0 %}Publié{% else %}Masqué{% endif %}
-           {% if page.public_route is defined and page.public_route and row.isconcealed==0 %} | <a class="external public_view" href="{{ include(template_from_string(page.public_route)) }}">Afficher sur le site</a>{% endif %}
+            
+           {% if page.public_route is defined and page.public_route and row.isconcealed== false %} | <a class="external public_view" href="{{ include(template_from_string(page.public_route)) }}">Afficher sur le site</a>{% endif %}
         </div>
         {% endif %}
     </header>
@@ -30,7 +31,7 @@
         
         <!-- Form -->
         <section class="form">
-        	{{ form_start(form) }}
+            {{ form_start(form) }}
                 {% include "admin/tpl/components/form_buttons.html.twig" %}
             
                 <div class="form_fields form_group">
@@ -45,7 +46,7 @@
                 
                 <input type="hidden" class="next_step" name="next_step" value="" />
 
-        	{{ form_end(form) }}
+            {{ form_end(form) }}
             
             <!-- Children -->
             {% if row.id and row._children %}
