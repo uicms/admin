@@ -81,9 +81,6 @@ class FileTransformer implements DataTransformerInterface
             throw new \Exception('file_error');
         }
         $file_source = $file->getPathName();
-
-        #dd(get_class_methods($file));
-        #dd($file_name);
         
         /* File name */
         if($slug) {
@@ -94,9 +91,8 @@ class FileTransformer implements DataTransformerInterface
             $file_name = $file_name . '-' . uniqid();
         }
 
-        /* Final path */
+        /* Copy file to upload path */
         $file_dest = $this->upload_path . '/' . $file_name . '.' . $extension;
-        #rename($file_source, $file_dest);
         copy($file_source, $file_dest);
         chmod($file_dest, 0755);
         
@@ -109,6 +105,11 @@ class FileTransformer implements DataTransformerInterface
             });
             $img->save($file_dest);
         }
+
+        /* Keep source */
+        $file_source_dest = $this->upload_path . '/_src_' . $file_name . '.' . $extension;
+        copy($file_source, $file_source_dest);
+        chmod($file_source_dest, 0755);
         
         /* Make image thumbnail */
         if(strpos($mime_type, 'image') === 0 && strpos($mime_type, 'svg') === false) {
