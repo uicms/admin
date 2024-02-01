@@ -195,7 +195,7 @@ class EditorController extends AbstractController
                 
                 # Add to results
                 if(isset($foreign_key['page_slug']) && $foreign_key['page_slug']) {
-                    $foreign_key['rows'] = $foreign_key['entity']->mode('admin')->getAll(array('findby'=>array($foreign_key['db_name'] => $row->getId())));
+                    $foreign_key['rows'] = $foreign_key['entity']->mode('admin')->getAll(array('limit'=>20,'findby'=>array($foreign_key['db_name'] => $row->getId())));
                     $children[] = $foreign_key;
                 }
             }
