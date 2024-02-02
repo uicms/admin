@@ -1,12 +1,23 @@
 {% trans_default_domain 'admin' %}
-{% if field.vars.data.publicPath is defined and field.vars.data.thumbnailPath %}
-<div class="form_field_thumbnail">
-    <a href="{{ field.vars.data.publicPath }}" data-fancybox="gallery">
-        <img src="{{ field.vars.data.thumbnailPath }}" />
-    </a>
-</div>
-{% endif %}
+<div class="form_field_aside">
+    <div class="form_field_thumbnail_container">
 
+        <div class="form_field_thumbnail">
+        {% if field.vars.data.publicPath is defined and field.vars.data.thumbnailPath %}
+
+            <a href="{{ field.vars.data.publicPath }}" data-fancybox="gallery">
+                <img src="{{ field.vars.data.thumbnailPath }}" class="preview_file" />
+            </a>
+        {% else %}
+            <img src="{{ theme_path.getUrl('img/image.svg') }}" class="preview_file empty" />
+        {% endif %}
+        </div>
+    </div>
+     <div data-field="{{ field.vars.name }}" class="rotation_buttons{% if field.vars.data.publicPath is defined and field.vars.data.thumbnailPath %} active{% endif %}">
+        <span class="rotate_left">Left</span>
+        <span class="rotate_right">Right</span>
+    </div>
+</div>
 <div class="form_field_content">
     {% if field.vars.data.publicPath is defined %}
     <p class="form_field_infos">

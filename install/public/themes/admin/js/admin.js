@@ -540,6 +540,51 @@ function uncheckAllItems(excepted_element) {
 /*
 /* Form functions
 */
+
+// Upload preview
+$('form input[type=file]').on('change', function() {
+    previewFile($(this));
+});
+function previewFile(input){
+    var file = input.get(0).files[0];
+    var extension = file.name.split('.').pop();
+
+    if(file){
+        var reader = new FileReader();
+
+        reader.onload = function(){
+            if(extension == 'jpg' || extension == 'png' || extension == 'jpeg' || extension == 'gif') {
+                var image = input.parentsUntil('.form_field').find('.preview_file');
+                $(image).attr("src", reader.result);
+                $(image).removeClass('empty');
+                var rotation_buttons = input.parentsUntil('.form_field').find('.rotation_buttons');
+                rotation_buttons.addClass('active');
+            }
+        }
+
+        reader.readAsDataURL(file);
+    }
+}
+$(".rotate_right").click(function() {
+    image = $(this).parentsUntil('.form_field').find('.preview_file');
+    rotation_input = $('#ui_form_Rotation' + $(this).parent().data('field'));
+    rotation = parseInt(rotation_input.val());
+    rotation = (rotation + 90) % 360;
+    $(".preview_file").css({'transform': 'rotate('+rotation+'deg)'});
+    rotation_input.val(rotation);
+    $(this).parentsUntil('form').parent().find('.cpnt_form_buttons button').attr('disabled', false);
+});
+
+$(".rotate_left").click(function() {
+    image = $(this).parentsUntil('.form_field').find('.preview_file');
+    rotation_input = $('#ui_form_Rotation' + $(this).parent().data('field'));
+    rotation = parseInt(rotation_input.val());
+    rotation = (rotation - 90) % 360;
+    $(".preview_file").css({'transform': 'rotate('+rotation+'deg)'});
+    rotation_input.val(rotation);
+    $(this).parentsUntil('form').parent().find('.cpnt_form_buttons button').attr('disabled', false);
+});
+
 // Enable submit buttons
 $("form select, form input, form textarea").on('input', function(){
    $(this).parentsUntil('form').parent().find('.cpnt_form_buttons button').attr('disabled', false);

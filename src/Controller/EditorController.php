@@ -16,6 +16,7 @@ use Uicms\App\Service\Paginator;
 use Uicms\App\Service\Params;
 use Uicms\App\Service\Security;
 use Uicms\App\Service\Viewnav;
+use Uicms\App\Service\UIFile;
 
 class EditorController extends AbstractController
 {
@@ -217,6 +218,21 @@ class EditorController extends AbstractController
             
             try {
                 $id = $model->persist($form->getData(), $current);
+                $row = $model->getRowById($id);
+
+                # File
+                foreach($form_config['fields'] as $field_name=>$field_config) {
+                    $field_method = 'get' . $field_config['name'];
+
+                    if($field_config['type'] == 'UIFileType' && $row->$field_method()) {
+
+                        # Rotation
+                        $rotation = $form->get('Rotation' . $field_config['name'])->getData();
+                        $file = new UIFile($ui_config);
+                        $file->rotate($row->$field_method(), $rotation);
+                    }
+                }
+
             } catch (\Throwable $throwable) {
                 $this->addFlash('error', $throwable->getMessage());
             }

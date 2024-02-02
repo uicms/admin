@@ -65,7 +65,7 @@ class FileTransformer implements DataTransformerInterface
         return $file;
     }
     
-    public function reverseTransform($file, $slug=true, $make_unique=true)
+    public function reverseTransform($file)
     {
         if ($file === null) return '';
         $mime_type = $file->getMimeType();
@@ -83,13 +83,13 @@ class FileTransformer implements DataTransformerInterface
         $file_source = $file->getPathName();
         
         /* File name */
-        if($slug) {
+        #if($slug) {
             $slugger = new AsciiSlugger();
             $file_name = strtolower($slugger->slug($file_name));
-        }
-        if($make_unique) {
+        #}
+        #if($make_unique) {
             $file_name = $file_name . '-' . uniqid();
-        }
+        #}
 
         /* Copy file to upload path */
         $file_dest = $this->upload_path . '/' . $file_name . '.' . $extension;

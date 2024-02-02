@@ -82,7 +82,12 @@ class UIFormType extends AbstractType
                         return $query;
                     };
                 }
-            
+                
+                # File Type : add hidden rotation field
+                if($field_config['type'] == 'UIFileType') {
+                    $builder->add('Rotation' . $field_config['name'], 'Symfony\Component\Form\Extension\Core\Type\HiddenType', ['data'=>0, 'mapped'=>false, 'attr'=>['class'=>'rotation_value']]);
+                }
+
                 # Translate label
                 if(isset($translator) && isset($field_config['options']['label']) && $field_config['options']['label']) {
                     $field_config['options']['label'] = $translator->trans($field_config['options']['label'], [], 'admin');
@@ -185,9 +190,12 @@ class UIFormType extends AbstractType
 
         # Post submit event
         $builder->addEventListener(FormEvents::POST_SUBMIT, function(FormEvent $event) {
+            $options = $event->getForm()->getConfig()->getOptions();
             $entity_name = $event->getForm()->getConfig()->getDataClass();
             $data = $event->getData();
             $model = $this->model->get($entity_name);
+
+            # Event OnPersist (repository)
             if(method_exists($model, 'onPersist')) {
                 $model->onPersist($data);
             }
