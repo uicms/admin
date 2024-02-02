@@ -8,6 +8,7 @@ use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\String\Slugger\AsciiSlugger;
 
 use Intervention\Image\ImageManagerStatic as Image;
+use Intervention\Image\ImageManager;
 use Uicms\App\Service\Uploader;
 
 class FileTransformer implements DataTransformerInterface
@@ -91,14 +92,24 @@ class FileTransformer implements DataTransformerInterface
             $file_name = $file_name . '-' . uniqid();
         #}
 
-        /* Copy file to upload path */
+        $manager = new ImageManager(array('driver' => 'imagick'));
+
+        /* Copy file */
         $file_dest = $this->upload_path . '/' . $file_name . '.' . $extension;
         copy($file_source, $file_dest);
         chmod($file_dest, 0755);
         
+        /* HEIC */
+        if($extension == 'heic') {
+            $img = $manager->make($file_dest);
+            $extension = 'jpg';
+            $file_dest = $this->upload_path . '/' . $file_name . '.' . $extension;
+            $img->save($file_dest );
+        }
+
         /* Limit image width */
         if(strpos($mime_type, 'image') === 0 && strpos($mime_type, 'svg') === false) {
-            $img = Image::make($file_dest);
+            $img = $manager->make($file_dest);
             $img->resize($this->max_width, $this->max_height, function($constraint){
                 $constraint->aspectRatio();
                 $constraint->upsize();
@@ -113,7 +124,7 @@ class FileTransformer implements DataTransformerInterface
         
         /* Make image thumbnail */
         if(strpos($mime_type, 'image') === 0 && strpos($mime_type, 'svg') === false) {
-            $img = Image::make($file_dest);
+            $img = $manager->make($file_dest);
             $img->resize($this->preview_max_width, $this->preview_max_height, function($constraint){
                 $constraint->aspectRatio();
                 $constraint->upsize();
