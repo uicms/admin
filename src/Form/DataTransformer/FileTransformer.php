@@ -74,10 +74,10 @@ class FileTransformer implements DataTransformerInterface
         # Upload
         if($file instanceof UploadedFile) {
             $file_name = pathinfo($file->getClientOriginalName(), PATHINFO_FILENAME);
-            $extension = $file->getClientOriginalExtension();
+            $extension = strtolower($file->getClientOriginalExtension());
         } else if ($file instanceof File) {
             $file_name = pathinfo($file->getFileName(), PATHINFO_FILENAME);
-            $extension = $file->getExtension();
+            $extension = strtolower($file->getExtension());
         } else {
             throw new \Exception('file_error');
         }
@@ -104,7 +104,7 @@ class FileTransformer implements DataTransformerInterface
             $img = $manager->make($file_dest);
             $extension = 'jpg';
             $file_dest = $this->upload_path . '/' . $file_name . '.' . $extension;
-            $img->save($file_dest );
+            $img->save($file_dest);
         }
 
         /* Limit image width */
