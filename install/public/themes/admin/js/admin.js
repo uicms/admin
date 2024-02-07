@@ -103,6 +103,7 @@ document.querySelector('body').addEventListener('click', function(e) {
 
 
 /* Misc */
+var has_confirmed = false;
 
 // Confirm window on a link (a:href)
 $('a.confirm').each(function() {
@@ -110,6 +111,7 @@ $('a.confirm').each(function() {
     $(this).attr('href', 'javascript:;');
     $(this).click(function() {
         if(confirm($(this).data('message'))) {
+            has_confirmed = true;
             window.location = url;
         }
     });
@@ -585,9 +587,17 @@ $(".rotate_left").click(function() {
     $(this).parentsUntil('form').parent().find('.cpnt_form_buttons button').attr('disabled', false);
 });
 
+
 // Enable submit buttons
 $("form select, form input, form textarea").on('input', function(){
    $(this).parentsUntil('form').parent().find('.cpnt_form_buttons button').attr('disabled', false);
+});
+
+
+$(window).bind('beforeunload', function(){
+    if(has_confirmed == false && $('#form').length && $('.cpnt_form_buttons button').attr('disabled') != 'disabled' ) {
+        return 'Are you sure you want to leave?';
+    }
 });
 
 // Save+action
