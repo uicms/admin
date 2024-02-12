@@ -102,21 +102,6 @@ document.querySelector('body').addEventListener('click', function(e) {
 });
 
 
-/* Misc */
-var has_confirmed = false;
-
-// Confirm window on a link (a:href)
-$('a.confirm').each(function() {
-    var url = $(this).attr('href');
-    $(this).attr('href', 'javascript:;');
-    $(this).click(function() {
-        if(confirm($(this).data('message'))) {
-            has_confirmed = true;
-            window.location = url;
-        }
-    });
-});
-
 // External links
 document.querySelectorAll('a.external').forEach(function(link) {
     link.setAttribute('target', '_blank');
@@ -588,17 +573,41 @@ $(".rotate_left").click(function() {
 });
 
 
+
+
+
+
 // Enable submit buttons
+var has_confirmed = false;
+var is_form_submitted = false;
+
 $("form select, form input, form textarea").on('input', function(){
    $(this).parentsUntil('form').parent().find('.cpnt_form_buttons button').attr('disabled', false);
 });
 
+$('#form').submit(function() {
+    is_form_submitted = true;
+});
 
 $(window).bind('beforeunload', function(){
-    if(has_confirmed == false && $('#form').length && $('.cpnt_form_buttons button').attr('disabled') != 'disabled' ) {
+    if($('#form').length && $('.cpnt_form_buttons button').attr('disabled') != 'disabled' && !is_form_submitted && !has_confirmed) {
         return 'Are you sure you want to leave?';
     }
 });
+
+
+// Confirm window on a link (a:href)
+$('a.confirm').each(function() {
+    var url = $(this).attr('href');
+    $(this).attr('href', 'javascript:;');
+    $(this).click(function() {
+        if(confirm($(this).data('message'))) {
+            has_confirmed = true;
+            window.location = url;
+        }
+    });
+});
+
 
 // Save+action
 var buttons = document.querySelectorAll('.cpnt_form_buttons .btn[type=button]');
@@ -609,6 +618,8 @@ buttons.forEach(function(button) {
         document.querySelector('form[name=ui_form]').submit();
     });
 })
+
+
 
 
 // Form translations tabs
