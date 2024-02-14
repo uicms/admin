@@ -196,8 +196,8 @@ class UIFormType extends AbstractType
             $model = $this->model->get($entity_name);
 
             # Event OnPersist (repository)
-            if(method_exists($model, 'onPersist')) {
-                $model->onPersist($data);
+            if(method_exists($model, 'onBeforePersist')) {
+                $data = $model->onPersist($data);
             }
         });
     }

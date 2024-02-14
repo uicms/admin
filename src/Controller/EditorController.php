@@ -233,6 +233,11 @@ class EditorController extends AbstractController
                     }
                 }
 
+                # Event OnPersist (repository)
+                if(method_exists($model, 'onPersist')) {
+                    $row = $model->onPersist($row);
+                }
+
             } catch (\Throwable $throwable) {
                 $this->addFlash('error', $throwable->getMessage());
             }
