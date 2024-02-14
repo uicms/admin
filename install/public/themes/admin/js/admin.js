@@ -614,6 +614,7 @@ var buttons = document.querySelectorAll('.cpnt_form_buttons .btn[type=button]');
 buttons.forEach(function(button) {
     var step = button.getAttribute('data-step');
     button.addEventListener('click', function(e) {
+        is_form_submitted = true;
         document.querySelector('.next_step').value = step;
         document.querySelector('form[name=ui_form]').submit();
     });
