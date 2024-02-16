@@ -16,38 +16,38 @@ class IndexController extends AbstractController
     {
         # Version strategy
         $version = 'v3.8';
-		$this->get('session')->set('theme_path', new PathPackage('themes/admin', new StaticVersionStrategy($version)));
-		$this->get('session')->set('js_path', new PathPackage('js', new StaticVersionStrategy($version)));
+        $this->get('session')->set('theme_path', new PathPackage('themes/admin', new StaticVersionStrategy($version)));
+        $this->get('session')->set('js_path', new PathPackage('js', new StaticVersionStrategy($version)));
         
         # UI Config & browser params
-		$ui_config = $this->getParameter('ui_config');
+        $ui_config = $this->getParameter('ui_config');
         $this->get('session')->set('ui_config', $ui_config);
         $url_parameters = array_merge($request->query->all(), $request->request->all());
         
-		# Locale
-		$this->get('session')->set('locale', $this->getParameter('locale'));
-		$request->setLocale($this->getParameter('locale'));
+        # Locale
+        $this->get('session')->set('locale', $this->getParameter('locale'));
+        $request->setLocale($this->getParameter('locale'));
         
-		# Slug
-		if(!$slug && $ui_config['admin']['pages']) {
+        # Slug
+        if(!$slug && $ui_config['admin']['pages']) {
             foreach($ui_config['admin']['pages'] as $page) {
                 if(!isset($page['display']) || $page['display']) {
                     $slug = $page["slug"];
                     break;
                 }
             }
-		}
+        }
         if(!$slug) {
-			throw $this->createNotFoundException('No page slug!');
-		}
+            throw $this->createNotFoundException('No page slug!');
+        }
 
-		# Get page related to slug
-		if(isset($ui_config['admin']['pages'][$slug])) {
-			$page = $ui_config['admin']['pages'][$slug];
-		} else {
-			throw $this->createNotFoundException('No data found for page '.$slug);
-		}
-		
+        # Get page related to slug
+        if(isset($ui_config['admin']['pages'][$slug])) {
+            $page = $ui_config['admin']['pages'][$slug];
+        } else {
+            throw $this->createNotFoundException('No data found for page '.$slug);
+        }
+        
         # Current action
         if(!$action && !isset($url_parameters['action'])) {
             $action = isset($page['action']) && $page['action'] ? $page['action'] : 'index';
@@ -96,11 +96,21 @@ class IndexController extends AbstractController
                 $nav->updateTab($current_tab);
             }
         }
+
+        # Params
+        if(isset($ui_config['entity']['App\Entity\Param'])) {
+            $req = $model->get('Param')->getAll();
+            $params = [];
+            foreach($req as $i=>$param) {
+                $params[$param->getName()] = $param->getValue();
+            }
+            $session->set('params', $params);
+        }
         
         # Attributes
         $attributes = array_merge(isset($page['arguments']) ? $page['arguments'] : array(), $request->attributes->all(), $url_parameters, array('page'=>$page));
         
         # Forward to the correct controller
         return $this->forward($page['controller'] . "Controller::" . $action, $attributes);
-	}    
+    }    
 }
