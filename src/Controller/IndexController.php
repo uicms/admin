@@ -12,7 +12,7 @@ use Uicms\App\Service\Nav;
 
 class IndexController extends AbstractController
 {
-    public function index(Request $request, Nav $nav, $slug='', $action='', $id=0)
+    public function index(Request $request, Nav $nav, Model $model, $slug='', $action='', $id=0)
     {
         # Version strategy
         $version = 'v3.8';
@@ -104,7 +104,7 @@ class IndexController extends AbstractController
             foreach($req as $i=>$param) {
                 $params[$param->getName()] = $param->getValue();
             }
-            $session->set('params', $params);
+            $this->get('session')->set('params', $params);
         }
         
         # Attributes
