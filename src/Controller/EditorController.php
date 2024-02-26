@@ -218,9 +218,8 @@ class EditorController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             
             try {
-                $id = $model->persist($form->getData(), $current);
+                $row = $model->persist($form->getData());
                 $model->flush();
-                $row = $model->getRowById($id);
 
                 # File
                 foreach($form_config['fields'] as $field_name=>$field_config) {
@@ -239,7 +238,7 @@ class EditorController extends AbstractController
                 $this->addFlash('error', $throwable->getMessage());
             }
             if(isset($current_tab['parent']) && $current_tab['parent']) {
-                $model->link(array($id), $current_tab['parent']['route']['params']['entity_name'], array($current_tab['parent']['route']['params']['id']));
+                $model->link([$row->getId()], $current_tab['parent']['route']['params']['entity_name'], [$current_tab['parent']['route']['params']['id']]);
                 $nav->removeTab($current_tab['route']['id']);
                 return $this->redirectToRoute($current_tab['parent']['route']['name'], $current_tab['parent']['route']['params']);
             } else {
@@ -257,7 +256,7 @@ class EditorController extends AbstractController
                         break;
                     
                     default:
-                        return $this->redirectToRoute('admin_page_action_id', array('slug'=>$request->get('slug'), 'action'=>'form', 'id'=>$id));
+                        return $this->redirectToRoute('admin_page_action_id', array('slug'=>$request->get('slug'), 'action'=>'form', 'id'=>$row->getId()));
                 }
                 
             }

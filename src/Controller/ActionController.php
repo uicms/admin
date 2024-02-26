@@ -18,6 +18,7 @@ class ActionController extends AbstractController
     {
         try {
             $model->get($entity_name)->delete($selection);
+            $model->flush();
         } catch(\Throwable $throwable) {
             $this->addFlash('error', $throwable->getMessage());
         }
@@ -35,6 +36,7 @@ class ActionController extends AbstractController
     {
         try {
             $model->get($entity_name)->mode('admin')->move($selection, $target);
+            $model->flush();
         } catch(\Throwable $throwable) {
             $this->addFlash('error', $throwable->getMessage());
         }
@@ -57,6 +59,7 @@ class ActionController extends AbstractController
                 $row->setParent($parent);
             }
             $model->persist($row);
+            $model->flush();
 
         } catch(\Throwable $throwable) {
             $this->addFlash('error', $throwable->getMessage());
@@ -70,6 +73,7 @@ class ActionController extends AbstractController
     {
         try {
             $model->get($entity_name)->mode('admin')->publish($selection);
+            $model->flush();
         } catch(\Throwable $throwable) {
             $this->addFlash('error', $throwable->getMessage());
         }
@@ -82,6 +86,7 @@ class ActionController extends AbstractController
     {
         try {
             $model->get($entity_name)->mode('admin')->conceal($selection);
+            $model->flush();
         } catch(\Throwable $throwable) {
             $this->addFlash('error', $throwable->getMessage());
         }
@@ -94,6 +99,7 @@ class ActionController extends AbstractController
     {
         try {
             $model->get($entity_name)->mode('admin')->duplicate($selection);
+            $model->flush();
         } catch(\Throwable $throwable) {
             $this->addFlash('error', $throwable->getMessage());
         }
@@ -112,6 +118,7 @@ class ActionController extends AbstractController
         $params = $params_service->get($model->get($entity_name)->getSlug(), $request);
         try {
             $model->get($entity_name)->mode('admin')->position($selection, $position, $params);
+            $model->flush();
         } catch(\Throwable $throwable) {
             $this->addFlash('error', $throwable->getMessage());
         }
@@ -146,7 +153,8 @@ class ActionController extends AbstractController
                 $new->$file_set_method($file_path);
                 $new->setName($file_infos['filename']);
                 $new->setParent($model->find($params['dir']));
-                $new_id = $model->persist($new);
+                $new = $model->persist($new);
+                $model->flush();
             }
         } catch(\Throwable $throwable) {
             $this->addFlash('error', $throwable->getMessage());
@@ -156,7 +164,7 @@ class ActionController extends AbstractController
             $redirect = $nav->getCurrentTab();
             return $this->redirectToRoute($redirect['route']['name'], $redirect['route']['params']);
         } else {
-            return new JsonResponse(['message' => $new_id], Response::HTTP_OK);
+            return new JsonResponse(['message' => $new->getId()], Response::HTTP_OK);
         }
     }
     
