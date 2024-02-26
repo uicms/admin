@@ -176,6 +176,7 @@ class EditorController extends AbstractController
                         $link_form->handleRequest($request);
                         if ($link_form->isSubmitted() && $link_form->isValid()) {
                             $link_entity->persist($link_form->getData());
+                            $link_entity->flush();
                         }
                         $linked_row->_form = $link_form->createView();
                     }
@@ -218,6 +219,7 @@ class EditorController extends AbstractController
             
             try {
                 $id = $model->persist($form->getData(), $current);
+                $model->flush();
                 $row = $model->getRowById($id);
 
                 # File
@@ -231,11 +233,6 @@ class EditorController extends AbstractController
                         $file = new UIFile($ui_config);
                         $file->rotate($row->$field_method(), $rotation);
                     }
-                }
-
-                # Event OnPersist (repository)
-                if(method_exists($model, 'onPersist')) {
-                    $row = $model->onPersist($row);
                 }
 
             } catch (\Throwable $throwable) {
