@@ -208,6 +208,10 @@ class EditorController extends AbstractController
         }
 
 
+
+
+
+
         #
         # Create form
         #
@@ -221,6 +225,11 @@ class EditorController extends AbstractController
                 $row = $model->persist($form->getData());
                 $model->flush();
 
+                # Event OnPersist (repository)
+                if(method_exists($model, 'onPersist')) {
+                    $model->onPersist($row);
+                }
+
                 # File
                 foreach($form_config['fields'] as $field_name=>$field_config) {
                     $field_method = 'get' . $field_config['name'];
@@ -233,10 +242,10 @@ class EditorController extends AbstractController
                         $file->rotate($row->$field_method(), $rotation);
                     }
                 }
-
             } catch (\Throwable $throwable) {
                 $this->addFlash('error', $throwable->getMessage());
             }
+
             if(isset($current_tab['parent']) && $current_tab['parent']) {
                 $model->link([$row->getId()], $current_tab['parent']['route']['params']['entity_name'], [$current_tab['parent']['route']['params']['id']]);
                 $nav->removeTab($current_tab['route']['id']);
@@ -261,6 +270,10 @@ class EditorController extends AbstractController
                 
             }
         }
+
+
+
+
 
         # Render
         return $this->render(

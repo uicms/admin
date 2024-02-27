@@ -179,7 +179,6 @@ class UIFormType extends AbstractType
             if(isset($form_config['on_submit'])) {
                 $current_data = $event->getForm()->getNormData();
                 $new_data = $event->getData();
-                
                 $service = new $form_config['on_submit']($this->params);
                 $service->execute($current_data, $new_data);
                 $data = $service->getData();
@@ -194,11 +193,6 @@ class UIFormType extends AbstractType
             $entity_name = $event->getForm()->getConfig()->getDataClass();
             $data = $event->getData();
             $model = $this->model->get($entity_name);
-
-            # Event OnPersist (repository)
-            if(method_exists($model, 'onBeforePersist')) {
-                $data = $model->onPersist($data);
-            }
         });
     }
     
