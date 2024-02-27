@@ -298,6 +298,7 @@ class ActionController extends AbstractController
     {
         try {
             $model->get($entity_name)->mode('admin')->link($selection, $action_entity_name, $action_selection);
+            $model->flush();
         } catch(\Throwable $throwable) {
             $this->addFlash('error', $throwable->getMessage());
         }
@@ -312,6 +313,7 @@ class ActionController extends AbstractController
     {
         try {
             $model->get($entity_name)->mode('admin')->linkChildren($selection, $action_entity_name, $action_field, $action_selection);
+            $model->flush();
         } catch(\Throwable $throwable) {
             $this->addFlash('error', $throwable->getMessage());
         }
@@ -326,6 +328,7 @@ class ActionController extends AbstractController
     {
         try {
             $model->get($entity_name)->unlink($selection, $action_entity_name, $action_selection);
+            $model->flush();
         } catch(\Throwable $throwable) {
             $this->addFlash('error', $throwable->getMessage());
         }
