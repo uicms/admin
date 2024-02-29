@@ -148,7 +148,19 @@ function initActionButton() {
     }
 }
 
-function action(container, action) {
+/* Items functions */
+$(window).on('select', function() {
+    $('body').addClass('body-selection');
+    $('.btn-valid-selection').attr('disabled', false);
+});
+
+$(window).on('unselect', function() {
+    $('.btn-valid-selection').attr('disabled', true);
+    $('body').removeClass('body-selection');
+});
+
+
+function action(container, action, params) {
     var submit = true;
 
     if(action == 'delete' && !confirm('Confirmez-vous la suppression ?')) {
@@ -161,21 +173,14 @@ function action(container, action) {
             url += "selection[]=" + $(this).val() + "&";
         });
         url = url.slice(0, -1);
-        
+    
+        if(params) {
+            url += '&' + params;
+        }
         window.location = url;
     }
 }
 
-/* Items functions */
-$(window).on('select', function() {
-    $('body').addClass('body-selection');
-    $('.btn-valid-selection').attr('disabled', false);
-});
-
-$(window).on('unselect', function() {
-    $('.btn-valid-selection').attr('disabled', true);
-    $('body').removeClass('body-selection');
-});
 
 function initItems() {
     var positionTimer = null;
@@ -308,9 +313,7 @@ function initItems() {
                 if($('.ui-droppable-hover').length) {
                     $('.selected').hide();
                     if(confirm('Confirmez-vous le déplacement ?')) {
-                        $('#form_results input[name=target]').val($('.ui-droppable-hover').data('id'));
-                        $('#form_results input[name=action]').val('move');
-                        $('#form_results').submit();
+                        action('#explorer_results', 'move', 'target=' + $('.ui-droppable-hover').data('id'));
                     } else {
                         $('.ui-droppable-hover').removeClass('ui-droppable-hover');
                         $('.selected').show();
@@ -319,9 +322,6 @@ function initItems() {
             }
         });
     }
-    
-
-
 
     /* Selecting */
     if($('.selectable-item').length) {
@@ -337,7 +337,7 @@ function initItems() {
             if($('#form_results').length && (event.which == 46 || event.which == 8)) {
                 if($('.selected').length) {
                     event.preventDefault();
-                    action('#form_results', 'delete');
+                    action('#form_results', 'delete', '');
                     return false;
                 }
                 return true;
@@ -573,10 +573,6 @@ $(".rotate_left").click(function() {
 });
 
 
-
-
-
-
 // Enable submit buttons
 var has_confirmed = false;
 var is_form_submitted = false;
@@ -614,7 +610,6 @@ var buttons = document.querySelectorAll('.cpnt_form_buttons .btn[type=button]');
 buttons.forEach(function(button) {
     var step = button.getAttribute('data-step');
     button.addEventListener('click', function(e) {
-        is_form_submitted = true;
         document.querySelector('.next_step').value = step;
         document.querySelector('form[name=ui_form]').submit();
     });
