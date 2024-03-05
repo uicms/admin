@@ -532,6 +532,7 @@ function uncheckAllItems(excepted_element) {
 $('form input[type=file]').on('change', function() {
     previewFile($(this));
 });
+
 function previewFile(input){
     var file = input.get(0).files[0];
     var extension = file.name.split('.').pop();
@@ -552,6 +553,7 @@ function previewFile(input){
         reader.readAsDataURL(file);
     }
 }
+
 $(".rotate_right").click(function() {
     image = $(this).parentsUntil('.form_field').find('.preview_file');
     rotation_input = $('#ui_form_Rotation' + $(this).parent().data('field'));
@@ -573,7 +575,7 @@ $(".rotate_left").click(function() {
 });
 
 
-// Enable submit buttons
+// Enable submit buttons and alert when leaving without saving
 var has_confirmed = false;
 var is_form_submitted = false;
 
@@ -592,6 +594,18 @@ $(window).bind('beforeunload', function(){
 });
 
 
+// Save+action
+var buttons = document.querySelectorAll('.cpnt_form_buttons .btn[type=button]');
+buttons.forEach(function(button) {
+    var step = button.getAttribute('data-step');
+    button.addEventListener('click', function(e) {
+        is_form_submitted = true;
+        document.querySelector('.next_step').value = step;
+        document.querySelector('form[name=ui_form]').submit();
+    });
+})
+
+
 // Confirm window on a link (a:href)
 $('a.confirm').each(function() {
     var url = $(this).attr('href');
@@ -603,19 +617,6 @@ $('a.confirm').each(function() {
         }
     });
 });
-
-
-// Save+action
-var buttons = document.querySelectorAll('.cpnt_form_buttons .btn[type=button]');
-buttons.forEach(function(button) {
-    var step = button.getAttribute('data-step');
-    button.addEventListener('click', function(e) {
-        document.querySelector('.next_step').value = step;
-        document.querySelector('form[name=ui_form]').submit();
-    });
-})
-
-
 
 
 // Form translations tabs
