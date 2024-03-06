@@ -286,6 +286,10 @@ class ActionController extends AbstractController
                         }
                         
                     }
+                    if(isset($ui_config['export_csv_convert_html']) && $ui_config['export_csv_convert_html']) {
+                        $value = preg_replace( "/\n\s+/", "\n", rtrim(html_entity_decode(strip_tags($value))));
+                    }
+
                     $array[$field['name']] = $value;
                 }
             }
