@@ -265,23 +265,26 @@ class ActionController extends AbstractController
                     }
                     
                     if(is_object($value)) {
-                        $type = get_class($value);
                         
-                        if($type == 'DateTime' && $field['form']['type'] == 'DateType') {
-                            $value = $value->format('Y-m-d');
-                        } else if($type == 'DateTime' && $field['form']['type'] == 'TimeType') {
-                            $value = $value->format('H:i:s');
-                        } else if($type == 'DateTime' && $field['form']['type'] == 'DateTimeType') {
-                            $value = $value->format('Y-m-d H:i:s');
-                        } else if (method_exists($value, 'getId')) {
-                            $tmp = explode ("\\", $type);
-                            $entity = end($tmp);
-                            $repo = $model->get($entity);
-                            $method = $repo->method($ui_config['entity'][$repo->getName()]['name_field']);
-                            $value = $value->$method();
-                        } else {
-                            $value = '';
+                        while(is_object($value)) {
+                            $type = get_class($value);
+                            if($type == 'DateTime' && $field['form']['type'] == 'DateType') {
+                                $value = $value->format('Y-m-d');
+                            } else if($type == 'DateTime' && $field['form']['type'] == 'TimeType') {
+                                $value = $value->format('H:i:s');
+                            } else if($type == 'DateTime' && $field['form']['type'] == 'DateTimeType') {
+                                $value = $value->format('Y-m-d H:i:s');
+                            } else if (method_exists($value, 'getId')) {
+                                $tmp = explode ("\\", $type);
+                                $entity = end($tmp);
+                                $repo = $model->get($entity);
+                                $method = $repo->method($ui_config['entity'][$repo->getName()]['name_field']);
+                                $value = $value->$method();
+                            } else {
+                                $value = '';
+                            }
                         }
+                        
                     }
                     $array[$field['name']] = $value;
                 }
