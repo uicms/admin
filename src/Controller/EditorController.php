@@ -265,7 +265,7 @@ class EditorController extends AbstractController
                         break;
                     
                     default:
-                        return $this->redirectToRoute('admin_page_action_id', array('slug'=>$request->get('slug'), 'action'=>'form', 'id'=>$row->getId()));
+                        return $this->redirectToRoute('admin_page_action_id', array('slug'=>$request->get('slug'), 'action'=>'form', 'id'=>$id));
                 }
                 
             }
