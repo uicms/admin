@@ -222,8 +222,9 @@ class EditorController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             
             try {
-                $row = $model->persist($form->getData());
+                $id = $model->persist($form->getData());
                 $model->flush();
+                $row = $model->getRowById($id);
 
                 # Event OnPersist (repository)
                 if(method_exists($model, 'onPersist')) {
