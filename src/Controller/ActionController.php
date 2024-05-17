@@ -229,13 +229,13 @@ class ActionController extends AbstractController
         }
     }
     
-    public function import($token, $entity_name, Model $model, Nav $nav, Request $request, Params $params_service)
+    public function import($token, $entity_name, $files_directory='', Model $model, Nav $nav, Request $request, Params $params_service)
     {
         #$output = null;
         #$retval = null;
         $split = explode('\\', $entity_name);
         $entity_name = end($split);
-        $command = "../bin/console app:import $entity_name import/$token/ > /dev/null 2>&1 &";
+        $command = "../bin/console app:import $entity_name import/$token/ $files_directory > /dev/null 2>&1 &";
         exec($command);
         $this->addFlash('success', 'import_in_progress');
         $redirect = $nav->getCurrentTab();
@@ -286,7 +286,6 @@ class ActionController extends AbstractController
                         }
                         
                     }
-                    
                     if(isset($ui_config['export_csv_convert_html']) && $ui_config['export_csv_convert_html']) {
                         $value = preg_replace( "/\n\s+/", "\n", rtrim(html_entity_decode(strip_tags($value))));
                     }

@@ -10,24 +10,27 @@
                 Format CSV. Les noms de colonne doivent être spécifiés sur la première ligne. Le séparateur est le point virgule et l'encodage UTF8
             </div>
             {% set import_token = random() %}
-        	<form action="{{ path('admin_page_action', {token: import_token, slug:'action', action:'uploadimportdata', entity_name: page.arguments.entity_name}) }}" class="dropzone csv">
+            <form action="{{ path('admin_page_action', {token: import_token, slug:'action', action:'uploadimportdata', entity_name: page.arguments.entity_name}) }}" class="dropzone csv">
                 
-        		<div class="dz-message" data-dz-message><span>Déposez ici un ou plusieurs fichiers de données (.csv)</span></div>
-        		<div class="fallback">
-        	  		<input name="file" type="file" multiple />
-        		</div>
-        	</form>
+                <div class="dz-message" data-dz-message><span>Déposez ici un ou plusieurs fichiers de données (.csv)</span></div>
+                <div class="fallback">
+                    <input name="file" type="file" multiple />
+                </div>
+            </form>
             
             <h3>Fichiers associés</h3>
             <div class="description">
                 Glisser ici les fichiers auxquels les données font référence
             </div>
-        	<form action="{{ path('admin_page_action', {token: import_token, slug:'action', action:'uploadimportfiles', entity_name: page.arguments.entity_name}) }}" class="dropzone files-linked">
-        		<div class="dz-message" data-dz-message><span>Déposez ici les fichiers liés aux données</span></div>
-        		<div class="fallback">
-        	  		<input name="file" type="file" multiple />
-        		</div>
-        	</form>
+            <form action="{{ path('admin_page_action', {token: import_token, slug:'action', action:'uploadimportfiles', entity_name: page.arguments.entity_name}) }}" class="dropzone files-linked">
+                <div class="dz-message" data-dz-message><span>Déposez ici les fichiers liés aux données</span></div>
+                <div class="fallback">
+                    <input name="file" type="file" multiple />
+                </div>
+            </form>
+
+            <p>Ou spécifier un dossier sur le serveur : </p>
+            <input type="text" value="" name="files_directory" id="files_directory" />
         </div>
         <footer>
             <button class="btn start_import" disabled="disabled" data-url="{{ path('admin_page_action', {token: import_token, slug:'action', action:'import', entity_name: page.arguments.entity_name}) }}">Importer</button>

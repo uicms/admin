@@ -6,7 +6,11 @@ var files_uploaded = 0;
 
 if(document.querySelector('.cpnt_import')) {
     document.querySelector('.cpnt_import .start_import').addEventListener('click', function() {
-        window.location = document.querySelector('.cpnt_import .start_import').getAttribute('data-url');
+        url = document.querySelector('.cpnt_import .start_import').getAttribute('data-url');
+        if($('#files_directory').val()) {
+            url += '&files_directory=' + $('#files_directory').val();
+        }
+        window.location = url;
     }); 
     var myDropzone = new Dropzone(".dropzone.csv", {
         paramName: "file",
