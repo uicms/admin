@@ -63,7 +63,7 @@ class EditorController extends AbstractController
             );
     }
 
-    public function form($page, $entity_name, $id=null, $next_step='', Params $params_service, Model $common_model, Request $request, Nav $nav, Viewnav $viewnav, TranslatorInterface $translator)
+    public function form($page, $entity_name, Params $params_service, Model $common_model, Request $request, Nav $nav, Viewnav $viewnav, TranslatorInterface $translator, $id=null, $next_step='')
     {
         # Init
         $params = $params_service->get($page['slug'], $request);
