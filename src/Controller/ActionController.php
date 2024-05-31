@@ -153,7 +153,7 @@ class ActionController extends AbstractController
                 $new->$file_set_method($file_path);
                 $new->setName($file_infos['filename']);
                 $new->setParent($model->find($params['dir']));
-                $new = $model->persist($new);
+                $new_id = $model->persist($new);
                 $model->flush();
             }
         } catch(\Throwable $throwable) {
@@ -229,7 +229,7 @@ class ActionController extends AbstractController
         }
     }
     
-    public function import($token, $entity_name, $files_directory='', Model $model, Nav $nav, Request $request, Params $params_service)
+    public function import(Model $model, Nav $nav, Request $request, Params $params_service, $token, $entity_name, $files_directory='')
     {
         #$output = null;
         #$retval = null;
