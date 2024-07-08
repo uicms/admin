@@ -81,6 +81,23 @@ class UIFormType extends AbstractType
                         }
                         return $query;
                     };
+
+                    $field_config['options']['choice_attr'] = function ($choice, $key, $value) use ($field_config) {
+                        if(isset($field_config['options']['attr']['data-conditionable-source']) && isset($field_config['options']['attr']['data-conditionable-type']) && $field_config['options']['attr']['data-conditionable-type'] == 'filter') {
+                            $linked_entity = $field_config['options']['attr']['data-conditionable-source'];
+                            $linked_options = $this->model->get($linked_entity)->getAll(['linked_to'=>$field_config['options']['class'], 'linked_to_id'=>$value]);
+                            $result = [];
+                            foreach($linked_options as $option) {
+                                $result[] = $option->getId();
+                            }
+                            if($result) {
+                                return [
+                                    'data-linked_to' => implode('-', $result),
+                                ];
+                            }   
+                        }
+                        return [];
+                    };
                 }
                 
                 # File Type : add hidden rotation field
