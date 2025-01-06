@@ -72,12 +72,16 @@ class UIFormType extends AbstractType
                     $field_config['options']['query_builder'] = function($model) {
                         $query = $model->createQueryBuilder('t');
                         $name_field = $model->getConfig('name_field');
+                        $hide_options = $model->getConfig('hide_concealed_options');
                         if($model->isTranslatable() && $model->isFieldTranslatable($name_field)) {
                             $query->join('t.translations', 'i');
                             $query->where("i.locale = '" . $this->params->get('locale') . "'");
                             $query->orderBy('t.position', 'ASC')->addOrderBy("i.$name_field", 'ASC');
                         } else {
                             $query->orderBy('t.position', 'ASC')->addOrderBy("t.$name_field", 'ASC');
+                        }
+                        if($hide_options) {
+                            $query->andWhere("t.is_concealed = 0");
                         }
                         return $query;
                     };
