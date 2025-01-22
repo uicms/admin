@@ -227,9 +227,9 @@ class EditorController extends AbstractController
                 $row = $model->getRowById($id);
 
                 # Event OnPersist (repository)
-                #if(method_exists($model, 'onPersist')) {
-                #    $model->onPersist($row);
-                #}
+                if(method_exists($model, 'onPersist')) {
+                    $model->onPersist($row);
+                }
 
                 # File
                 foreach($form_config['fields'] as $field_name=>$field_config) {
