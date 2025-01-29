@@ -126,14 +126,16 @@ class UIFormType extends AbstractType
                         $field_config['options']['choices'][$translator->trans($label, [], 'admin')] = $key;
                     }
                 }
-            
-
+                
                 #
                 # Add field to form
                 #
-                $builder->add($field_config['name'], $field_config['namespace'] . '\\' . $field_config['type'], $field_config['options']);
-            
-            
+                if($field_config['namespace']) {
+                    $builder->add($field_config['name'], $field_config['namespace'] . '\\' . $field_config['type'], $field_config['options']);
+                } else {
+                    $builder->add($field_config['name'], $field_config['type'], $field_config['options']);
+                }
+                
                 # Add transformer to field
                 if(isset($field_config['transformer']) && $field_config['transformer']) {
                     eval("\$transformer = new " . $field_config['transformer'] . "(\$field_config, \$ui_config);");
