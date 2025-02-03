@@ -59,6 +59,10 @@
 #nav li.active a {
     color: black;
 }
+#nav hr {
+    border-top: 1px solid #000;
+    height: 1px;
+}
 
 
 /*

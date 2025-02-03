@@ -58,8 +58,9 @@
         <div id="container">
             <header id="header">
         		<h1 id="logo">UI5</h1>
-            
+                
                 {% block aside %}
+                {% set current_group = 0 %}
                 {% if is_granted('IS_AUTHENTICATED_FULLY') %}
                 <div id="nav">
             		<ul id="pages">
@@ -70,6 +71,11 @@
                         {% set trans_key = 'tbl_' ~ admin_page.slug %}
                         {% if trans_key|trans != trans_key %}
                         {% set page_name = trans_key|trans %}
+                        {% endif %}
+                        
+                        {% if admin_page.group is defined and admin_page.group != current_group %}
+                        <hr/>
+                        {% set current_group = admin_page.group %}
                         {% endif %}
                         
                         <li class="{% if admin_page.slug==page.slug %}active{% endif %}"><a href="{{ path('admin_page', {'slug': admin_page.slug, linked_to:''}) }}">{{ page_name|capitalize }}</a></li>
