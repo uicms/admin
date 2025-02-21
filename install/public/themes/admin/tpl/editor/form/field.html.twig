@@ -9,7 +9,7 @@
     {% endif %}
 {% endif %}
 
-{% if field.vars.block_prefixes.1 == "collection" %}
+{% if field.vars.attr.prototype is defined and field.vars.block_prefixes.1 == "collection" %}
     {% set template = 'collection' %}
 {% endif %}
 
