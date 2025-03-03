@@ -110,6 +110,9 @@ class FileTransformer implements DataTransformerInterface
         /* Limit image width */
         if(strpos($mime_type, 'image') === 0 && strpos($mime_type, 'svg') === false) {
             $img = $manager->make($file_dest);
+            if($extension == 'png') {
+                $img->encode('png', 100);
+            }
             $img->resize($this->max_width, $this->max_height, function($constraint){
                 $constraint->aspectRatio();
                 $constraint->upsize();
@@ -125,6 +128,9 @@ class FileTransformer implements DataTransformerInterface
         /* Make image thumbnail */
         if(strpos($mime_type, 'image') === 0 && strpos($mime_type, 'svg') === false) {
             $img = $manager->make($file_dest);
+            if($extension == 'png') {
+                $img->encode('png', 100);
+            }
             $img->resize($this->preview_max_width, $this->preview_max_height, function($constraint){
                 $constraint->aspectRatio();
                 $constraint->upsize();
