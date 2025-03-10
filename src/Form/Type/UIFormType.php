@@ -211,12 +211,12 @@ class UIFormType extends AbstractType
         });
 
         # Post submit event
-        $builder->addEventListener(FormEvents::POST_SUBMIT, function(FormEvent $event) {
+        /*$builder->addEventListener(FormEvents::POST_SUBMIT, function(FormEvent $event) {
             $options = $event->getForm()->getConfig()->getOptions();
             $entity_name = $event->getForm()->getConfig()->getDataClass();
             $data = $event->getData();
             $model = $this->model->get($entity_name);
-        });
+        });*/
     }
     
     public function configureOptions(OptionsResolver $resolver)
