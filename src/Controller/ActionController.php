@@ -246,7 +246,7 @@ class ActionController extends AbstractController
     {
         $data = $model->get($entity_name)->mode('admin')->getAll();
         $ui_config = $this->getParameter('ui_config');
-        
+
         header('Content-Type: text/csv; charset=utf-8');
         header('Content-Disposition: attachment; filename="' . $entity_name . '_' . date('Ymd') . '.csv"');
         header("Pragma: no-cache");
@@ -256,7 +256,7 @@ class ActionController extends AbstractController
         foreach($data as $i=>$line) {
             $array = [];
             foreach($model->get($entity_name)->getFields() as $field) {
-                if(!$field['is_meta']) {
+                #if(!$field['is_meta']) {
                     $method = 'get' . str_replace(' ', '', ucwords(str_replace('_', ' ', $field['name'])));
                     $value = $line->$method();
                     
@@ -268,11 +268,11 @@ class ActionController extends AbstractController
                         
                         while(is_object($value)) {
                             $type = get_class($value);
-                            if($type == 'DateTime' && $field['form']['type'] == 'DateType') {
+                            if($type == 'Date') {
                                 $value = $value->format('Y-m-d');
-                            } else if($type == 'DateTime' && $field['form']['type'] == 'TimeType') {
+                            } else if($type == 'Time') {
                                 $value = $value->format('H:i:s');
-                            } else if($type == 'DateTime' && $field['form']['type'] == 'DateTimeType') {
+                            } else if($type == 'DateTime') {
                                 $value = $value->format('Y-m-d H:i:s');
                             } else if (method_exists($value, 'getId')) {
                                 $tmp = explode ("\\", $type);
@@ -291,7 +291,7 @@ class ActionController extends AbstractController
                     }
 
                     $array[$field['name']] = $value;
-                }
+                #}
             }
             if(!$i) { fputcsv($handle, array_keys($array)); }
             fputcsv($handle, $array);
