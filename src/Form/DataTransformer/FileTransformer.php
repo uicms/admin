@@ -69,8 +69,10 @@ class FileTransformer implements DataTransformerInterface
     public function reverseTransform($file)
     {
         if ($file === null) return '';
+        
         $mime_type = $file->getMimeType();
-
+        $manager = new ImageManager(array('driver' => 'imagick'));
+        
         # Upload
         if($file instanceof UploadedFile) {
             $file_name = pathinfo($file->getClientOriginalName(), PATHINFO_FILENAME);
@@ -84,15 +86,8 @@ class FileTransformer implements DataTransformerInterface
         $file_source = $file->getPathName();
         
         /* File name */
-        #if($slug) {
-            $slugger = new AsciiSlugger();
-            $file_name = strtolower($slugger->slug($file_name));
-        #}
-        #if($make_unique) {
-            $file_name = $file_name . '-' . uniqid();
-        #}
-
-        $manager = new ImageManager(array('driver' => 'imagick'));
+        $slugger = new AsciiSlugger();
+        $file_name = strtolower($slugger->slug($file_name)) . '-' . uniqid();
 
         /* Copy file */
         $file_dest = $this->upload_path . '/' . $file_name . '.' . $extension;
@@ -103,6 +98,14 @@ class FileTransformer implements DataTransformerInterface
         if($extension == 'heic') {
             $img = $manager->make($file_dest);
             $extension = 'jpg';
+            $file_dest = $this->upload_path . '/' . $file_name . '.' . $extension;
+            $img->save($file_dest);
+        }
+        
+        /* WEBP */
+        if(isset($this->field_config['convert2webp']) && $this->field_config['convert2webp']) {
+            $img = $manager->make($file_dest);
+            $extension = 'webp';
             $file_dest = $this->upload_path . '/' . $file_name . '.' . $extension;
             $img->save($file_dest);
         }
