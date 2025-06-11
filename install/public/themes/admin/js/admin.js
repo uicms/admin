@@ -563,7 +563,7 @@ $(".rotate_right").click(function() {
     rotation_input = $('#ui_form_Rotation' + $(this).parent().data('field'));
     rotation = parseInt(rotation_input.val());
     rotation = (rotation + 90) % 360;
-    $(".preview_file").css({'transform': 'rotate('+rotation+'deg)'});
+    image.css({'transform': 'rotate('+rotation+'deg)'});
     rotation_input.val(rotation);
     $(this).parentsUntil('form').parent().find('.cpnt_form_buttons button').attr('disabled', false);
 });
@@ -573,7 +573,7 @@ $(".rotate_left").click(function() {
     rotation_input = $('#ui_form_Rotation' + $(this).parent().data('field'));
     rotation = parseInt(rotation_input.val());
     rotation = (rotation - 90) % 360;
-    $(".preview_file").css({'transform': 'rotate('+rotation+'deg)'});
+    image.css({'transform': 'rotate('+rotation+'deg)'});
     rotation_input.val(rotation);
     $(this).parentsUntil('form').parent().find('.cpnt_form_buttons button').attr('disabled', false);
 });
@@ -597,6 +597,13 @@ $(window).bind('beforeunload', function(){
     }
 });
 
+
+// Delete file
+$('.delete_file').click(function() {
+    var targetId = $(this).data('target');
+    var isChecked = $(this).is(':checked') ? 1 : 0;
+    $('#' + targetId).val(isChecked);
+});
 
 // Save+action
 var buttons = document.querySelectorAll('.cpnt_form_buttons .btn[type=button]');

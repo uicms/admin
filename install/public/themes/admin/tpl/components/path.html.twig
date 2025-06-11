@@ -1,3 +1,4 @@
+    {% trans_default_domain 'admin' %}
     <div class="cpnt cpnt_path">
         <h1>
             {% if current_tab.route.action == 'form' %}
@@ -5,9 +6,9 @@
             {% else %}
                 {% set  root_action = current_tab.route.action %}
             {% endif %}
-            
+
             <a href="{{ path('admin_page_action', {slug: page_slug, action: root_action, dir: 0, offset: 0, search:'' }) }}">
-                <span class="droppable" data-id="0"><span class="wrapper">{{ page.slug|capitalize }}</span></span>
+                <span class="droppable" data-id="0"><span class="wrapper">{{ page_name|capitalize }}</span></span>
             </a>
             
             {% if params.search %}

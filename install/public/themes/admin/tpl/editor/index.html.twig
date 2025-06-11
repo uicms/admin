@@ -2,8 +2,9 @@
 {% set results = rows %}
 {% set page_slug = page.slug %}
 {% set current_entity = model.name|slugger %}
+{% trans_default_domain 'admin' %}
 
-{% block title %}{{ page.slug|capitalize }} - Parcourir{% endblock %}
+{% block title %}{{ page_name|capitalize }} - Parcourir{% endblock %}
 
 {% block body %}
 

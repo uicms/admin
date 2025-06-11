@@ -24,6 +24,7 @@
     <p class="form_field_infos">
         <a href="{{ field.vars.data.publicPath }}" class="external">{{ field.vars.data.publicPath }}</a>
         <br/>{% if field.vars.data.width is defined %}{{ field.vars.data.width }} x {{ field.vars.data.height }}px, {% endif %}{{ field.vars.data.size|number_format(0, '.', ' ') }} octets
+        <br/><input type="checkbox" name="delete_{{ field.vars.name }}" data-target="ui_form_Delete{{ field.vars.name }}" class="delete_file" /> Supprimer
     </p>
     {% endif %}
     

@@ -236,11 +236,19 @@ class EditorController extends AbstractController
                     $field_method = 'get' . $field_config['name'];
 
                     if($field_config['type'] == 'UIFileType' && $row->$field_method()) {
-
+                        $file = new UIFile($ui_config);
+                        
                         # Rotation
                         $rotation = $form->get('Rotation' . $field_config['name'])->getData();
-                        $file = new UIFile($ui_config);
                         $file->rotate($row->$field_method(), $rotation);
+                        
+                        # Delete file
+                        if($delete = $form->get('Delete' . $field_config['name'])->getData()) {
+                            $file->delete($row->$field_method());
+                            $set_method = 'set' . $field_config['name'];
+                            $row->$set_method('');
+                        }
+                        
                     }
                 }
             } catch (\Throwable $throwable) {

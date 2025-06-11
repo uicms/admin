@@ -5,6 +5,12 @@
 	{% set theme_path = app.session.get('theme_path') %}
     {% set js_path = app.session.get('js_path') %}
     {% set current_tab = nav.getCurrentTab() %}
+    {% set page_name = page.slug %}
+    {% set trans_key = 'tbl_' ~ page.slug %}
+    {% if trans_key|trans != trans_key %}
+        {% set page_name = trans_key|trans %}
+    {% endif %}
+    
 	<head>
         <meta charset="UTF-8">
 
@@ -91,8 +97,14 @@
                 <div id="tabs">
                     {% set tabs = nav.getTabs(page.slug) %}
                     {% for tab in tabs %}
+                    {% set tab_name = tab.title|lower %}
+                    {% set trans_key = 'tbl_' ~ tab_name %}
+                    {% if trans_key|trans != trans_key %}
+                        {% set tab_name = trans_key|trans %}
+                    {% endif %}
+                    
                     <div class="tab{% if current_tab.route.id == tab.route.id %} active{% endif %} {{ tab.route.action }}">
-                        <a href="{{ path(tab.route.name, tab.route.params) }}">{{ tab.title }}</a>
+                        <a href="{{ path(tab.route.name, tab.route.params) }}">{{ tab_name }}</a>
                          {% if tabs|length > 1 %}&nbsp;<a href="{{ path('admin_page_action', {slug: 'action', action: 'removetab', route_id: tab.route.id}) }}" class="close">x</a>{% endif %}
                     </div>
                     {% endfor %}

@@ -104,11 +104,6 @@ class UIFormType extends AbstractType
                     };
                 }
                 
-                # File Type : add hidden rotation field
-                if($field_config['type'] == 'UIFileType') {
-                    $builder->add('Rotation' . $field_config['name'], 'Symfony\Component\Form\Extension\Core\Type\HiddenType', ['data'=>0, 'mapped'=>false, 'attr'=>['class'=>'rotation_value']]);
-                }
-
                 # Translate label
                 if(isset($translator) && isset($field_config['options']['label']) && $field_config['options']['label']) {
                     $field_config['options']['label'] = $translator->trans($field_config['options']['label'], [], 'admin');
@@ -134,6 +129,12 @@ class UIFormType extends AbstractType
                     $builder->add($field_config['name'], $field_config['namespace'] . '\\' . $field_config['type'], $field_config['options']);
                 } else {
                     $builder->add($field_config['name'], $field_config['type'], $field_config['options']);
+                }
+                
+                # File Type : add hidden rotation field
+                if($field_config['type'] == 'UIFileType') {
+                    $builder->add('Rotation' . $field_config['name'], 'Symfony\Component\Form\Extension\Core\Type\HiddenType', ['required'=>false, 'data'=>0, 'mapped'=>false, 'attr'=>['class'=>'rotation_value']]);
+                    $builder->add('Delete' . $field_config['name'], 'Symfony\Component\Form\Extension\Core\Type\HiddenType', ['required'=>false, 'data'=>false, 'mapped'=>false, 'attr'=>['class'=>'delete_value']]);
                 }
                 
                 # Add transformer to field
